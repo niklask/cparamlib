@@ -1,3 +1,12 @@
+/*
+		flux.c
+
+		Main part of cparamlib; methods for flux calculations
+
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/flux.c,v $
+		$Author: niklas $ $Date: 2006/01/17 19:53:45 $ $Revision: 1.2 $
+*/
+
 #include <stdio.h>
 #include <math.h>
 #include "cparammodel.h"

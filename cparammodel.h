@@ -1,3 +1,12 @@
+/*
+		cparammodel.h
+
+		Header file for cparamlib
+
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/cparammodel.h,v $
+		$Author: niklas $ $Date: 2006/01/17 19:53:45 $ $Revision: 1.2 $
+*/
+
 #ifndef _GAMMA_H_
 #define _GAMMA_H_
 

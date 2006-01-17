@@ -19,4 +19,4 @@ cparamlib: flux.o gamma.o
 
 clean:
 	-@ echo "Cleaning up..."
-	-@ rm -r *.a *.o *~ $(LIB)
+	-@ rm -r *.a *.o
