@@ -4,7 +4,7 @@
 		Test app for the parameterization model lib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/test.c,v $
-		$Author: niklas $ $Date: 2006/01/17 19:58:19 $ $Revision: 1.5 $
+		$Author: niklas $ $Date: 2006/01/17 19:58:48 $ $Revision: 1.6 $
 */
 
 #include <stdio.h>
@@ -30,6 +30,7 @@ int main(void) {
 				printf("flux_nd(Tp=512TeV) = %10e\n", f);
 
 				/* Example 2: total flux */
+				printf("\n");
 				printf("Example 2: total flux\n");
 				f = flux(ID_GAMMA, E, Pp);
 				printf("total flux(Tp=512TeV) = %10e\n", f);
