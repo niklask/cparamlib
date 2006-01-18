@@ -4,7 +4,7 @@
 		Main part of cparamlib; methods for flux calculations
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/flux.c,v $
-		$Author: niklas $ $Date: 2006/01/17 19:53:45 $ $Revision: 1.2 $
+		$Author: niklas $ $Date: 2006/01/18 01:04:07 $ $Revision: 1.3 $
 */
 
 #include <stdio.h>
@@ -137,15 +137,13 @@ double flux(int particle, double E, double Pp) {
 				/* calculate parameters */
 				paramfunc_table[0](Pp, a);
 				paramfunc_table[1](Pp, b);
-				if ((particle != ID_ELECTRON) && (particle != ID_ANTINUE))
-								paramfunc_table[2](Pp, c);
+				paramfunc_table[2](Pp, c);
 				paramfunc_table[3](Pp, d);
 
 				/* calculate fluxes */
 				f_nd = flux_nd(particle, E, Tp, a);
 				f_diff = flux_diff(particle, E, Tp, b);
-				if ((particle != ID_ELECTRON) && (particle != ID_ANTINUE))
-								f_d1232 = flux_res(particle, E, Tp, c);
+				f_d1232 = flux_res(particle, E, Tp, c);
 				f_r1600 = flux_res(particle, E, Tp, d);
 
 				f_tot = f_nd + f_diff + f_d1232 + f_r1600;
