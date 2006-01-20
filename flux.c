@@ -4,7 +4,7 @@
 		Main part of cparamlib; methods for flux calculations
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/flux.c,v $
-		$Author: niklas $ $Date: 2006/01/18 01:04:07 $ $Revision: 1.3 $
+		$Author: niklas $ $Date: 2006/01/20 21:48:08 $ $Revision: 1.4 $
 */
 
 #include <stdio.h>
@@ -51,7 +51,7 @@ double flux_nd(int particle, double E, double Tp, double* a) {
 				/* renormalization */
 				if (Tp <= 1.95) {
 								r_factor = 3.05*exp(-107.0*pow((y + 3.25)/(1.0 + 8.08*(y + 3.25)), 2));
-								/*flux = flux*r_factor;*/
+								flux = flux*r_factor;
 				}
 
 				return flux;
