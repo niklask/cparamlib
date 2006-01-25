@@ -1,10 +1,12 @@
 /*
 		flux.c
 
-		Main part of cparamlib; methods for flux calculations
+		Main part of cparamlib; methods for flux calculations.
+		Functions for fluxes as well as kinematic cutoff functions are 
+		given in Kamae et al. (2006).
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/flux.c,v $
-		$Author: niklas $ $Date: 2006/01/20 21:48:08 $ $Revision: 1.4 $
+		$Author: niklas $ $Date: 2006/01/25 01:34:47 $ $Revision: 1.5 $
 */
 
 #include <stdio.h>
