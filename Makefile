@@ -12,7 +12,8 @@ ARFLAGS = rcs
 %.o : %.c
 	${CC} $(CCFLAGS) $< -o $@
 
-all: test.o flux.o gamma.o
+all: test.o flux.o gamma.o params.o
+	$(CC) params.c -L. -lm -lcparammodel $(CLFLAGS) params
 	$(CC) test.c -L. -lm -lcparammodel $(CLFLAGS) test
 	$(AR) $(ARFLAGS) $(LIB) flux.o gamma.o
 
