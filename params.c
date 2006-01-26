@@ -5,7 +5,7 @@
 		Calculates parameters as functions of Tp
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/params.c,v $
-		$Author: niklas $ $Date: 2006/01/26 22:21:16 $ $Revision: 1.1 $
+		$Author: niklas $ $Date: 2006/01/26 22:22:12 $ $Revision: 1.2 $
 */
 
 #include <stdio.h>
@@ -27,7 +27,7 @@ void nondiff(void) {
 				int i, j;
 				FILE *fp;
 
-				fp = fopen("GammaDiffDiss.dat", "w");
+				fp = fopen("GammaNonDiff.dat", "w");
 				printf("results written to file!\n");
 				for (i = 0; i < 43; i++) {
 								Tp = Tp_list[i]*1000.0;
