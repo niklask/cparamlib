@@ -9,12 +9,11 @@ CCFLAGS = -c -g
 CLFLAGS = -o
 ARFLAGS = rcs
 
-all: cparamlib
-
-%.o : %.cpp
+%.o : %.c
 	${CC} $(CCFLAGS) $< -o $@
 
-cparamlib: flux.o gamma.o
+all: test.o flux.o gamma.o
+	$(CC) test.c -L. -lm -lcparammodel $(CLFLAGS) test
 	$(AR) $(ARFLAGS) $(LIB) flux.o gamma.o
 
 clean:
