@@ -5,7 +5,7 @@
 		Calculates parameters as functions of Tp
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/params.c,v $
-		$Author: niklas $ $Date: 2006/01/26 22:22:12 $ $Revision: 1.2 $
+		$Author: niklas $ $Date: 2006/01/27 23:20:01 $ $Revision: 1.3 $
 */
 
 #include <stdio.h>
@@ -70,9 +70,61 @@ void diffdiss(void) {
 				fclose(fp);
 }
 
+void delta1232(void) {
+				double Tp, Pp;
+				double f;
+				double c[5];
+				int i, j;
+				FILE *fp;
+
+				fp = fopen("GammaDelta1232.dat", "w");
+				printf("results written to file!\n");
+				for (i = 36; i < 43; i++) {
+								Tp = Tp_list[i]*1000.0;
+								Pp = sqrt(Tp*Tp + 2.0*Tp*m_p);
+								gamma_param_delta(Pp, c);
+								fprintf(fp, "%f ", Tp_list[i]);
+								for (j = 0; j < 5; j++) {
+												fprintf(fp, "%10e", c[j]);
+												if (j < 4)
+																fprintf(fp, " ");
+												else
+																fprintf(fp, "\n");
+								}
+				}
+				fclose(fp);
+}
+
+void delta1600(void) {
+				double Tp, Pp;
+				double f;
+				double d[5];
+				int i, j;
+				FILE *fp;
+
+				fp = fopen("GammaDelta1600.dat", "w");
+				printf("results written to file!\n");
+				for (i = 35; i < 41; i++) {
+								Tp = Tp_list[i]*1000.0;
+								Pp = sqrt(Tp*Tp + 2.0*Tp*m_p);
+								gamma_param_res(Pp, d);
+								fprintf(fp, "%f ", Tp_list[i]);
+								for (j = 0; j < 5; j++) {
+												fprintf(fp, "%10e", d[j]);
+												if (j < 4)
+																fprintf(fp, " ");
+												else
+																fprintf(fp, "\n");
+								}
+				}
+				fclose(fp);
+}
+
 int main(void) {
 				nondiff();
 				diffdiss();
+				delta1232();
+				delta1600();
 
 				return 0;
 }
