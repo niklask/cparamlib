@@ -4,7 +4,7 @@
 		Parameter calculation for electrons
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/elec.c,v $
-		$Author: niklas $ $Date: 2006/01/28 04:17:36 $ $Revision: 1.2 $
+		$Author: niklas $ $Date: 2006/01/28 04:25:31 $ $Revision: 1.3 $
 */
 
 #include <stdio.h>
@@ -129,7 +129,7 @@ void elec_param_res(double Pp, double* d) {
 								d[0] = 0.37790*exp(-56.826*pow((y + 2.9537)/(1.0 + 1.5221*(y + 2.9537)), 2)) - 0.059458 + 0.0096583*y*y;
 								d[1] = -5.5135 - 3.3988*y;
 								d[2] = -7.1209 - 7.1850*tanh(30.801*(y + 2.1)) + 0.35108*y;
-								d[3] = -6.7841 - 4.8485*y - 0.91523*y*y;
+								d[3] = -6.7841 - 4.8385*y - 0.91523*y*y;
 								d[4] = -134.03 - 139.63*y - 48.316*y*y - 5.5526*y*y*y;
 				}
 }
