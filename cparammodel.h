@@ -4,7 +4,7 @@
 		Header file for cparamlib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/cparammodel.h,v $
-		$Author: niklas $ $Date: 2006/01/17 19:53:45 $ $Revision: 1.2 $
+		$Author: niklas $ $Date: 2006/01/28 21:39:20 $ $Revision: 1.3 $
 */
 
 #ifndef _GAMMA_H_
@@ -27,6 +27,36 @@ void gamma_param_nd(double Pp, double* a);
 void gamma_param_diff(double Pp, double* b);
 void gamma_param_delta(double Pp, double* c);
 void gamma_param_res(double Pp, double* d);
+
+void elec_param_nd(double Pp, double* a);
+void elec_param_diff(double Pp, double* b);
+void elec_param_delta(double Pp, double* c);
+void elec_param_res(double Pp, double* d);
+
+void posi_param_nd(double Pp, double* a);
+void posi_param_diff(double Pp, double* b);
+void posi_param_delta(double Pp, double* c);
+void posi_param_res(double Pp, double* d);
+
+void nue_param_nd(double Pp, double* a);
+void nue_param_diff(double Pp, double* b);
+void nue_param_delta(double Pp, double* c);
+void nue_param_res(double Pp, double* d);
+
+void antinue_param_nd(double Pp, double* a);
+void antinue_param_diff(double Pp, double* b);
+void antinue_param_delta(double Pp, double* c);
+void antinue_param_res(double Pp, double* d);
+
+void numu_param_nd(double Pp, double* a);
+void numu_param_diff(double Pp, double* b);
+void numu_param_delta(double Pp, double* c);
+void numu_param_res(double Pp, double* d);
+
+void antinumu_param_nd(double Pp, double* a);
+void antinumu_param_diff(double Pp, double* b);
+void antinumu_param_delta(double Pp, double* c);
+void antinumu_param_res(double Pp, double* d);
 
 double flux_nd(int particle, double E, double Tp, double* a);
 double flux_diff(int particle, double E, double Tp, double* b);

@@ -6,7 +6,7 @@
 		given in Kamae et al. (2006).
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/flux.c,v $
-		$Author: niklas $ $Date: 2006/01/25 01:34:47 $ $Revision: 1.5 $
+		$Author: niklas $ $Date: 2006/01/28 21:39:20 $ $Revision: 1.6 $
 */
 
 #include <stdio.h>
@@ -50,10 +50,19 @@ double flux_nd(int particle, double E, double Tp, double* a) {
 				if (flux < 0.0)
 								flux = 0.0;
 				
-				/* renormalization */
-				if (Tp <= 1.95) {
-								r_factor = 3.05*exp(-107.0*pow((y + 3.25)/(1.0 + 8.08*(y + 3.25)), 2));
-								flux = flux*r_factor;
+				/* renormalization
+							this is different for each particle, thus we must use if statements
+					*/
+				if (particle == 0) {
+								if (Tp <= 1.95) {
+												r_factor = 3.05*exp(-107.0*pow((y + 3.25)/(1.0 + 8.08*(y + 3.25)), 2));
+												flux = flux*r_factor;
+								}
+				} else if (particle == 1) {
+								if (Tp <= 15.6) {
+												r_factor = 3.63*exp(-106*pow((y + 3.26)/(1.0 + 9.21*(y + 3.26)), 2)) - 0.182*y - 0.175*y*y;
+												flux = flux*r_factor;
+								}
 				}
 
 				return flux;
