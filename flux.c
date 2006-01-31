@@ -6,7 +6,7 @@
 		given in Kamae et al. (2006).
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/flux.c,v $
-		$Author: niklas $ $Date: 2006/01/28 21:39:20 $ $Revision: 1.6 $
+		$Author: niklas $ $Date: 2006/01/31 22:25:24 $ $Revision: 1.7 $
 */
 
 #include <stdio.h>
@@ -53,16 +53,27 @@ double flux_nd(int particle, double E, double Tp, double* a) {
 				/* renormalization
 							this is different for each particle, thus we must use if statements
 					*/
-				if (particle == 0) {
-								if (Tp <= 1.95) {
-												r_factor = 3.05*exp(-107.0*pow((y + 3.25)/(1.0 + 8.08*(y + 3.25)), 2));
-												flux = flux*r_factor;
-								}
-				} else if (particle == 1) {
-								if (Tp <= 15.6) {
-												r_factor = 3.63*exp(-106*pow((y + 3.26)/(1.0 + 9.21*(y + 3.26)), 2)) - 0.182*y - 0.175*y*y;
-												flux = flux*r_factor;
-								}
+				switch (particle) {
+								case 0:
+												if (Tp <= 1.95) {
+																r_factor = 3.05*exp(-107.0*pow((y + 3.25)/(1.0 + 8.08*(y + 3.25)), 2));
+																flux = flux*r_factor;
+												}
+								case 1:
+												if (Tp <= 15.6) {
+																r_factor = 3.63*exp(-106*pow((y + 3.26)/(1.0 + 9.21*(y + 3.26)), 2)) - 0.182*y - 0.175*y*y;
+																flux = flux*r_factor;
+												}
+								case 2:
+												if (Tp <= 5.52) {
+																r_factor = 2.22*exp(-98.9*pow((y + 3.25)/(1.0 + 1.04*(y + 3.25)), 2));
+																flux = flux*r_factor;
+												}
+								case 3:
+												if (Tp <= 7.81) {
+																r_factor = 0.329*exp(-249*pow((y + 3.26)/(1.0 + 6.56*(y + 3.26)), 2)) - 9.57*y - 0.229*y*y;
+																flux = flux*r_factor;
+												}
 				}
 
 				return flux;
