@@ -4,7 +4,7 @@
 		Parameter calculation for electrons
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/elec.c,v $
-		$Author: niklas $ $Date: 2006/01/28 04:25:31 $ $Revision: 1.3 $
+		$Author: niklas $ $Date: 2006/01/31 19:38:27 $ $Revision: 1.4 $
 */
 
 #include <stdio.h>
@@ -12,7 +12,7 @@
 #include "cparammodel.h"
 
 /*
-		Calculate parameters for electron from non-diff
+		Calculate parameters for electrons from non-diff
 */
 void elec_param_nd(double Pp, double* a) {
     double Etot, Tp, y;
@@ -51,7 +51,7 @@ void elec_param_nd(double Pp, double* a) {
 }
 
 /*
-		Calculate parameters for electron from diff. dissoc.
+		Calculate parameters for electrons from diff. dissoc.
 */
 void elec_param_diff(double Pp, double* b) {
     double Etot, Tp, y;
@@ -96,14 +96,14 @@ void elec_param_diff(double Pp, double* b) {
 }
 
 /*
-		Calculate parameters for electron from delta(1232)
+		Calculate parameters for electrons from delta(1232)
 */
 void elec_param_delta(double Pp, double* c) {
 				c[0] = c[1] = c[2] = c[3] = c[4] = 0.0;
 }
 
 /*
-		Calculate parameters for gamma-ray from res(1600)
+		Calculate parameters for electrons from res(1600)
 */
 void elec_param_res(double Pp, double* d) {
     double Etot, Tp, y;

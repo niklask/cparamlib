@@ -4,7 +4,7 @@
 		Parameter calculation for positrons
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/posi.c,v $
-		$Author: niklas $ $Date: 2006/01/30 17:27:04 $ $Revision: 1.2 $
+		$Author: niklas $ $Date: 2006/01/31 19:38:27 $ $Revision: 1.3 $
 */
 
 #include <stdio.h>
@@ -12,7 +12,7 @@
 #include "cparammodel.h"
 
 /*
-		Calculate parameters for positron from non-diff
+		Calculate parameters for positrons from non-diff
 */
 void posi_param_nd(double Pp, double* a) {
     double Etot, Tp, y;
@@ -51,7 +51,7 @@ void posi_param_nd(double Pp, double* a) {
 }
 
 /*
-		Calculate parameters for positron from diff. dissoc.
+		Calculate parameters for positrons from diff. dissoc.
 */
 void posi_param_diff(double Pp, double* b) {
     double Etot, Tp, y;
@@ -96,7 +96,7 @@ void posi_param_diff(double Pp, double* b) {
 }
 
 /*
-		Calculate parameters for positron from delta(1232)
+		Calculate parameters for positrons from delta(1232)
 */
 void posi_param_delta(double Pp, double* c) {
     double Etot, Tp, y;
@@ -128,7 +128,7 @@ void posi_param_delta(double Pp, double* c) {
 }
 
 /*
-		Calculate parameters for gamma-ray from res(1600)
+		Calculate parameters for positrons from res(1600)
 */
 void posi_param_res(double Pp, double* d) {
     double Etot, Tp, y;
