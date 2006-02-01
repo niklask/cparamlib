@@ -5,7 +5,7 @@
 		Calculates parameters as functions of Tp
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/params.c,v $
-		$Author: niklas $ $Date: 2006/02/01 00:27:24 $ $Revision: 1.6 $
+		$Author: niklas $ $Date: 2006/02/01 22:49:27 $ $Revision: 1.8 $
 */
 
 #include <stdio.h>
@@ -161,10 +161,14 @@ void delta1600(int p) {
 }
 
 int main(void) {
-				nondiff(3);
-				diffdiss(3);
-				delta1232(3);
-				delta1600(3);
+				int i;
+
+				for (i = 0; i < 5; i++) {
+								nondiff(i);
+								diffdiss(i);
+								delta1232(i);
+								delta1600(i);
+				}
 
 				return 0;
 }

@@ -6,7 +6,7 @@
 		given in Kamae et al. (2006).
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/flux.c,v $
-		$Author: niklas $ $Date: 2006/01/31 22:25:24 $ $Revision: 1.7 $
+		$Author: niklas $ $Date: 2006/02/01 22:48:15 $ $Revision: 1.8 $
 */
 
 #include <stdio.h>
@@ -53,28 +53,38 @@ double flux_nd(int particle, double E, double Tp, double* a) {
 				/* renormalization
 							this is different for each particle, thus we must use if statements
 					*/
+				r_factor = 1.0;
 				switch (particle) {
+								/* gamma */
 								case 0:
-												if (Tp <= 1.95) {
+												if (Tp <= 1.95)
 																r_factor = 3.05*exp(-107.0*pow((y + 3.25)/(1.0 + 8.08*(y + 3.25)), 2));
-																flux = flux*r_factor;
-												}
+												else
+																r_factor = 1.01;
+								/* electron */
 								case 1:
-												if (Tp <= 15.6) {
+												if (Tp <= 15.6)
 																r_factor = 3.63*exp(-106*pow((y + 3.26)/(1.0 + 9.21*(y + 3.26)), 2)) - 0.182*y - 0.175*y*y;
-																flux = flux*r_factor;
-												}
+												else
+																r_factor = 1.01;
+								/* positron */
 								case 2:
-												if (Tp <= 5.52) {
+												if (Tp <= 5.52)
 																r_factor = 2.22*exp(-98.9*pow((y + 3.25)/(1.0 + 1.04*(y + 3.25)), 2));
-																flux = flux*r_factor;
-												}
+								/* electron neutrino */
 								case 3:
-												if (Tp <= 7.81) {
+												if (Tp <= 7.81)
 																r_factor = 0.329*exp(-249*pow((y + 3.26)/(1.0 + 6.56*(y + 3.26)), 2)) - 9.57*y - 0.229*y*y;
-																flux = flux*r_factor;
-												}
+								/* muon neutrino */
+								case 4:
+												if (Tp <= 15.6)
+																r_factor = 2.23*exp(-93.4*pow((y + 3.25)/(1.0 + 8.38*(y + 3.25)), 2)) - 0.376*y - 0.121*y*y;
+								/* electron anti-neutrino */
+								case 5:
+												if (Tp <= 15.6)
+																r_factor = 2.67*exp(-45.7*pow((y + 3.27)/(1.0 + 6.59*(y + 3.27)), 2)) - 0.301*y - 0.208*y*y;
 				}
+				flux = flux*r_factor;
 
 				return flux;
 }
