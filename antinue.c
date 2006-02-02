@@ -4,7 +4,7 @@
 		Parameter calculation for electron anti neutrinos
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/antinue.c,v $
-		$Author: niklas $ $Date: 2006/02/02 16:33:43 $ $Revision: 1.2 $
+		$Author: niklas $ $Date: 2006/02/02 16:35:01 $ $Revision: 1.3 $
 */
 
 #include <stdio.h>
@@ -48,7 +48,7 @@ void antinue_param_nd(double Pp, double* a) {
 								a[5] = 4.7673e-5 + 5.4936e-5*log10(0.0067905*(y + 4.3)) + 0.00020740/(y + 4.9772);
 								a[6] = -270.30 - 114.47*log10(0.34352*(y + 3.4)) + 80.085*y - 7.9240*y*y;
 								a[7] = 3271.9 - 2.9161e5/(y + 87.847) - 6.2330*y*y;
-								a[8] = -0.17787 + 0.36771*y + 0.025397*y*y - 0.0019238*y*y*y + 0.0032725*y*y*y*y;
+								a[8] = -0.17787 + 0.36771*y - 0.025397*y*y + 0.0019238*y*y*y + 0.0032725*y*y*y*y;
 				} else {
 								for (i = 0; i < 9; i++)
 												a[i] = 0.0;
