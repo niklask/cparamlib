@@ -4,7 +4,7 @@
 		Parameter calculation for muon anti neutrinos
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/antinumu.c,v $
-		$Author: niklas $ $Date: 2006/02/02 22:27:37 $ $Revision: 1.2 $
+		$Author: niklas $ $Date: 2006/02/02 22:50:16 $ $Revision: 1.3 $
 */
 
 #include <stdio.h>
@@ -99,7 +99,32 @@ void antinumu_param_diff(double Pp, double* b) {
 		Calculate parameters for muon anti neutrino from delta(1232)
 */
 void antinumu_param_delta(double Pp, double* c) {
-				c[0] = c[1] = c[2] = c[3] = c[4] = 0.0;
+    double Etot, Tp, y;
+				int i;
+
+				Etot	= sqrt(Pp*Pp + m_p*m_p);
+    Tp = Etot - m_p;
+    y = log10(Tp*0.001);
+
+				/* These are the original parameter values
+							note that d0 have been multiplied with 1/(10^0.05 - 1) for unit conversion
+							0.34484359622 62.8936309814 -3.12501573563 -0.475674360991 -0.693612337112 -1.63610374928 0.011871852912
+							16.7209835052 11.74954319 2.46374106407
+							-6.05571603775 -6.33783912659 21.9838676453 0.43172544241
+							0.370088845491 0.277059644461
+							0.0475074648857 0.0615698136389 0.00701167900115
+				*/
+
+    if (Tp <= 0.4 || Tp >= 2.0) {
+								for (i = 0; i < 5; i++)
+												c[i] = 0.0;
+				} else {
+								c[0] = 2.8262*exp(-62.894*pow((y + 3.1250)/(1.0 - 0.47567*(y + 3.1250)), 2)) + 5.6845 + 13.409/y - 0.097296*y*y;
+								c[1] = 16.721 + 11.750*y + 2.4637*y*y;
+								c[2] = -6.0557 - 6.3378*tanh(21.984*(y + 2.1)) + 0.43173*y;
+								c[3] = 0.37009 + 0.27706*y;
+								c[4] = 0.047507 + 0.061570*y + 0.0070117*y*y;
+				}
 }
 
 /*
