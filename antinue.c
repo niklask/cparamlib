@@ -4,7 +4,7 @@
 		Parameter calculation for electron anti neutrinos
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/antinue.c,v $
-		$Author: niklas $ $Date: 2006/02/02 16:28:57 $ $Revision: 1.1 $
+		$Author: niklas $ $Date: 2006/02/02 16:33:43 $ $Revision: 1.2 $
 */
 
 #include <stdio.h>
@@ -14,7 +14,7 @@
 /*
 		Calculate parameters for electron anti neutrino from non-diff
 */
-void nue_param_nd(double Pp, double* a) {
+void antinue_param_nd(double Pp, double* a) {
     double Etot, Tp, y;
 				int i;
 
@@ -58,7 +58,7 @@ void nue_param_nd(double Pp, double* a) {
 /*
 		Calculate parameters for electron anti neutrino from diff. dissoc.
 */
-void nue_param_diff(double Pp, double* b) {
+void antinue_param_diff(double Pp, double* b) {
     double Etot, Tp, y;
 				int i;
 
@@ -103,7 +103,7 @@ void nue_param_diff(double Pp, double* b) {
 /*
 		Calculate parameters for electron anti neutrino from delta(1232)
 */
-void nue_param_delta(double Pp, double* c) {
+void antinue_param_delta(double Pp, double* c) {
     double Etot, Tp, y;
 				int i;
 
@@ -135,7 +135,7 @@ void nue_param_delta(double Pp, double* c) {
 /*
 		Calculate parameters for electron anti neutrino from res(1600)
 */
-void nue_param_res(double Pp, double* d) {
+void antinue_param_res(double Pp, double* d) {
     double Etot, Tp, y;
 				int i;
 
