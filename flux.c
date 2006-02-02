@@ -6,7 +6,7 @@
 		given in Kamae et al. (2006).
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/flux.c,v $
-		$Author: niklas $ $Date: 2006/02/01 22:48:15 $ $Revision: 1.8 $
+		$Author: niklas $ $Date: 2006/02/02 17:18:48 $ $Revision: 1.9 $
 */
 
 #include <stdio.h>
@@ -83,6 +83,10 @@ double flux_nd(int particle, double E, double Tp, double* a) {
 								case 5:
 												if (Tp <= 15.6)
 																r_factor = 2.67*exp(-45.7*pow((y + 3.27)/(1.0 + 6.59*(y + 3.27)), 2)) - 0.301*y - 0.208*y*y;
+								/* muon anti-neutrino */
+								case 6:
+												if (Tp <= 15.6)
+																r_factor = 2.56*exp(-107*pow((y + 3.25)/(1.0 + 8.34*(y + 3.25)), 2)) - 0.385*y - 0.125*y*y;
 				}
 				flux = flux*r_factor;
 
