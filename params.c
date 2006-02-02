@@ -5,7 +5,7 @@
 		Calculates parameters as functions of Tp
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/params.c,v $
-		$Author: niklas $ $Date: 2006/02/01 22:49:27 $ $Revision: 1.8 $
+		$Author: niklas $ $Date: 2006/02/02 23:08:22 $ $Revision: 1.9 $
 */
 
 #include <stdio.h>
@@ -45,9 +45,8 @@ void nondiff(int p) {
 												case 2: posi_param_nd(Pp, a);
 												case 3: nue_param_nd(Pp, a);
 												case 4: numu_param_nd(Pp, a);
-																/*case 5: antinue_param_nd(Pp, a);
-																		case 6: antinumu_param_nd(Pp, a);
-																*/
+												case 5: antinue_param_nd(Pp, a);
+												case 6: antinumu_param_nd(Pp, a);
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 9; j++) {
@@ -78,9 +77,8 @@ void diffdiss(int p) {
 												case 2: posi_param_diff(Pp, b);
 												case 3: nue_param_diff(Pp, b);
 												case 4: numu_param_diff(Pp, b);
-																/*case 5: antinue_param_diff(Pp, b);
-																		case 6: antinumu_param_diff(Pp, b);
-																*/
+												case 5: antinue_param_diff(Pp, b);
+												case 6: antinumu_param_diff(Pp, b);
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 8; j++) {
@@ -111,9 +109,8 @@ void delta1232(int p) {
 												case 2: posi_param_delta(Pp, c);
 												case 3: nue_param_delta(Pp, c);
 												case 4: numu_param_delta(Pp, c);
-																/*case 5: antinue_param_delta(Pp, c);
-																		case 6: antinumu_param_delta(Pp, c);
-																*/
+												case 5: antinue_param_delta(Pp, c);
+												case 6: antinumu_param_delta(Pp, c);
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 5; j++) {
@@ -144,9 +141,8 @@ void delta1600(int p) {
 												case 2: posi_param_res(Pp, d);
 												case 3: nue_param_res(Pp, d);
 												case 4: numu_param_res(Pp, d);
-																/*case 5: antinue_param_res(Pp, d);
-																		case 6: antinumu_param_res(Pp, d);
-																*/
+												case 5: antinue_param_res(Pp, d);
+												case 6: antinumu_param_res(Pp, d);
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 5; j++) {
@@ -163,7 +159,7 @@ void delta1600(int p) {
 int main(void) {
 				int i;
 
-				for (i = 0; i < 5; i++) {
+				for (i = 0; i <= 6; i++) {
 								nondiff(i);
 								diffdiss(i);
 								delta1232(i);
