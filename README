@@ -1,4 +1,28 @@
-Tag history:
+cparamlib
+==================
+Niklas Karlsson <niklas@slac.stanford.edu> (maintainer)
 
-02/02/06: tagged version 1.0 - cparamlib-1_0
-02/19/06: tagged version 1.0.1 - cparamlib-1_0_1
+cparamlib is a simple library for calculation of fluxes for stable secondary 
+particles created in proton-proton interactions in astronomical environment.
+
+Feel free to include the source code within your own program.
+
+IMPORTANT! The maintainer cannot be held responsible for anything that is
+caused by using this piece of code.
+
+BUILD
+=====
+
+The library is built by running "make all". The makefile is really simple
+and should be self-explaining. Once the library is built, copy it to any
+location where you want to keep it.
+
+USING
+=====
+
+There is one example program, params.c, that uses the library to calculate
+fluxes. It is compiled by the makefile.
+
+Generally, the library is linked to your program using something like
+
+gcc yourprogram.c -L. -lm -lcparammodel -o yourprogram.bin
