@@ -4,6 +4,11 @@ Niklas Karlsson <niklas@slac.stanford.edu> (maintainer)
 
 cparamlib is a simple library for calculation of fluxes for stable secondary 
 particles created in proton-proton interactions in astronomical environment.
+according to the model described in 
+Tuneyoshi Kamae, Niklas Karlsson, Tsunefumi Mizuno, Toshinori Abe,
+and Tatsumi Koi; "Parameterization of $\gamma$, $e^{\pm}$ and 
+Neutrino Spectra Produced by $p-p$ Interaction in Astronomical 
+Environment" to appear in Astrophysical Journal (2006).
 
 Feel free to include the source code within your own program.
 
