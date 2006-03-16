@@ -1,12 +1,12 @@
 /*
-		flux.c
+		sigma.c
 
-		Main part of cparamlib; methods for flux calculations.
-		Functions for fluxes as well as kinematic cutoff functions are 
-		given in Kamae et al. (2006).
+		Main part of cparamlib; methods for calculations of inclusive
+		cross sections. Functions for inclusive cross sections as well 
+		as kinematic cutoff functions are given in Kamae et al. (2006).
 
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/flux.c,v $
-		$Author: niklas $ $Date: 2006/02/02 17:18:48 $ $Revision: 1.9 $
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/sigma.c,v $
+		$Author: niklas $ $Date: 2006/03/16 22:57:07 $ $Revision: 1.1 $
 */
 
 #include <stdio.h>
@@ -22,12 +22,12 @@ typedef void (*PARAM_FUNC)(double, double*);
 static PARAM_FUNC paramfunc_table[4] = {&gamma_param_nd, &gamma_param_diff, &gamma_param_delta, &gamma_param_res};
 
 /*
-		Calculate flux from non-diff process
+		Calculate inclusive crosssection from non-diff process
 	*/
-double flux_nd(int particle, double E, double Tp, double* a) {
+double sigma_nd(int particle, double E, double Tp, double* a) {
 				double Wl, Wh, Lmin, Lmax;
 				double x, y;
-				double flux;
+				double sigma;
 				double factor, r_factor;
 
 				/* init some variables, given in table 2 */
@@ -41,14 +41,14 @@ double flux_nd(int particle, double E, double Tp, double* a) {
 				y = log10(Tp);
 
 				/* calculate the flux due to non-diffractive process for given gamma-ray energy */
-				flux = a[0]*exp(-a[1]*pow(x - a[3] + a[2]*pow(x - a[3], 2), 2)) + 
-								   a[4]*exp(-a[5]*pow(x - a[8] + a[6]*pow(x - a[8], 2) + a[7]*pow(x - a[8], 3), 2));
+				sigma = a[0]*exp(-a[1]*pow(x - a[3] + a[2]*pow(x - a[3], 2), 2)) + 
+								a[4]*exp(-a[5]*pow(x - a[8] + a[6]*pow(x - a[8], 2) + a[7]*pow(x - a[8], 3), 2));
 				/* factor is the kinematic limit function as in paper */
     factor = (1.0/(1.0 + exp(Wl*(Lmin - x))))*(1.0/(1.0 + exp(Wh*(x - Lmax))));			
-				flux = flux*factor;
+				sigma = sigma*factor;
 				
-				if (flux < 0.0)
-								flux = 0.0;
+				if (sigma < 0.0)
+								sigma = 0.0;
 				
 				/* renormalization
 							this is different for each particle, thus we must use if statements
@@ -88,18 +88,18 @@ double flux_nd(int particle, double E, double Tp, double* a) {
 												if (Tp <= 15.6)
 																r_factor = 2.56*exp(-107*pow((y + 3.25)/(1.0 + 8.34*(y + 3.25)), 2)) - 0.385*y - 0.125*y*y;
 				}
-				flux = flux*r_factor;
+				sigma = sigma*r_factor;
 
-				return flux;
+				return sigma;
 }
 
 /*
-		Calculate from diff. dissoc. process
+		Calculate inclusive cross section from diff. dissoc. process
 	*/
-double flux_diff(int particle, double E, double Tp, double* b) {
+double sigma_diff(int particle, double E, double Tp, double* b) {
 				double Wdiff, Lmax;
 				double x, y;
-				double flux;
+				double sigma;
 				double factor;
 
 				/* init some variables */
@@ -110,26 +110,26 @@ double flux_diff(int particle, double E, double Tp, double* b) {
 				x = log10(E);
 				y = log10(Tp);
 
-				/* calculate the flux due to diffractive process for given gamma-ray energy */
-    flux = b[0]*exp(-b[1]*pow((x - b[2])/(1.0 + b[3]*(x - b[2])), 2)) +
-								   b[4]*exp(-b[5]*pow((x - b[6])/(1.0 + b[7]*(x - b[6])), 2));
+				/* calculate the sigma due to diffractive process for given gamma-ray energy */
+    sigma = b[0]*exp(-b[1]*pow((x - b[2])/(1.0 + b[3]*(x - b[2])), 2)) +
+								b[4]*exp(-b[5]*pow((x - b[6])/(1.0 + b[7]*(x - b[6])), 2));
 				/* factor is the kinematic limit function as in paper */
 				factor = 1.0/(1.0 + exp(Wdiff*(x - Lmax)));
-				flux = flux*factor;
+				sigma = sigma*factor;
 
-				if (flux < 0.0)
-								flux = 0.0;
+				if (sigma < 0.0)
+								sigma = 0.0;
 
-				return flux;
+				return sigma;
 }
 
 /*
-		Calculate gamma-ray flux from either of the two resonance processes
+		Calculate inclusive cross section from either of the two resonance processes
 	*/
-double flux_res(int particle, double E, double Tp, double* c) {
+double sigma_res(int particle, double E, double Tp, double* c) {
 				double Wdiff, Lmax;
 				double x, y;
-				double flux;
+				double sigma;
 				double factor;
 
 				/* init some variables */
@@ -140,22 +140,22 @@ double flux_res(int particle, double E, double Tp, double* c) {
 				x = log10(E);
 				y = log10(Tp);
 
-				/* calculate the flux due to resonance process for given gamma-ray energy */
-    flux = c[0]*exp(-c[1]*pow((x - c[2])/(1.0 + c[3]*(x - c[2]) + c[4]*pow(x - c[2], 2)), 2));
+				/* calculate the sigma due to resonance process for given gamma-ray energy */
+    sigma = c[0]*exp(-c[1]*pow((x - c[2])/(1.0 + c[3]*(x - c[2]) + c[4]*pow(x - c[2], 2)), 2));
 				/* factor is the kinematic limit function as in paper */
 				factor = 1.0/(1.0 + exp(Wdiff*(x - Lmax)));
-				flux = flux*factor;
+				sigma = sigma*factor;
 
-				if (flux < 0.0)
-								flux = 0.0;
+				if (sigma < 0.0)
+								sigma = 0.0;
 
-				return flux;
+				return sigma;
 }
 
 /*
-		Calculate flux from all processes
+		Calculate sigma from all processes
 */
-double flux(int particle, double E, double Pp) {
+double sigma(int particle, double E, double Pp) {
     double Etot, Tp;
 				double f_tot;
 				double f_nd, f_diff, f_d1232, f_r1600;
@@ -176,11 +176,11 @@ double flux(int particle, double E, double Pp) {
 				paramfunc_table[2](Pp, c);
 				paramfunc_table[3](Pp, d);
 
-				/* calculate fluxes */
-				f_nd = flux_nd(particle, E, Tp, a);
-				f_diff = flux_diff(particle, E, Tp, b);
-				f_d1232 = flux_res(particle, E, Tp, c);
-				f_r1600 = flux_res(particle, E, Tp, d);
+				/* calculate sigmaes */
+				f_nd = sigma_nd(particle, E, Tp, a);
+				f_diff = sigma_diff(particle, E, Tp, b);
+				f_d1232 = sigma_res(particle, E, Tp, c);
+				f_r1600 = sigma_res(particle, E, Tp, d);
 
 				f_tot = f_nd + f_diff + f_d1232 + f_r1600;
 
