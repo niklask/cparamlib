@@ -26,8 +26,22 @@ USING
 =====
 
 There is one example program, params.c, that uses the library to calculate
-fluxes. It is compiled by the makefile.
+inclusive cross-sections for non-diffractive, diffractive, Delta1232 and
+Reson1600 processes and for all secondary particles. It is compiled by the 
+makefile.
 
 Generally, the library is linked to your program using something like
 
 gcc yourprogram.c -L. -lm -lcparammodel -o yourprogram.bin
+
+SUBROUTINES
+===========
+
+The subroutines in the library libcparammodel.a are:
+*****
+
+TEST PROGRAM
+============
+
+A test program "test.c" shows how subroutines in the library lcparammodel
+can be used. 
