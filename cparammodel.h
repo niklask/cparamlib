@@ -4,7 +4,7 @@
 		Header file for cparamlib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/cparammodel.h,v $
-		$Author: niklas $ $Date: 2006/03/19 05:52:13 $ $Revision: 1.5 $
+		$Author: niklas $ $Date: 2006/03/19 19:20:09 $ $Revision: 1.6 $
 */
 
 #ifndef _GAMMA_H_
@@ -60,7 +60,8 @@ void antinumu_param_res(double Tp, double* d);
 
 double sigma_nd(int particle, double E, double Tp, double* a);
 double sigma_diff(int particle, double E, double Tp, double* b);
-double sigma_res(int particle, double E, double Tp, double* c);
+double sigma_delta(int particle, double E, double Tp, double* c);
+double sigma_res(int particle, double E, double Tp, double* d);
 
 double sigma(int particle, double E, double Tp);
 

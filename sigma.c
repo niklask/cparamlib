@@ -6,7 +6,7 @@
 		as kinematic cutoff functions are given in Kamae et al. (2006).
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/sigma.c,v $
-		$Author: niklas $ $Date: 2006/03/19 05:52:14 $ $Revision: 1.2 $
+		$Author: niklas $ $Date: 2006/03/19 19:20:09 $ $Revision: 1.3 $
 */
 
 #include <stdio.h>
@@ -126,7 +126,7 @@ double sigma_diff(int particle, double E, double Tp, double* b) {
 /*
 		Calculate inclusive cross section from either of the two resonance processes
 	*/
-double sigma_res(int particle, double E, double Tp, double* c) {
+double sigma_delta(int particle, double E, double Tp, double* c) {
 				double Wdiff, Lmax;
 				double x, y;
 				double sigma;
@@ -150,6 +150,10 @@ double sigma_res(int particle, double E, double Tp, double* c) {
 								sigma = 0.0;
 
 				return sigma;
+}
+
+double sigma_res(int particle, double E, double Tp, double* d) {
+				return sigma_delta(particle, E, Tp, d);
 }
 
 /*
