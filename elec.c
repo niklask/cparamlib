@@ -4,7 +4,7 @@
 		Parameter calculation for electrons
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/elec.c,v $
-		$Author: niklas $ $Date: 2006/01/31 19:38:27 $ $Revision: 1.4 $
+		$Author: niklas $ $Date: 2006/03/19 05:52:13 $ $Revision: 1.5 $
 */
 
 #include <stdio.h>
@@ -14,26 +14,12 @@
 /*
 		Calculate parameters for electrons from non-diff
 */
-void elec_param_nd(double Pp, double* a) {
-    double Etot, Tp, y;
+void elec_param_nd(double Tp, double* a) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
 
-				/* These are the original parameter values
-							note that a0 and a4 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							-0.00227427738719 0.296685099602 -0.0704276934266 0.00774029362947
-							7.18268483979e-06 -3.50668619831e-06 1.32643742745e-06 -3.34813563541e-07 2.35509229896e-08 3.42968631273e-09
-							563.909851074 -362.181091309 2.71871185303 -28924.9960938 7.90309762955
-							0.526838362217 0.577174305916 0.00453363452107 -0.00890664290637
-							0.0440583191812 0.206974059343 -0.00908503122628 -0.00871878303587 0.0012778629316
-							9.73868664005e-05 7.85731754149e-05 0.00360554642975 0.000246596493525 4.9389667511 -3.80967208002e-07
-							-272.979888916 -106.217224121 0.341000974178 89.0373687744 -12.5462293625
-							432.526733398 -883.994812012 0.197373971343 -41937.7460938 8.55176448822
-							-0.127555832267 0.434775620699 -0.00277966680005 -0.0083074150607
-				*/
 				if (Tp > 0.4) {
 								a[0] = -0.018639*(y + 3.3) + 2.4315*pow(y + 3.3, 2) - 0.57719*pow(y + 3.3, 3) + 0.063435*pow(y + 3.3, 4);
 								a[1] = 7.1827e-6 - 3.5067e-6*y + 1.3264e-6*y*y - 3.3481e-7*y*y*y + 2.3551e-8*y*y*y*y + 3.4297e-9*y*y*y*y*y;
@@ -53,25 +39,11 @@ void elec_param_nd(double Pp, double* a) {
 /*
 		Calculate parameters for electrons from diff. dissoc.
 */
-void elec_param_diff(double Pp, double* b) {
-    double Etot, Tp, y;
+void elec_param_diff(double Tp, double* b) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that b0 and b4 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							0.0249691866338 -6.23704004288 -0.0199651997536 1.68776345253 4.29302090197e-05 9.64004135132
-							1.65368855 3.85295248032 3.2026617527 -2.01541686058 0.627792596817
-							-10.7221393585 0.0826715230942 1.88791573048 0.00014895023196 255.631759644
-							-0.0237520020455 0.517341017723 3.30872654915 -1.98768746853 0.40300488472
-							0.115821219981 0.0149836251512 -8.73467724887e-05 0.06360848248
-							-4.22947454453 -1.00249087811 9.07331371307 -0.114516332746 -62.3815078735
-							1.4861805439 0.995444893837 -0.0427628308535 -0.00400647893548 0.00579872075468
-							6.26293468475 6.95169401169 -0.363795995712 -0.260329335928 -2.85419464111
-				*/
 
 				if (Tp > 1.38) {
 								if (Tp > 5.52) {
@@ -98,29 +70,18 @@ void elec_param_diff(double Pp, double* b) {
 /*
 		Calculate parameters for electrons from delta(1232)
 */
-void elec_param_delta(double Pp, double* c) {
+void elec_param_delta(double Tp, double* c) {
 				c[0] = c[1] = c[2] = c[3] = c[4] = 0.0;
 }
 
 /*
 		Calculate parameters for electrons from res(1600)
 */
-void elec_param_res(double Pp, double* d) {
-    double Etot, Tp, y;
+void elec_param_res(double Tp, double* d) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that d0 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							0.046110983938 56.8264007568 -2.95373129845 1.52206134796 0.00725625408813 -0.00117849593516
-							-5.51345300674 -3.39880275726
-							-7.12091302872 -7.18501472473 30.8012924194 0.351079583168
-							-6.78410625458 -4.83850049973 -0.915232002735
-							-134.033050537 -139.628967285 -48.3161201477 -5.55262756348
-				*/
 
     if (Tp <= 0.6 || Tp >= 2.9) {
 								for (i = 0; i < 5; i++)

@@ -37,8 +37,99 @@ gcc yourprogram.c -L. -lm -lcparammodel -o yourprogram.bin
 SUBROUTINES
 ===========
 
-The subroutines in the library libcparammodel.a are:
-*****
+The subroutines in the library libcparammodel.a are used to calculate parameters
+and inclusive cross-sections according to tables 3 through 9.
+
+Parameter calculation
+---------------------
+Step one is to calculate the parameter arrays a,b,c and d given in tables 3
+through 9. Do this by calling the four functions for each of the secondary
+particle species. Suffices for the functions are:
+  nd		 contribution from non-diffractive process 
+  diff	 contribution from diffractive process 
+  delta	 contribution from Delta(1232) excitation process 
+  res		 contribution from Res(1600) excitation process
+				 (note that Res(1600) represents a collaction of resonances) 
+
+Arguments:
+  Tp			proton kinetic energy in GeV
+  a,b,c,d pointer to where the parameter array will be stored
+					dimensions are a[9], b[8], c[5], d[5]
+
+Gamma-rays (table 3):
+  void gamma_param_nd(double Tp, double* a);
+  void gamma_param_diff(double Tp, double* b);
+  void gamma_param_delta(double Tp, double* c);
+  void gamma_param_res(double Tp, double* d);
+
+Electrons (table 4):
+  void elec_param_nd(double Tp, double* a);
+  void elec_param_diff(double Tp, double* b);
+  void elec_param_delta(double Tp, double* c);
+  void elec_param_res(double Tp, double* d);
+
+Positrons (table 5):
+  void posi_param_nd(double Tp, double* a);
+  void posi_param_diff(double Tp, double* b);
+  void posi_param_delta(double Tp, double* c);
+  void posi_param_res(double Tp, double* d);
+
+Electron neutrinos (table 6):
+	void nue_param_nd(double Tp, double* a);
+  void nue_param_diff(double Tp, double* b);
+  void nue_param_delta(double Tp, double* c);
+  void nue_param_res(double Tp, double* d);
+
+Electron anti-neutrinos (table 7):
+  void antinue_param_nd(double Tp, double* a);
+  void antinue_param_diff(double Tp, double* b);
+  void antinue_param_delta(double Tp, double* c);
+  void antinue_param_res(double Tp, double* d);
+
+Muon neutrinos (table 8):
+  void numu_param_nd(double Tp, double* a);
+  void numu_param_diff(double Tp, double* b);
+  void numu_param_delta(double Tp, double* c);
+  void numu_param_res(double Tp, double* d);
+
+Muon neutrinos (table 8):
+  void antinumu_param_nd(double Tp, double* a);
+  void antinumu_param_diff(double Tp, double* b);
+  void antinumu_param_delta(double Tp, double* c);
+  void antinumu_param_res(double Tp, double* d);
+
+Secondary particle id's
+-----------------------
+The library uses the following id's for secondary particle species
+ID_GAMMA				0
+ID_ELECTRON			1
+ID_POSITRON			2
+ID_NUE					3
+ID_NUMU					4
+ID_ANTINUE			5
+ID_ANTINUMU			6
+
+Inclusive cross-sections
+------------------------
+Inclusive cross-sections are calculated separately for the four contributions
+(non-diff, diff, delta and res). Note that that delta does not contribute to
+electrons or electrons anti-neutrinos in the present modeling.
+
+Arguments:
+  particle  id of the secondary particle to calculate for
+						(see list above)
+  E					energy of the secondary particle in GeV
+  Tp				proton kinetic energy in GeV
+  a,b,c,d		parameter array for each species
+						(note that these depend on the particle species)
+
+Individual contributions are calculated with:
+  double sigma_nd(int particle, double E, double Tp, double* a);
+  double sigma_diff(int particle, double E, double Tp, double* b);
+  double sigma_res(int particle, double E, double Tp, double* c);
+
+Total inclusive cross-sections is calculated with:
+  double sigma(int particle, double E, double Tp);
 
 TEST PROGRAM
 ============

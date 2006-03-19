@@ -4,7 +4,7 @@
 		Parameter calculation for electron anti neutrinos
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/antinue.c,v $
-		$Author: niklas $ $Date: 2006/02/02 21:39:14 $ $Revision: 1.4 $
+		$Author: niklas $ $Date: 2006/03/19 05:52:13 $ $Revision: 1.5 $
 */
 
 #include <stdio.h>
@@ -14,26 +14,12 @@
 /*
 		Calculate parameters for electron anti neutrino from non-diff
 */
-void antinue_param_nd(double Pp, double* a) {
-    double Etot, Tp, y;
+void antinue_param_nd(double Tp, double* a) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
 
-				/* These are the original parameter values
-							note that a0 and a4 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							0.0445831045508 0.185184702277 -0.0252182129771 0.00295956782065
-							-4.78325864606e-06 4.58372342109e-05 0.429796010256 6.15593944531e-06 4.17305612564 1.19282742617e-06
-							-245.224960327 73.2229919434 -19.6516265869 0.83138012886 0.715635001659
-							0.452317714691 0.529340386391 0.0100781433284 -0.00170923187397
-							0.0468848235905 0.189335510135 0.0211527608335 -0.0209385622293 0.00256953551434
-							4.76732493553e-05 5.49357937416e-05 0.00679045822471 0.000207401491934 4.97721815109
-							-270.300567627 -114.466438293 0.34352183342 80.0849914551 -7.92403793335
-							3271.85229492 -291610.125 87.8467941284 -6.23296308517
-							-0.177871257067 0.367711722851 -0.0253971107304 0.0019238491077 0.00327251874842
-				*/
 				if (Tp > 0.4) {
 								a[0] = 0.0013113 + 0.36538*(y + 3.31) + 1.5178*pow(y + 3.31, 2) - 0.20668*pow(y + 3.31, 3) + 0.024255*pow(y + 3.31, 4);
 								a[1] = -4.7833e-6 + 4.5837e-5*exp(-0.42980*(y + 3.4)) + 6.1559e-6/(y + 4.1731) + 1.1928e-6*y;
@@ -53,25 +39,11 @@ void antinue_param_nd(double Pp, double* a) {
 /*
 		Calculate parameters for electron anti neutrino from diff. dissoc.
 */
-void antinue_param_diff(double Pp, double* b) {
-    double Etot, Tp, y;
+void antinue_param_diff(double Tp, double* b) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that b0 and b4 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							5.04022836685 -0.374111622572 -0.502991974354 0.555054187775 0.00052043038886 9.26850318909
-							-132.497528076 142.121444702 8.02891921997 -1.91964447498 11.5301580429
-							-17.2226715088 0.0112848961726 69.7463684082 -0.0482330694795 0.000258806801867 250.765533447
-							8.19913768768 9.64370822906 45.2611694336 -1.92924618721 16.6818733215
-							0.0682312548161 0.0447165779769 0.00685667200014 0.0609562620521 5.53165960312 0.438668340445
-							1.25439107418 -0.523622095585 2.76376008987 -0.0558370649815 -17.6376686096
-							1.4788351059 1.02780652046 -0.0928517282009 -0.00627340003848 0.0119195589796
-							5.16509532928 5.73983097076 -0.373560637236 -0.222342729568 -2.78893399239
-				*/
 
 				if (Tp > 1.38) {
 								if (Tp > 11.0) {
@@ -98,29 +70,18 @@ void antinue_param_diff(double Pp, double* b) {
 /*
 		Calculate parameters for electron anti neutrino from delta(1232)
 */
-void antinue_param_delta(double Pp, double* c) {
+void antinue_param_delta(double Tp, double* c) {
 				c[0] = c[1] = c[2] = c[3] = c[4] = 0.0;
 }
 
 /*
 		Calculate parameters for electron anti neutrino from res(1600)
 */
-void antinue_param_res(double Pp, double* d) {
-    double Etot, Tp, y;
+void antinue_param_res(double Tp, double* d) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that d0 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							0.0444865971804 58.2102165222 -2.95368266106 1.43199265003 0.0137672061101 0.00564260641113
-							-9.50664615631 -5.46553182602 -0.317691653967
-							-7.18312692642 -7.15508651733 30.3540401459 0.337569147348
-							2.79380726814 1.6991943121 0.201611116529
-							0.618783593178 0.623712420464 0.189134046435 0.0191184338182
-				*/
 
     if (Tp <= 0.6 || Tp >= 2.9) {
 								for (i = 0; i < 5; i++)

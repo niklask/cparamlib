@@ -4,7 +4,7 @@
 		Parameter calculation for positrons
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/posi.c,v $
-		$Author: niklas $ $Date: 2006/01/31 19:38:27 $ $Revision: 1.3 $
+		$Author: niklas $ $Date: 2006/03/19 05:52:13 $ $Revision: 1.4 $
 */
 
 #include <stdio.h>
@@ -14,26 +14,12 @@
 /*
 		Calculate parameters for positrons from non-diff
 */
-void posi_param_nd(double Pp, double* a) {
-    double Etot, Tp, y;
+void posi_param_nd(double Tp, double* a) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
 
-				/* These are the original parameter values
-							note that a0 and a4 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							-0.0971335172653 0.945592820644 -0.479853034019 0.0978613495827 -0.00671031558886
-							6.79428057992e-06 -3.5344708067e-06 6.09270273344e-07 2.02188431331e-07 5.10053581593e-08 -4.26223110139e-08
-							44.8273010254 81.3782653809 0.027733316645 -13885.9570312 8.44171237946
-							0.520102679729 0.593361794949 0.0120323887095 -0.00642422027886
-							0.260641157627 0.225898891687 -0.0584131404757 0.000390978035284 0.00101220363285
-							1.08451126835e-06 1.43362171912e-06 0.00772554660216 0.000130176325911 4.81884002686 9.36013933028e-08
-							-267.736297607 14.1750164032 0.353914827108 64.6693954468 -7.70355606079
-							138.260513306 -529.838012695 0.124669328332 -19869.2695312 7.68836832047 1.06751298904
-							-0.147067934275 0.40135461092 0.00398988928646 -0.00166020612232
-				*/
 				if (Tp > 0.4) {
 								a[0] = -0.79606*(y + 3.3) + 7.7496*pow(y + 3.3, 2) - 3.9326*pow(y + 3.3, 3) + 0.80202*pow(y + 3.3, 4) - 0.054994*pow(y + 3.3, 5);
 								a[1] = 6.7943e-6 - 3.5345e-6*y + 6.0927e-7*y*y + 2.0219e-7*y*y*y + 5.1005e-8*y*y*y*y - 4.2622e-8*y*y*y*y*y;
@@ -53,25 +39,11 @@ void posi_param_nd(double Pp, double* a) {
 /*
 		Calculate parameters for positrons from diff. dissoc.
 */
-void posi_param_diff(double Pp, double* b) {
-    double Etot, Tp, y;
+void posi_param_diff(double Tp, double* b) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that b0 and b4 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							3.56192159653 -0.378794789314 -0.392854571342 0.675004661083 0.00044765509665 9.08243083954
-							-142.96635437 147.8568573 0.371939599514 -1.87809276581 3.83885550499
-							-14.4874792099 -4.22232198715 -13.5457267761 0.000169882376213 234.647613525
-							-0.00369744631462 0.41975620389 6.15271615982 -1.81937229633 0.999455809593
-							0.220948114991 0.0226288419217 -0.000244634633418 0.103818245232 14.9871606827 -0.189670920372
-							2.0403752327 -0.515474557877 2.27578520775 -0.0350058339536 -6.65551614761
-							1.52579438686 1.01315379143 -0.0643878951669 -0.0040208962746 0.00837717577815
-							3.05505847931 3.5239880085 -0.367388755083 -0.133813351393 -2.77184319496
-				*/
 
 				if (Tp > 1.38) {
 								if (Tp > 11.0) {
@@ -98,22 +70,11 @@ void posi_param_diff(double Pp, double* b) {
 /*
 		Calculate parameters for positrons from delta(1232)
 */
-void posi_param_delta(double Pp, double* c) {
-    double Etot, Tp, y;
+void posi_param_delta(double Tp, double* c) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that c0 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							0.36411473155 67.8570632935 -3.12719631195 0.228314727545 0.803548634052 1.18338441849 -0.0503396354616
-							6.82763385773 5.22358512878 1.46297347546
-							-6.02910232544 -6.45806407928 5.0829706192 0.463520437479
-							0.593000531197 0.360930740833
-							0.773676991463 0.447761267424 0.0564094521105
-				*/
 
     if (Tp <= 0.4 || Tp >= 2.0)
 								for (i = 0; i < 5; i++)
@@ -130,22 +91,11 @@ void posi_param_delta(double Pp, double* c) {
 /*
 		Calculate parameters for positrons from res(1600)
 */
-void posi_param_res(double Pp, double* d) {
-    double Etot, Tp, y;
+void posi_param_res(double Tp, double* d) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that d0 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							0.234105244279 56.5444946289 -2.94853496552 1.28917956352 0.0289423391223 -0.00504121184349
-							-4.98662805557 -3.14346814156
-							-7.05501937866 -7.21645498276 31.0328960419 0.38540750742
-							-2.8914911747 -2.14952278137 -0.450058221817
-							-1.29702174664 -0.139468535781 0.411970019341 0.106410078704
-				*/
 
     if (Tp <= 0.6 || Tp >= 2.9) {
 								for (i = 0; i < 5; i++)

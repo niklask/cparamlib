@@ -6,7 +6,7 @@
 		as kinematic cutoff functions are given in Kamae et al. (2006).
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/sigma.c,v $
-		$Author: niklas $ $Date: 2006/03/16 22:57:07 $ $Revision: 1.1 $
+		$Author: niklas $ $Date: 2006/03/19 05:52:14 $ $Revision: 1.2 $
 */
 
 #include <stdio.h>
@@ -155,8 +155,7 @@ double sigma_res(int particle, double E, double Tp, double* c) {
 /*
 		Calculate sigma from all processes
 */
-double sigma(int particle, double E, double Pp) {
-    double Etot, Tp;
+double sigma(int particle, double E, double Tp) {
 				double f_tot;
 				double f_nd, f_diff, f_d1232, f_r1600;
 
@@ -165,16 +164,13 @@ double sigma(int particle, double E, double Pp) {
 				double c[5];
 				double d[5];
 
-				f_tot = f_nd = f_diff = f_d1232 = f_r1600 = 1.0;
-
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
+				f_tot = f_nd = f_diff = f_d1232 = f_r1600 = 0.0;
 
 				/* calculate parameters */
-				paramfunc_table[0](Pp, a);
-				paramfunc_table[1](Pp, b);
-				paramfunc_table[2](Pp, c);
-				paramfunc_table[3](Pp, d);
+				paramfunc_table[0](Tp, a);
+				paramfunc_table[1](Tp, b);
+				paramfunc_table[2](Tp, c);
+				paramfunc_table[3](Tp, d);
 
 				/* calculate sigmaes */
 				f_nd = sigma_nd(particle, E, Tp, a);

@@ -4,7 +4,7 @@
 		Parameter calculation for electron neutrinos
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/numu.c,v $
-		$Author: niklas $ $Date: 2006/02/15 18:06:13 $ $Revision: 1.3 $
+		$Author: niklas $ $Date: 2006/03/19 05:52:13 $ $Revision: 1.4 $
 */
 
 #include <stdio.h>
@@ -14,26 +14,11 @@
 /*
 		Calculate parameters for muon neutrino from non-diff
 */
-void numu_param_nd(double Pp, double* a) {
-    double Etot, Tp, y;
+void numu_param_nd(double Tp, double* a) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that a0 and a4 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							-0.0776176527143 1.20816171169 -0.560022830963 0.111986078322 -0.00740943104029
-							6.87003193889e-06 -2.82453379441e-06 7.60322450333e-07 -3.29528290877e-07 7.42916270724e-08
-							-240.459503174 58.4051551819 -9.85559368134 3.14013671875 -0.889319837093
-							0.49934849143 0.609192371368 0.00249632634223 -0.00999098084867
-							0.306188255548 0.504549503326 -0.109248518944 -0.000336493190844 0.00177059567068
-							8.20459149509e-07 1.40854785968e-06 0.0167926754802 0.000133396300953 4.71360111237
-							-267.550567627 -0.210183113813 0.352167755365 69.5857849121 -9.99296474457
-							2741.82275391 222.011001587 9.7400657418e-13 -4772.52636719 19.77293396 -6.10014438629
-							-0.118572950363 0.390722066164 -0.0378127060831 0.00222649751231 0.00469314260408
-				*/
 
 				if (Tp > 0.4) {
 								a[0] = -0.63611*(y + 3.3) + 9.9015*pow(y + 3.3, 2) - 4.5897*pow(y + 3.3, 3) + 0.91778*pow(y + 3.3, 4) - 0.060724*pow(y + 3.3, 5);
@@ -54,25 +39,11 @@ void numu_param_nd(double Pp, double* a) {
 /*
 		Calculate parameters for muon neutrino from diff. dissoc.
 */
-void numu_param_diff(double Pp, double* b) {
-    double Etot, Tp, y;
+void numu_param_diff(double Tp, double* b) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that b0 and b4 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							7.89243459702 -0.343128234148 -0.682757496834 0.447541594505 0.000611523049884 9.91654872894
-							-7.60160779953 3042.67675781 10133.8964844 -2.30661416054 41.6118354797
-							-1.49784827232 -0.581631362438 -0.364877969027 0.0318247117102 2.80966067314 0.022795651108 -1.88608634472
-							-0.00614827312529 65.7985610962 4.82392454147 -3.88350534439 0.533428430557
-							0.341756731272 0.0431344583631 -0.000485377211589 0.158764913678 10.5919437408 -0.191487923265
-							1.8015525341 -0.698465168476 2.86266255379 -0.0157217178494 -45.4102363586
-							1.46169531345 1.01667201519 -0.0786167010665 -0.00383363896981 0.0101410336792
-							3.55994796753 4.00408840179 -0.418888926506 -0.181823328137 -2.42088723183
-				*/
 
 				if (Tp > 1.38) {
 								if (Tp > 11.0) {
@@ -99,22 +70,11 @@ void numu_param_diff(double Pp, double* b) {
 /*
 		Calculate parameters for muon neutrino from delta(1232)
 */
-void numu_param_delta(double Pp, double* c) {
-    double Etot, Tp, y;
+void numu_param_delta(double Tp, double* c) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that d0 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							0.439896821976 68.9136657715 -3.12780284882 -0.194965928793 0.112884283066 -0.260081738234 -0.0287333726883
-							95.309928894 70.4965820312 13.6357879639
-							-6.21578121185 -6.29394960403 21.5918693542 0.374396264553
-							2.74848127365 1.1692057848
-							-2.75683712959 -1.84607040882 -0.313759803772
-				*/
 
     if (Tp <= 0.4 || Tp >= 2.0) {
 								for (i = 0; i < 5; i++)
@@ -131,22 +91,11 @@ void numu_param_delta(double Pp, double* c) {
 /*
 		Calculate parameters for muon neutrino from res(1600)
 */
-void numu_param_res(double Pp, double* d) {
-    double Etot, Tp, y;
+void numu_param_res(double Tp, double* d) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that d0 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							0.311008006334 58.4875907898 -2.95088672638 1.31543469429 0.101322606206 0.0419886931777
-							88.1734924316 65.1479568481 12.5846834183
-							-7.09616851807 -7.16902017593 30.8898277283 0.380321264267
-							-4.14397573471 -3.27169561386 -0.705370306969
-							2.26241779327 1.1805934906 0.00434496579692 -0.0430197119713
-				*/
 
     if (Tp <= 0.6 || Tp >= 2.9) {
 								for (i = 0; i < 5; i++)

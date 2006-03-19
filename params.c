@@ -5,7 +5,7 @@
 		Calculates parameters as functions of Tp
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/params.c,v $
-		$Author: niklas $ $Date: 2006/02/02 23:08:22 $ $Revision: 1.9 $
+		$Author: niklas $ $Date: 2006/03/19 05:52:13 $ $Revision: 1.10 $
 */
 
 #include <stdio.h>
@@ -29,7 +29,7 @@ char *filenames[7][4] = {{"GammaNonDiff.dat", "GammaDiffDiss.dat", "GammaDelta12
 																									{"AntiNuMuNonDiff.dat", "AntiNuMuDiffDiss.dat", "AntiNuMuDelta1232.dat", "AntiNuMuDelta1600.dat"}};
 
 void nondiff(int p) {
-				double Tp, Pp;
+				double Tp;
 				double f;
 				double a[9];
 				int i, j;
@@ -38,15 +38,14 @@ void nondiff(int p) {
 				fp = fopen(filenames[p][0], "w");
 				for (i = 0; i < 43; i++) {
 								Tp = Tp_list[i]*1000.0;
-								Pp = sqrt(Tp*Tp + 2.0*Tp*m_p);
 								switch (p) {
-												case 0: gamma_param_nd(Pp, a);
-												case 1: elec_param_nd(Pp, a);
-												case 2: posi_param_nd(Pp, a);
-												case 3: nue_param_nd(Pp, a);
-												case 4: numu_param_nd(Pp, a);
-												case 5: antinue_param_nd(Pp, a);
-												case 6: antinumu_param_nd(Pp, a);
+												case 0: gamma_param_nd(Tp, a);
+												case 1: elec_param_nd(Tp, a);
+												case 2: posi_param_nd(Tp, a);
+												case 3: nue_param_nd(Tp, a);
+												case 4: numu_param_nd(Tp, a);
+												case 5: antinue_param_nd(Tp, a);
+												case 6: antinumu_param_nd(Tp, a);
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 9; j++) {
@@ -61,7 +60,7 @@ void nondiff(int p) {
 }
 
 void diffdiss(int p) {
-				double Tp, Pp;
+				double Tp;
 				double f;
 				double b[8];
 				int i, j;
@@ -70,15 +69,14 @@ void diffdiss(int p) {
 				fp = fopen(filenames[p][1], "w");
 				for (i = 0; i < 37; i++) {
 								Tp = Tp_list[i]*1000.0;
-								Pp = sqrt(Tp*Tp + 2.0*Tp*m_p);
 								switch (p) {
-												case 0: gamma_param_diff(Pp, b);
-												case 1: elec_param_diff(Pp, b);
-												case 2: posi_param_diff(Pp, b);
-												case 3: nue_param_diff(Pp, b);
-												case 4: numu_param_diff(Pp, b);
-												case 5: antinue_param_diff(Pp, b);
-												case 6: antinumu_param_diff(Pp, b);
+												case 0: gamma_param_diff(Tp, b);
+												case 1: elec_param_diff(Tp, b);
+												case 2: posi_param_diff(Tp, b);
+												case 3: nue_param_diff(Tp, b);
+												case 4: numu_param_diff(Tp, b);
+												case 5: antinue_param_diff(Tp, b);
+												case 6: antinumu_param_diff(Tp, b);
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 8; j++) {
@@ -93,7 +91,7 @@ void diffdiss(int p) {
 }
 
 void delta1232(int p) {
-				double Tp, Pp;
+				double Tp;
 				double f;
 				double c[5];
 				int i, j;
@@ -102,15 +100,14 @@ void delta1232(int p) {
 				fp = fopen(filenames[p][2], "w");
 				for (i = 36; i < 43; i++) {
 								Tp = Tp_list[i]*1000.0;
-								Pp = sqrt(Tp*Tp + 2.0*Tp*m_p);
 								switch (p) {
-												case 0: gamma_param_delta(Pp, c);
-												case 1: elec_param_delta(Pp, c);
-												case 2: posi_param_delta(Pp, c);
-												case 3: nue_param_delta(Pp, c);
-												case 4: numu_param_delta(Pp, c);
-												case 5: antinue_param_delta(Pp, c);
-												case 6: antinumu_param_delta(Pp, c);
+												case 0: gamma_param_delta(Tp, c);
+												case 1: elec_param_delta(Tp, c);
+												case 2: posi_param_delta(Tp, c);
+												case 3: nue_param_delta(Tp, c);
+												case 4: numu_param_delta(Tp, c);
+												case 5: antinue_param_delta(Tp, c);
+												case 6: antinumu_param_delta(Tp, c);
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 5; j++) {
@@ -125,7 +122,7 @@ void delta1232(int p) {
 }
 
 void delta1600(int p) {
-				double Tp, Pp;
+				double Tp;
 				double f;
 				double d[5];
 				int i, j;
@@ -134,15 +131,14 @@ void delta1600(int p) {
 				fp = fopen(filenames[p][3], "w");
 				for (i = 35; i < 41; i++) {
 								Tp = Tp_list[i]*1000.0;
-								Pp = sqrt(Tp*Tp + 2.0*Tp*m_p);
 								switch (p) {
-												case 0: gamma_param_res(Pp, d);
-												case 1: elec_param_res(Pp, d);
-												case 2: posi_param_res(Pp, d);
-												case 3: nue_param_res(Pp, d);
-												case 4: numu_param_res(Pp, d);
-												case 5: antinue_param_res(Pp, d);
-												case 6: antinumu_param_res(Pp, d);
+												case 0: gamma_param_res(Tp, d);
+												case 1: elec_param_res(Tp, d);
+												case 2: posi_param_res(Tp, d);
+												case 3: nue_param_res(Tp, d);
+												case 4: numu_param_res(Tp, d);
+												case 5: antinue_param_res(Tp, d);
+												case 6: antinumu_param_res(Tp, d);
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 5; j++) {

@@ -4,7 +4,7 @@
 		Parameter calculation for muon anti neutrinos
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/antinumu.c,v $
-		$Author: niklas $ $Date: 2006/02/15 18:06:13 $ $Revision: 1.5 $
+		$Author: niklas $ $Date: 2006/03/19 05:52:13 $ $Revision: 1.6 $
 */
 
 #include <stdio.h>
@@ -14,26 +14,12 @@
 /*
 		Calculate parameters for muon anti neutrino from non-diff
 */
-void antinumu_param_nd(double Pp, double* a) {
-    double Etot, Tp, y;
+void antinumu_param_nd(double Tp, double* a) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
 
-				/* These are the original parameter values
-							note that a0 and a4 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							-0.185991585255 1.23324215412 -0.526211738586 0.0977133139968 -0.00594520336017
-							-2.62967587332e-05 9.38576922636e-05 0.323838979006 7.78205503593e-06 4.05602025986 7.61485125622e-06 -8.40908967348e-07
-							-243.62197876 59.3739776611 -5.73555803299 1.98147809505 -1.04779481888
-							0.508068501949 0.602210879326 0.00341200479306 -0.0111390100792
-							0.323135674 0.544017136097 -0.155495405197 0.0142262140289 0.000371871079551
-							9.11014865324e-07 1.38803295613e-06 0.0169981326908 0.000125834150822 4.77067899704
-							-272.112670898 53.4774284363 0.355306923389 56.0406951904 -6.08761930466
-							6431.83984375 893.920410156 5.70126656996e-09 2103.59521484 5.6739859581 -6.1124920845
-							-0.111196398735 0.381441265345 -0.0401276387274 0.00474844034761 0.00547071173787
-				*/
 				if (Tp > 0.4) {
 								a[0] = -1.5243*(y + 3.3) + 10.107*pow(y + 3.3, 2) - 4.3126*pow(y + 3.3, 3) + 0.80081*pow(y + 3.3, 4) - 0.048724*pow(y + 3.3, 5);
 								a[1] = -2.6297e-5 + 9.3858e-5*exp(-0.32384*(y + 3.4)) + 7.7821e-6/(y + 4.0560) + 7.6149e-6*y - 8.4091e-7*y*y;
@@ -53,25 +39,11 @@ void antinumu_param_nd(double Pp, double* a) {
 /*
 		Calculate parameters for muon anti neutrino from diff. dissoc.
 */
-void antinumu_param_diff(double Pp, double* b) {
-    double Etot, Tp, y;
+void antinumu_param_diff(double Tp, double* b) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that b0 and b4 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							8.59378910065 -0.35816475749 -0.815034985542 0.522732317448 0.000801161513664 9.52664852142
-							-8.11448192596 7685.99902344 44046.3203125 -2.21900486946 81.1047286987
-							-1.3094547987 0.071270160377 0.00754632754251 0.0677590221167 5.34327173233 -0.00442051235586 -1.86827158928
-							0.0821493342519 2190.05322266 533.749938965 -2.83626127243 7.09758710861
-							0.33603516221 0.0413145460188 -0.000418203737354 0.142508044839 10.4077215195 -0.189221933484 
-							2.18170928955 -0.595835030079 2.7053797245 -0.010909171775 -14.8804807663
-							1.45912253857 1.02747344971 -0.0749489739537 -0.0060396399349 0.00975683052093
-							3.76090764999 4.28426742554 -0.371478229761 -0.164793148637 -2.76527428627
-				*/
 
 				if (Tp > 1.38) {
 								if (Tp > 11.0) {
@@ -98,22 +70,11 @@ void antinumu_param_diff(double Pp, double* b) {
 /*
 		Calculate parameters for muon anti neutrino from delta(1232)
 */
-void antinumu_param_delta(double Pp, double* c) {
-    double Etot, Tp, y;
+void antinumu_param_delta(double Tp, double* c) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that d0 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							0.34484359622 62.8936309814 -3.12501573563 -0.475674360991 -0.693612337112 -1.63610374928 0.011871852912
-							16.7209835052 11.74954319 2.46374106407
-							-6.05571603775 -6.33783912659 21.9838676453 0.43172544241
-							0.370088845491 0.277059644461
-							0.0475074648857 0.0615698136389 0.00701167900115
-				*/
 
     if (Tp <= 0.4 || Tp >= 2.0) {
 								for (i = 0; i < 5; i++)
@@ -130,22 +91,11 @@ void antinumu_param_delta(double Pp, double* c) {
 /*
 		Calculate parameters for muon anti neutrino from res(1600)
 */
-void antinumu_param_res(double Pp, double* d) {
-    double Etot, Tp, y;
+void antinumu_param_res(double Tp, double* d) {
+    double y;
 				int i;
 
-				Etot	= sqrt(Pp*Pp + m_p*m_p);
-    Tp = Etot - m_p;
     y = log10(Tp*0.001);
-
-				/* These are the original parameter values
-							note that d0 have been multiplied with 1/(10^0.05 - 1) for unit conversion
-							0.273317009211 57.1590881348 -2.94919157028 1.29939556122 0.081167332828 0.0336207039654
-							-7.06502962112 -4.2772731781 -0.176479712129
-							-7.04097604752 -7.19768571854 31.0954551697 0.4023835361
-							-1.23535823822 -0.875811636448 -0.208287969232
-							-0.113945670426 0.344183743 0.271030217409 0.0502476878464
-				*/
 
     if (Tp <= 0.6 || Tp >= 2.9) {
 								for (i = 0; i < 5; i++)
