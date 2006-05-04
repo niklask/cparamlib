@@ -4,7 +4,7 @@
 		Parameter calculation for positrons
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/posi.c,v $
-		$Author: niklas $ $Date: 2006/03/19 05:52:13 $ $Revision: 1.4 $
+		$Author: niklas $ $Date: 2006/05/04 20:44:33 $ $Revision: 1.5 $
 */
 
 #include <stdio.h>

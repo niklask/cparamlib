@@ -4,7 +4,7 @@
 		Header file for cparamlib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/cparammodel.h,v $
-		$Author: niklas $ $Date: 2006/03/19 19:20:09 $ $Revision: 1.6 $
+		$Author: niklas $ $Date: 2006/05/04 20:45:09 $ $Revision: 1.7 $
 */
 
 #ifndef _GAMMA_H_
