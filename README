@@ -19,6 +19,8 @@ BUILD
 
 The library is built by running "make all". The makefile is really simple and should be
 self-explaining. Once the library is built, copy it to any location where you want to keep it.
+The makefile also compiles the SWIG wrapper for interfacing the c library in python. For this to work one must
+set the correct paths, i.e. change variables SWIG and PYTHON_INCLUDE.
 
 USING
 =====
@@ -30,6 +32,10 @@ It is compiled by the  makefile.
 Generally, the library is linked to your program using something like
 
 gcc yourprogram.c -L. -lm -lcparammodel -o yourprogram.bin
+
+For use with python:
+1. Build the library and python wrapper
+2. Copy the python directory contents to somewhere where python will find it, for example site-packages.
 
 SUBROUTINES
 ===========
