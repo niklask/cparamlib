@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2006/05/05 20:27:06 $ $Revision: 1.1 $
+# $Author: niklas $ $Date: 2006/05/05 20:40:50 $ $Revision: 1.2 $
 #
 
 #
@@ -139,7 +139,7 @@ class ParamModel:
             if (self.particle == ID_ANTINUMU):
                 cparammodel.numu_param_diff(Tp[i], b)
 
-            for j in range(9):
+            for j in range(8):
                 paramTable[i,j] = b[j]
                 
         return paramTable
@@ -172,18 +172,18 @@ class ParamModel:
             if (self.particle == ID_ANTINUMU):
                 cparammodel.numu_param_delta(Tp[i], c)
 
-            for j in range(9):
+            for j in range(5):
                 paramTable[i,j] = c[j]
                 
         return paramTable
     
     #
-    # Method paramDelta
+    # Method paramRes
     #
     # Create a table with the res(1600) parameter values for all Tp:s
     # This is a wrapper around <particle>_param_res(Tp, a)
     #
-    def paramDelta(self, Tp):
+    def paramRes(self, Tp):
         n = Tp.shape[0]
         
         paramTable = zeros((n,5), Float32)
@@ -205,7 +205,7 @@ class ParamModel:
             if (self.particle == ID_ANTINUMU):
                 cparammodel.numu_param_res(Tp[i], d)
 
-            for j in range(9):
+            for j in range(5):
                 paramTable[i,j] = d[j]
                 
         return paramTable
