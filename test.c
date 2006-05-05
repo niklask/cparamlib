@@ -4,7 +4,7 @@
 		Test app for the parameterization model lib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/test.c,v $
-		$Author: niklas $ $Date: 2006/05/05 00:13:06 $ $Revision: 1.13 $
+		$Author: niklas $ $Date: 2006/05/05 17:26:25 $ $Revision: 1.14 $
 */
 
 #include <stdio.h>
@@ -24,7 +24,7 @@ void example1(void) {
 
 				printf("Example 1: non-diff\n");
 				gamma_param_nd(Tp, a);
-				for (i = 0; i < 8; i++)
+				for (i = 0; i < 9; i++)
 								printf("a[%d] = %10e\n", i, a[i]);
 				f = sigma_nd(ID_GAMMA, E, Tp, a);
 				printf("Tp = 512TeV and Egamma = 100 GeV => sigma_nd = %10e mb\n", f);
@@ -115,8 +115,8 @@ void example3(void) {
 
 int main(void) {
 				example1();
-				example2();
-				example3();
+				/*	example2();
+							example3();*/
 
 				return 0;
 }

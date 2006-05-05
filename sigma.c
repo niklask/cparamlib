@@ -6,7 +6,7 @@
 		as kinematic cutoff functions are given in Kamae et al. (2006).
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/sigma.c,v $
-		$Author: niklas $ $Date: 2006/05/05 00:13:06 $ $Revision: 1.5 $
+		$Author: niklas $ $Date: 2006/05/05 17:26:25 $ $Revision: 1.6 $
 */
 
 #include <stdio.h>
@@ -38,7 +38,7 @@ double sigma_nd(int particle, double E, double Tp, double* a) {
 
 				/* calculate the log of E and Tp */
 				x = log10(E);
-				y = log10(Tp);
+				y = log10(Tp*0.001);
 
 				/* calculate the flux due to non-diffractive process for given gamma-ray energy */
 				sigma = a[0]*exp(-a[1]*pow(x - a[3] + a[2]*pow(x - a[3], 2), 2)) + 
@@ -61,32 +61,39 @@ double sigma_nd(int particle, double E, double Tp, double* a) {
 																r_factor = 3.05*exp(-107.0*pow((y + 3.25)/(1.0 + 8.08*(y + 3.25)), 2));
 												else
 																r_factor = 1.01;
+												break;
 								/* electron */
 								case 1:
 												if (Tp <= 15.6)
 																r_factor = 3.63*exp(-106*pow((y + 3.26)/(1.0 + 9.21*(y + 3.26)), 2)) - 0.182*y - 0.175*y*y;
 												else
 																r_factor = 1.01;
+												break;
 								/* positron */
 								case 2:
 												if (Tp <= 5.52)
 																r_factor = 2.22*exp(-98.9*pow((y + 3.25)/(1.0 + 1.04*(y + 3.25)), 2));
+												break;
 								/* electron neutrino */
 								case 3:
 												if (Tp <= 7.81)
 																r_factor = 0.329*exp(-249*pow((y + 3.26)/(1.0 + 6.56*(y + 3.26)), 2)) - 9.57*y - 0.229*y*y;
+												break;
 								/* muon neutrino */
 								case 4:
 												if (Tp <= 15.6)
 																r_factor = 2.23*exp(-93.4*pow((y + 3.25)/(1.0 + 8.38*(y + 3.25)), 2)) - 0.376*y - 0.121*y*y;
+												break;
 								/* electron anti-neutrino */
 								case 5:
 												if (Tp <= 15.6)
 																r_factor = 2.67*exp(-45.7*pow((y + 3.27)/(1.0 + 6.59*(y + 3.27)), 2)) - 0.301*y - 0.208*y*y;
+												break;
 								/* muon anti-neutrino */
 								case 6:
 												if (Tp <= 15.6)
 																r_factor = 2.56*exp(-107*pow((y + 3.25)/(1.0 + 8.34*(y + 3.25)), 2)) - 0.385*y - 0.125*y*y;
+												break;
 				}
 				sigma = sigma*r_factor;
 
