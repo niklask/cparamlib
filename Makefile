@@ -22,7 +22,7 @@ SWIGFLAGS = -python -o
 
 py: lib
 	$(SWIG) $(SWIGFLAGS) cparammodel_wrap.c cparammodel.i
-	$(CC) -shared -fPIC cparammodel_wrap.c -L. -lm -lcparammodel -I$(PYTHON_INCLUDE) $(CLFLAGS) $(PYTHON_LIB)
+	$(CC) -shared cparammodel_wrap.c -L. -lm -lcparammodel -I$(PYTHON_INCLUDE) $(CLFLAGS) $(PYTHON_LIB)
 
 lib: test.o sigma.o gamma.o elec.o posi.o nue.o numu.o antinue.o antinumu.o params.o
 	$(AR) $(ARFLAGS) $(LIB) sigma.o gamma.o elec.o posi.o nue.o numu.o antinue.o antinumu.o

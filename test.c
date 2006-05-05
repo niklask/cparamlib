@@ -4,7 +4,7 @@
 		Test app for the parameterization model lib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/test.c,v $
-		$Author: niklas $ $Date: 2006/05/04 20:44:33 $ $Revision: 1.12 $
+		$Author: niklas $ $Date: 2006/05/05 00:13:06 $ $Revision: 1.13 $
 */
 
 #include <stdio.h>
@@ -114,9 +114,8 @@ void example3(void) {
 }
 
 int main(void) {
-				/*
-						example1();
-						example2(); */
+				example1();
+				example2();
 				example3();
 
 				return 0;
