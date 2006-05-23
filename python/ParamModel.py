@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2006/05/05 20:40:50 $ $Revision: 1.2 $
+# $Author: niklas $ $Date: 2006/05/23 22:41:05 $ $Revision: 1.3 $
 #
 
 #
@@ -234,13 +234,14 @@ class ParamModel:
 
         a = self.__paramTableND
         
-        cutoff = (1.0/(1.0 + exp(Wl*(Lmin - x))))*(1.0/(1.0 + exp(Wh*(x - Lmax))))
-
         #
         # calculate inclusive cross section
         #
         for i in range(m):
             s = a[i,0]*exp(-a[i,1]*(x - a[i,3] + a[i,2]*(x - a[i,3])**2)**2) + a[i,4]*exp(-a[i,5]*(x - a[i,8] + a[i,6]*(x - a[i,8])**2 + a[i,7]*(x - a[i,8])**3)**2)
+            
+            cutoff = (1.0/(1.0 + exp(Wl*(Lmin - x))))*(1.0/(1.0 + exp(Wh*(x - Lmax[i]))))
+        
             # multiply with cutoff
             s = s*cutoff
             # if any element is less than zero then set equal to zero
@@ -299,13 +300,14 @@ class ParamModel:
 
         b = self.__paramTableDiff
         
-        cutoff = 1.0/(1.0 + exp(Wdiff*(x - Lmax)))
-
         #
         # calculate inclusive cross section
         #
         for i in range(m):
             sigma = b[i,0]*exp(-b[i,1]*((x - b[i,2])/(1.0 + b[i,3]*(x - b[i,2])))**2) + b[i,4]*exp(-b[i,5]*((x - b[i,6])/(1.0 + b[i,7]*(x - b[i,6])))**2)
+
+            cutoff = 1.0/(1.0 + exp(Wdiff*(x - Lmax[i])))
+
             # multiply with cutoff
             s = s*cutoff
             # if any element is less than zero then set equal to zero
@@ -336,13 +338,14 @@ class ParamModel:
 
         c = self.__paramTableDelta
         
-        cutoff = 1.0/(1.0 + exp(Wdelta*(x - Lmax)))
-
         #
         # calculate inclusive cross section
         #
         for i in range(m):
             sigma = c[i,0]*exp(-c[i,1]*((x - c[i,2])/(1.0 + c[i,3]*(x - c[i,2]) + c[i,4]*(x - c[i,2])**2))**2)
+
+            cutoff = 1.0/(1.0 + exp(Wdelta*(x - Lmax[i])))
+
             # multiply with cutoff
             s = s*cutoff
             # if any element is less than zero then set equal to zero
@@ -357,7 +360,7 @@ class ParamModel:
     # Calculates the inclusive res(1600) cross section for given E and Tp values
     # E and Tp are numarrays, returns a numarray
     #
-    def sigmaDelta(self, E, Tp):
+    def sigmaRes(self, E, Tp):
         n = E.shape[0]
         m = Tp.shape[0]
 
@@ -373,13 +376,14 @@ class ParamModel:
 
         d = self.__paramTableRes
         
-        cutoff = 1.0/(1.0 + exp(Wres*(x - Lmax)))
-
         #
         # calculate inclusive cross section
         #
         for i in range(m):
             sigma = d[i,0]*exp(-d[i,1]*((x - d[i,2])/(1.0 + d[i,3]*(x - d[i,2]) + d[i,4]*(x - d[i,2])**2))**2)
+
+            cutoff = 1.0/(1.0 + exp(Wres*(x - Lmax[i])))
+
             # multiply with cutoff
             s = s*cutoff
             # if any element is less than zero then set equal to zero
