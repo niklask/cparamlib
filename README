@@ -1,3 +1,37 @@
+================================================================================
+Title: Parameterization of {gamma}, e^{+/-}^ and Neutrino Spectra Produced
+       by p-p Interaction in Astronomical Environment
+Authors: Kamae T., Karlsson N., Mizuno T., Abe T., Koi T.
+================================================================================
+
+Code names: 
+
+antinue.c  
+antinumu.c  
+elec.c  
+nue.c  
+numu.c  
+params.c  
+posi.c  
+sigma.c  
+test.c
+
+Language: C
+
+Code tested under the following compilers/operating systems:
+  RedHat Enterprise Linux 3.0 (Linux kernel 2.4.21) with gcc 3.2.3
+  RedHat Linux 7.3 (Linux kernel 2.4.18) with gcc 3.2 (on VMWare 3)
+
+Description of input data: See below.
+
+Description of output data: See below.
+
+System requirements: None
+
+Calls to external routines: None
+
+Additional comments: 
+
 cparamlib
 ==================
 Niklas Karlsson <niklas@slac.stanford.edu> (maintainer)
@@ -19,8 +53,8 @@ BUILD
 
 The library is built by running "make all". The makefile is really simple and should be
 self-explaining. Once the library is built, copy it to any location where you want to keep it.
-The makefile also compiles the SWIG wrapper for interfacing the c library in python. For this to work one must
-set the correct paths, i.e. change variables SWIG and PYTHON_INCLUDE.
+The makefile also compiles the SWIG wrapper for interfacing the c library in python. For
+this to work one must set the correct paths, i.e. change variables SWIG and PYTHON_INCLUDE.
 
 USING
 =====
@@ -139,3 +173,34 @@ TEST PROGRAM
 ============
 
 A test program "test.c" shows how subroutines in the library lcparammodel can be used. 
+
+To run the program, make sure that two executables "params" and "test" are made by
+the "make all" command you have executed. In the directory where the two executables
+are, execute "params" to create the parameters,
+  > ./params 
+You will then find 28 files with extension .dat in the directory.
+
+Then execute "test" as,
+  > ./test
+  
+A data file gammaspectrum.csv contains the E*dSigma(E)/dlog(E) of the gamma-ray
+spectrum produced by continuum protons with power-law-index of 2 from the pion
+threshold to Tp=512TeV. The first column of gammaspectrum.csv is log10 of gamma-ray
+energy at log(E)=0.05 steps and the log(E*dSigma/dlogE) is log10 of E*dSigma(E)/dlog(E)
+for each bin. Here E is in GeV and Sigma is the inclusive pp-gamma production
+cross-section in mb.  
+
+You can change the program "test.c" to calculate secondary particle spectra produce
+by any incident proton spectrum. You are reminded to "make clean" and "make all"
+to create a new executable. 
+
+================================================================================
+The AAS gives permission to anyone who wishes to use these subroutines
+to run their own calculations.  Permission to republish or reuse these
+routines should be directed to the Executive Officer of the AAS.
+
+Note that the AAS does not take responsibility for the content of the 
+source code.  Potential users should be wary of applying the code
+to conditions that the code was not written to model and the accuracy of
+the code may be affected when compiled and executed on different systems.
+================================================================================
