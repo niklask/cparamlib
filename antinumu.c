@@ -4,7 +4,7 @@
 		Parameter calculation for muon anti neutrinos
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/antinumu.c,v $
-		$Author: niklas $ $Date: 2006/05/04 20:44:33 $ $Revision: 1.7 $
+		$Author: niklas $ $Date: 2006/05/31 23:08:00 $ $Revision: 1.8 $
 */
 
 #include <stdio.h>

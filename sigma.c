@@ -6,7 +6,7 @@
 		as kinematic cutoff functions are given in Kamae et al. (2006).
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/sigma.c,v $
-		$Author: niklas $ $Date: 2006/05/05 17:26:25 $ $Revision: 1.6 $
+		$Author: niklas $ $Date: 2006/05/31 23:08:00 $ $Revision: 1.7 $
 */
 
 #include <stdio.h>

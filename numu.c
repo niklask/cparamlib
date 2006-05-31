@@ -4,7 +4,7 @@
 		Parameter calculation for electron neutrinos
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/numu.c,v $
-		$Author: niklas $ $Date: 2006/05/04 20:44:33 $ $Revision: 1.5 $
+		$Author: niklas $ $Date: 2006/05/31 23:08:00 $ $Revision: 1.6 $
 */
 
 #include <stdio.h>

@@ -5,7 +5,7 @@
 		Calculates parameters as functions of Tp
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/params.c,v $
-		$Author: niklas $ $Date: 2006/05/04 20:44:33 $ $Revision: 1.11 $
+		$Author: niklas $ $Date: 2006/05/31 23:08:00 $ $Revision: 1.12 $
 */
 
 #include <stdio.h>
