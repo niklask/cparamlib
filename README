@@ -32,9 +32,8 @@ Calls to external routines: None
 
 Additional comments: 
 
-cparamlib
-==================
-Niklas Karlsson <niklas@slac.stanford.edu> (maintainer)
+DESCRIPTION
+===========
 
 cparamlib is a simple library for calculation of fluxes for stable secondary particles
 created in proton-proton interactions in astronomical environment according to the model
@@ -45,23 +44,11 @@ to appear in Astrophysical Journal (2006).
 
 Feel free to include the source code within your own program.
 
-IMPORTANT! The maintainer cannot be held responsible for anything that is caused by using
-this piece of code.
-
-BUILD
-=====
-
-The library is built by running "make all". The makefile is really simple and should be
-self-explaining. Once the library is built, copy it to any location where you want to keep it.
-The makefile also compiles the SWIG wrapper for interfacing the c library in python. For
-this to work one must set the correct paths, i.e. change variables SWIG and PYTHON_INCLUDE.
-
-USING
-=====
+Using the library
+-----------------
 
 There is one example program, params.c, that uses the library to calculate inclusive cross-sections
 for non-diffractive, diffractive, Delta1232 and Reson1600 processes and for all secondary particles.
-It is compiled by the  makefile.
 
 Generally, the library is linked to your program using something like
 
@@ -71,14 +58,14 @@ For use with python:
 1. Build the library and python wrapper
 2. Copy the python directory contents to somewhere where python will find it, for example site-packages.
 
-SUBROUTINES
-===========
+Subroutines
+-----------
 
 The subroutines in the library libcparammodel.a are used to calculate parameters and inclusive
 cross-sections according to tables 3 through 9.
 
-Parameter calculation
----------------------
+Parameter calculation:
+
 Step one is to calculate the parameter arrays a,b,c and d given in tables 3
 through 9. Do this by calling the four functions for each of the secondary
 particle species. Suffices for the functions are:
@@ -135,8 +122,8 @@ Muon neutrinos (table 8):
   void antinumu_param_delta(double Tp, double* c);
   void antinumu_param_res(double Tp, double* d);
 
-Secondary particle id's
------------------------
+Secondary particle id's:
+
 The library uses the following id's for secondary particle species
 ID_GAMMA				0
 ID_ELECTRON			1
@@ -146,8 +133,8 @@ ID_NUMU					4
 ID_ANTINUE			5
 ID_ANTINUMU			6
 
-Inclusive cross-sections
-------------------------
+Inclusive cross-sections:
+
 Inclusive cross-sections in mb are calculated separately for the four contributions
 (non-diff, diff, delta and res). Note that that delta does not contribute to electrons
 or electrons anti-neutrinos in the present modeling.
@@ -169,8 +156,8 @@ Individual contributions are calculated with:
 Total inclusive cross-sections is calculated with:
   double sigma(int particle, double E, double Tp);
 
-TEST PROGRAM
-============
+Test program
+------------
 
 A test program "test.c" shows how subroutines in the library lcparammodel can be used. 
 
@@ -192,7 +179,7 @@ cross-section in mb.
 
 You can change the program "test.c" to calculate secondary particle spectra produce
 by any incident proton spectrum. You are reminded to "make clean" and "make all"
-to create a new executable. 
+to create a new executable.
 
 ================================================================================
 The AAS gives permission to anyone who wishes to use these subroutines
