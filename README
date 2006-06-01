@@ -32,8 +32,8 @@ Calls to external routines: None
 
 Additional comments: 
 
-DESCRIPTION
-===========
+Description
+-----------
 
 cparamlib is a simple library for calculation of fluxes for stable secondary particles
 created in proton-proton interactions in astronomical environment according to the model
@@ -43,6 +43,17 @@ described in
 to appear in Astrophysical Journal (2006).
 
 Feel free to include the source code within your own program.
+
+IMPORTANT! The maintainer cannot be held responsible for anything that is caused by using
+this piece of code.
+
+Build
+-----
+
+The library is built by running "make all". The makefile is really simple and should be
+self-explaining. Once the library is built, copy it to any location where you want to keep it.
+The makefile also compiles the SWIG wrapper for interfacing the c library in python. For this to work one must
+set the correct paths, i.e. change variables SWIG and PYTHON_INCLUDE.
 
 Using the library
 -----------------
