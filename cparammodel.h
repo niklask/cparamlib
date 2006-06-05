@@ -4,7 +4,7 @@
 		Header file for cparamlib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/cparammodel.h,v $
-		$Author: niklas $ $Date: 2006/05/31 23:08:30 $ $Revision: 1.8 $
+		$Author: niklas $ $Date: 2006/06/05 01:49:25 $ $Revision: 1.9 $
 */
 
 #ifndef _GAMMA_H_
@@ -20,9 +20,7 @@
 #define ID_ANTINUE 5
 #define ID_ANTINUMU 6
 
-/* particle masses */
-#define m_p 0.938
-
+/* function defs */
 void gamma_param_nd(double Tp, double* a);
 void gamma_param_diff(double Tp, double* b);
 void gamma_param_delta(double Tp, double* c);
