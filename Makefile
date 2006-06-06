@@ -12,7 +12,7 @@ PYTHON_LIB = _cparammodel.so
 PYTHON_PATH = python/
 PYTHON_INCLUDE = /opt/include/python2.4
 
-CCFLAGS = -c -g
+CCFLAGS = -O2 -c -g
 CFLAGS  = -c
 CLFLAGS = -o
 ARFLAGS = rcs
