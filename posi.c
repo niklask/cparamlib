@@ -2,6 +2,9 @@
 	 posi.c
 
 		Parameter calculation for positrons
+
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/posi.c,v $
+		$Author: niklas $ $Date: 2006/06/22 21:30:46 $ $Revision: 1.8 $
 */
 
 #include <stdio.h>

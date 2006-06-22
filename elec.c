@@ -2,6 +2,9 @@
 	 elec.c
 
 		Parameter calculation for electrons
+
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/elec.c,v $
+		$Author: niklas $ $Date: 2006/06/22 21:30:19 $ $Revision: 1.9 $
 */
 
 #include <stdio.h>

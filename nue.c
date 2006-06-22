@@ -2,6 +2,9 @@
 	 nue.c
 
 		Parameter calculation for electron neutrinos
+
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/nue.c,v $
+		$Author: niklas $ $Date: 2006/06/22 21:29:26 $ $Revision: 1.7 $
 */
 
 #include <stdio.h>

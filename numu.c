@@ -2,6 +2,9 @@
 	 numu.c
 
 		Parameter calculation for electron neutrinos
+
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/numu.c,v $
+		$Author: niklas $ $Date: 2006/06/22 21:29:58 $ $Revision: 1.8 $
 */
 
 #include <stdio.h>

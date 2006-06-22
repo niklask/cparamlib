@@ -2,6 +2,9 @@
 	 antinumu.c
 
 		Parameter calculation for muon anti neutrinos
+
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/antinumu.c,v $
+		$Author: niklas $ $Date: 2006/06/22 21:28:53 $ $Revision: 1.10 $
 */
 
 #include <stdio.h>
