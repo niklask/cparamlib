@@ -6,7 +6,7 @@
 		as kinematic cutoff functions are given in Kamae et al. (2006).
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/sigma.c,v $
-		$Author: niklas $ $Date: 2006/05/31 23:08:00 $ $Revision: 1.7 $
+		$Author: niklas $ $Date: 2006/06/22 21:22:51 $ $Revision: 1.8 $
 */
 
 #include <stdio.h>
@@ -19,16 +19,28 @@ double W_NDL[7] = {15.0, 20.0, 15.0, 15.0, 15.0, 20.0, 15.0};
 double W_NDH[7] = {44.0, 45.0, 47.0, 42.0, 40.0, 45.0, 40.0};
 
 typedef void (*PARAM_FUNC)(double, double*);
-static PARAM_FUNC paramfunc_table[4] = {&gamma_param_nd, &gamma_param_diff, &gamma_param_delta, &gamma_param_res};
+static PARAM_FUNC paramfunc_table[7][4] = {{&gamma_param_nd, &gamma_param_diff, &gamma_param_delta, &gamma_param_res},
+																																											{&elec_param_nd, &elec_param_diff, &elec_param_delta, &elec_param_res},
+																																											{&posi_param_nd, &posi_param_diff, &posi_param_delta, &posi_param_res},
+																																											{&nue_param_nd, &nue_param_diff, &nue_param_delta, &nue_param_res},
+																																											{&numu_param_nd, &numu_param_diff, &numu_param_delta, &numu_param_res},
+																																											{&antinue_param_nd, &antinue_param_diff, &antinue_param_delta, &antinue_param_res},
+																																											{&antinumu_param_nd, &antinumu_param_diff, &antinumu_param_delta, &antinumu_param_res}};
 
 /*
 		Calculate inclusive crosssection from non-diff process
 	*/
 double sigma_nd(int particle, double E, double Tp, double* a) {
 				double Wl, Wh, Lmin, Lmax;
-				double x, y;
+				double x, xa3, xa8;
+				double y;
+				double pow1, pow2;
 				double sigma;
 				double factor, r_factor;
+
+				/* calculate log(E) and log(Tp) */
+				x = log10(E);
+				y = log10(Tp*0.001);
 
 				/* init some variables, given in table 2 */
 				Lmin = -2.6;
@@ -36,14 +48,15 @@ double sigma_nd(int particle, double E, double Tp, double* a) {
 				Wl = W_NDL[particle];
 				Wh = W_NDH[particle];
 
-				/* calculate the log of E and Tp */
-				x = log10(E);
-				y = log10(Tp*0.001);
-
 				/* calculate the flux due to non-diffractive process for given gamma-ray energy */
-				sigma = a[0]*exp(-a[1]*pow(x - a[3] + a[2]*pow(x - a[3], 2), 2)) + 
-								a[4]*exp(-a[5]*pow(x - a[8] + a[6]*pow(x - a[8], 2) + a[7]*pow(x - a[8], 3), 2));
-				/* factor is the kinematic limit function as in paper */
+				/* 06/12/06: replaced code involving pow() */
+				xa3 = x - a[3];
+				pow1 = xa3*(1 + a[2]*xa3);
+				xa8 = x - a[8];
+				pow2 = xa8*(1 + xa8*(a[6] + a[7]*xa8));
+				sigma = a[0]*exp(-a[1]*pow1*pow1) + a[4]*exp(-a[5]*pow2*pow2);
+
+				/* factor is the kinematic limit function as in the paper */
     factor = (1.0/(1.0 + exp(Wl*(Lmin - x))))*(1.0/(1.0 + exp(Wh*(x - Lmax))));			
 				sigma = sigma*factor;
 				
@@ -56,43 +69,55 @@ double sigma_nd(int particle, double E, double Tp, double* a) {
 				r_factor = 1.0;
 				switch (particle) {
 								/* gamma */
-								case 0:
-												if (Tp <= 1.95)
-																r_factor = 3.05*exp(-107.0*pow((y + 3.25)/(1.0 + 8.08*(y + 3.25)), 2));
-												else
+								case ID_GAMMA:
+												if (Tp <= 1.95) {
+																pow1 = (y + 3.25)/(1.0 + 8.08*(y + 3.25));
+																r_factor = 3.05*exp(-107.0*pow1*pow1);
+												} else
 																r_factor = 1.01;
 												break;
 								/* electron */
-								case 1:
-												if (Tp <= 15.6)
-																r_factor = 3.63*exp(-106*pow((y + 3.26)/(1.0 + 9.21*(y + 3.26)), 2)) - 0.182*y - 0.175*y*y;
-												else
+								case ID_ELECTRON:
+												if (Tp <= 15.6) {
+																pow1 = (y + 3.26)/(1.0 + 9.21*(y + 3.26));
+																r_factor = 3.63*exp(-106*pow1*pow1) + y*(-0.182 - 0.175*y);
+												} else
 																r_factor = 1.01;
 												break;
 								/* positron */
-								case 2:
-												if (Tp <= 5.52)
-																r_factor = 2.22*exp(-98.9*pow((y + 3.25)/(1.0 + 1.04*(y + 3.25)), 2));
+								case ID_POSITRON:
+												if (Tp <= 5.52) {
+																pow1 = (y + 3.25)/(1.0 + 10.4*(y + 3.25));
+																r_factor = 2.22*exp(-98.9*pow1*pow1);
+												}
 												break;
 								/* electron neutrino */
-								case 3:
-												if (Tp <= 7.81)
-																r_factor = 0.329*exp(-249*pow((y + 3.26)/(1.0 + 6.56*(y + 3.26)), 2)) - 9.57*y - 0.229*y*y;
+								case ID_NUE:
+												if (Tp <= 7.81) {
+																pow1 = (y + 3.26)/(1.0 + 6.56*(y + 3.26));
+																r_factor = 0.329*exp(-247*pow1*pow1) + y*(-0.959 - 0.229*y);
+												}
 												break;
 								/* muon neutrino */
-								case 4:
-												if (Tp <= 15.6)
-																r_factor = 2.23*exp(-93.4*pow((y + 3.25)/(1.0 + 8.38*(y + 3.25)), 2)) - 0.376*y - 0.121*y*y;
+								case ID_NUMU:
+												if (Tp <= 15.6) {
+																pow1 = (y + 3.25)/(1.0 + 8.38*(y + 3.25));
+																r_factor = 2.23*exp(-93.4*pow1*pow1) + y*(-0.376 - 0.121*y);
+												}
 												break;
 								/* electron anti-neutrino */
-								case 5:
-												if (Tp <= 15.6)
-																r_factor = 2.67*exp(-45.7*pow((y + 3.27)/(1.0 + 6.59*(y + 3.27)), 2)) - 0.301*y - 0.208*y*y;
+								case ID_ANTINUE:
+												if (Tp <= 15.6) {
+																pow1 = (y + 3.27)/(1.0 + 6.59*(y + 3.27));
+																r_factor = 2.67*exp(-45.7*pow1*pow1) + y*(-0.301 - 0.208*y);
+												}
 												break;
 								/* muon anti-neutrino */
-								case 6:
-												if (Tp <= 15.6)
-																r_factor = 2.56*exp(-107*pow((y + 3.25)/(1.0 + 8.34*(y + 3.25)), 2)) - 0.385*y - 0.125*y*y;
+								case ID_ANTINUMU:
+												if (Tp <= 15.6) {
+																pow1 = (y + 3.25)/(1.0 + 8.34*(y + 3.25));
+																r_factor = 2.56*exp(-107*pow1*pow1) + y*(-0.385 - 0.125*y);
+												}
 												break;
 				}
 				sigma = sigma*r_factor;
@@ -105,7 +130,8 @@ double sigma_nd(int particle, double E, double Tp, double* a) {
 	*/
 double sigma_diff(int particle, double E, double Tp, double* b) {
 				double Wdiff, Lmax;
-				double x, y;
+				double x;
+				double pow1, pow2;
 				double sigma;
 				double factor;
 
@@ -115,12 +141,14 @@ double sigma_diff(int particle, double E, double Tp, double* b) {
 
 				/* calculate the log of E and Tp */
 				x = log10(E);
-				y = log10(Tp);
 
 				/* calculate the sigma due to diffractive process for given gamma-ray energy */
-    sigma = b[0]*exp(-b[1]*pow((x - b[2])/(1.0 + b[3]*(x - b[2])), 2)) +
-								b[4]*exp(-b[5]*pow((x - b[6])/(1.0 + b[7]*(x - b[6])), 2));
-				/* factor is the kinematic limit function as in paper */
+				/* 06/12/06: replaced code involving pow() */
+				pow1 = (x - b[2])/(1.0 + b[3]*(x - b[2]));
+				pow2 = (x - b[6])/(1.0 + b[7]*(x - b[6]));
+    sigma = b[0]*exp(-b[1]*pow1*pow1) + b[4]*exp(-b[5]*pow2*pow2);
+
+				/* factor is the kinematic limit function as in the paper */
 				factor = 1.0/(1.0 + exp(Wdiff*(x - Lmax)));
 				sigma = sigma*factor;
 
@@ -135,7 +163,8 @@ double sigma_diff(int particle, double E, double Tp, double* b) {
 	*/
 double sigma_delta(int particle, double E, double Tp, double* c) {
 				double Wdiff, Lmax;
-				double x, y;
+				double x, xc2;
+				double pow;
 				double sigma;
 				double factor;
 
@@ -145,11 +174,14 @@ double sigma_delta(int particle, double E, double Tp, double* c) {
 
 				/* calculate the log of E and Tp */
 				x = log10(E);
-				y = log10(Tp);
 
 				/* calculate the sigma due to resonance process for given gamma-ray energy */
-    sigma = c[0]*exp(-c[1]*pow((x - c[2])/(1.0 + c[3]*(x - c[2]) + c[4]*pow(x - c[2], 2)), 2));
-				/* factor is the kinematic limit function as in paper */
+				/* 06/12/06: replaced code involving pow() */
+				xc2 = x - c[2];
+				pow = xc2/(1.0 + xc2*(c[3] + c[4]*xc2));
+    sigma = c[0]*exp(-c[1]*pow*pow);
+
+				/* factor is the kinematic limit function as in the paper */
 				factor = 1.0/(1.0 + exp(Wdiff*(x - Lmax)));
 				sigma = sigma*factor;
 
@@ -178,10 +210,10 @@ double sigma(int particle, double E, double Tp) {
 				f_tot = f_nd = f_diff = f_d1232 = f_r1600 = 0.0;
 
 				/* calculate parameters */
-				paramfunc_table[0](Tp, a);
-				paramfunc_table[1](Tp, b);
-				paramfunc_table[2](Tp, c);
-				paramfunc_table[3](Tp, d);
+				paramfunc_table[particle][0](Tp, a);
+				paramfunc_table[particle][1](Tp, b);
+				paramfunc_table[particle][2](Tp, c);
+				paramfunc_table[particle][3](Tp, d);
 
 				/* calculate sigmaes */
 				f_nd = sigma_nd(particle, E, Tp, a);

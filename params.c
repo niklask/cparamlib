@@ -5,15 +5,15 @@
 		Calculates parameters as functions of Tp
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/params.c,v $
-		$Author: niklas $ $Date: 2006/05/31 23:08:00 $ $Revision: 1.12 $
+		$Author: niklas $ $Date: 2006/06/22 21:22:58 $ $Revision: 1.13 $
 */
 
 #include <stdio.h>
 #include <math.h>
 #include "cparammodel.h"
 
-double Tp_list[43] = {512., 362., 256., 181., 128., 90.5, 64., 45.3, 32.,
-																						22.6, 16., 11.3, 8., 5.66, 4., 2.8, 2., 1.41, 1.,
+double Tp_list[43] = {512.0, 362.0, 256.0, 181.0, 128.0, 90.5, 64.0, 45.3, 32.0,
+																						22.6, 16.0, 11.3, 8.0, 5.66, 4.0, 2.8, 2.0, 1.41, 1.0,
 																						0.707, 0.5, 0.354, 0.25, 0.177, 0.125, 88.4e-3,
 																						62.5e-3, 44.2e-3, 31.3e-3, 22.1e-3, 15.6e-3,
 																						11.1e-3, 7.81e-3, 5.52e-3, 3.91e-3, 2.76e-3,
@@ -39,13 +39,27 @@ void nondiff(int p) {
 				for (i = 0; i < 43; i++) {
 								Tp = Tp_list[i]*1000.0;
 								switch (p) {
-												case 0: gamma_param_nd(Tp, a);
-												case 1: elec_param_nd(Tp, a);
-												case 2: posi_param_nd(Tp, a);
-												case 3: nue_param_nd(Tp, a);
-												case 4: numu_param_nd(Tp, a);
-												case 5: antinue_param_nd(Tp, a);
-												case 6: antinumu_param_nd(Tp, a);
+												case ID_GAMMA:
+																gamma_param_nd(Tp, a);
+																break;
+												case ID_ELECTRON:
+																elec_param_nd(Tp, a);
+																break;
+												case ID_POSITRON:
+																posi_param_nd(Tp, a);
+																break;
+												case ID_NUE:
+																nue_param_nd(Tp, a);
+																break;
+												case ID_NUMU:
+																numu_param_nd(Tp, a);
+																break;
+												case ID_ANTINUE:
+																antinue_param_nd(Tp, a);
+																break;
+												case ID_ANTINUMU:
+																antinumu_param_nd(Tp, a);
+																break;
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 9; j++) {
@@ -70,13 +84,27 @@ void diffdiss(int p) {
 				for (i = 0; i < 37; i++) {
 								Tp = Tp_list[i]*1000.0;
 								switch (p) {
-												case 0: gamma_param_diff(Tp, b);
-												case 1: elec_param_diff(Tp, b);
-												case 2: posi_param_diff(Tp, b);
-												case 3: nue_param_diff(Tp, b);
-												case 4: numu_param_diff(Tp, b);
-												case 5: antinue_param_diff(Tp, b);
-												case 6: antinumu_param_diff(Tp, b);
+												case ID_GAMMA: 
+																gamma_param_diff(Tp, b);
+																break;
+												case ID_ELECTRON:
+																elec_param_diff(Tp, b);
+																break;
+												case ID_POSITRON:
+																posi_param_diff(Tp, b);
+																break;
+												case ID_NUE:
+																nue_param_diff(Tp, b);
+																break;
+												case ID_NUMU:
+																numu_param_diff(Tp, b);
+																break;
+												case ID_ANTINUE:
+																antinue_param_diff(Tp, b);
+																break;
+												case ID_ANTINUMU:
+																antinumu_param_diff(Tp, b);
+																break;
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 8; j++) {
@@ -101,13 +129,27 @@ void delta1232(int p) {
 				for (i = 36; i < 43; i++) {
 								Tp = Tp_list[i]*1000.0;
 								switch (p) {
-												case 0: gamma_param_delta(Tp, c);
-												case 1: elec_param_delta(Tp, c);
-												case 2: posi_param_delta(Tp, c);
-												case 3: nue_param_delta(Tp, c);
-												case 4: numu_param_delta(Tp, c);
-												case 5: antinue_param_delta(Tp, c);
-												case 6: antinumu_param_delta(Tp, c);
+												case ID_GAMMA:
+																gamma_param_delta(Tp, c);
+																break;
+												case ID_ELECTRON:
+																elec_param_delta(Tp, c);
+																break;
+												case ID_POSITRON:
+																posi_param_delta(Tp, c);
+																break;
+												case ID_NUE:
+																nue_param_delta(Tp, c);
+																break;
+												case ID_NUMU:
+																numu_param_delta(Tp, c);
+																break;
+												case ID_ANTINUE:
+																antinue_param_delta(Tp, c);
+																break;
+												case ID_ANTINUMU:
+																antinumu_param_delta(Tp, c);
+																break;
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 5; j++) {
@@ -132,13 +174,27 @@ void delta1600(int p) {
 				for (i = 35; i < 41; i++) {
 								Tp = Tp_list[i]*1000.0;
 								switch (p) {
-												case 0: gamma_param_res(Tp, d);
-												case 1: elec_param_res(Tp, d);
-												case 2: posi_param_res(Tp, d);
-												case 3: nue_param_res(Tp, d);
-												case 4: numu_param_res(Tp, d);
-												case 5: antinue_param_res(Tp, d);
-												case 6: antinumu_param_res(Tp, d);
+												case ID_GAMMA:
+																gamma_param_res(Tp, d);
+																break;
+												case ID_ELECTRON:
+																elec_param_res(Tp, d);
+																break;
+												case ID_POSITRON:
+																posi_param_res(Tp, d);
+																break;
+												case ID_NUE:
+																nue_param_res(Tp, d);
+																break;
+												case ID_NUMU:
+																numu_param_res(Tp, d);
+																break;
+												case ID_ANTINUE:
+																antinue_param_res(Tp, d);
+																break;
+												case ID_ANTINUMU:
+																antinumu_param_res(Tp, d);
+																break;
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 5; j++) {
