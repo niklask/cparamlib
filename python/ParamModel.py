@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2006/05/23 22:41:05 $ $Revision: 1.3 $
+# $Author: niklas $ $Date: 2006/06/27 23:59:03 $ $Revision: 1.4 $
 #
 
 #
@@ -304,7 +304,7 @@ class ParamModel:
         # calculate inclusive cross section
         #
         for i in range(m):
-            sigma = b[i,0]*exp(-b[i,1]*((x - b[i,2])/(1.0 + b[i,3]*(x - b[i,2])))**2) + b[i,4]*exp(-b[i,5]*((x - b[i,6])/(1.0 + b[i,7]*(x - b[i,6])))**2)
+            s = b[i,0]*exp(-b[i,1]*((x - b[i,2])/(1.0 + b[i,3]*(x - b[i,2])))**2) + b[i,4]*exp(-b[i,5]*((x - b[i,6])/(1.0 + b[i,7]*(x - b[i,6])))**2)
 
             cutoff = 1.0/(1.0 + exp(Wdiff*(x - Lmax[i])))
 
@@ -342,7 +342,7 @@ class ParamModel:
         # calculate inclusive cross section
         #
         for i in range(m):
-            sigma = c[i,0]*exp(-c[i,1]*((x - c[i,2])/(1.0 + c[i,3]*(x - c[i,2]) + c[i,4]*(x - c[i,2])**2))**2)
+            s = c[i,0]*exp(-c[i,1]*((x - c[i,2])/(1.0 + c[i,3]*(x - c[i,2]) + c[i,4]*(x - c[i,2])**2))**2)
 
             cutoff = 1.0/(1.0 + exp(Wdelta*(x - Lmax[i])))
 
@@ -364,7 +364,7 @@ class ParamModel:
         n = E.shape[0]
         m = Tp.shape[0]
 
-        sigma = zeros((n,m), Float32)
+        s = zeros((n,m), Float32)
 
 				# init some variables, given in table 2
         Lmax = log10(Tp)
