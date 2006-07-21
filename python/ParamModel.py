@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2006/06/27 23:59:03 $ $Revision: 1.4 $
+# $Author: niklas $ $Date: 2006/07/21 07:32:26 $ $Revision: 1.5 $
 #
 
 #
@@ -364,7 +364,7 @@ class ParamModel:
         n = E.shape[0]
         m = Tp.shape[0]
 
-        s = zeros((n,m), Float32)
+        sigma = zeros((n,m), Float32)
 
 				# init some variables, given in table 2
         Lmax = log10(Tp)
@@ -380,7 +380,7 @@ class ParamModel:
         # calculate inclusive cross section
         #
         for i in range(m):
-            sigma = d[i,0]*exp(-d[i,1]*((x - d[i,2])/(1.0 + d[i,3]*(x - d[i,2]) + d[i,4]*(x - d[i,2])**2))**2)
+            s = d[i,0]*exp(-d[i,1]*((x - d[i,2])/(1.0 + d[i,3]*(x - d[i,2]) + d[i,4]*(x - d[i,2])**2))**2)
 
             cutoff = 1.0/(1.0 + exp(Wres*(x - Lmax[i])))
 
