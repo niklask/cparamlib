@@ -26,7 +26,7 @@ Description of input data: See below.
 
 Description of output data: See below.
 
-System requirements: None
+System requirements: See below.
 
 Calls to external routines: None
 
@@ -48,6 +48,12 @@ Feel free to include the source code within your own program.
 
 IMPORTANT! The maintainer cannot be held responsible for anything that is caused by using
 this piece of code.
+
+Requirements
+------------
+
+To build this library and the python wrapper one needs a working compiler, such as gcc, and must have SWIG
+installed. SWIG is used to build the python wrapper code.
 
 Build
 -----
