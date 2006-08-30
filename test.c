@@ -4,7 +4,7 @@
 		Test app for the parameterization model lib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/test.c,v $
-		$Author: niklas $ $Date: 2006/06/22 21:24:14 $ $Revision: 1.16 $
+		$Author: niklas $ $Date: 2006/08/30 14:38:34 $ $Revision: 1.17 $
 */
 
 #include <stdio.h>
@@ -25,7 +25,7 @@ char *filenames[7] = {"gammaspectrum.csv", "elecspectrum.csv", "posispectrum.csv
 double Tp[43] = {512.0e3, 362.0e3, 256.0e3, 181.0e3, 128.0e3, 90.5e3, 64.0e3, 45.3e3, 32.0e3, 22.6e3, 
 																	16.0e3, 11.3e3, 8.0e3, 5.66e3, 4.0e3, 2.8e3, 2.0e3, 1.41e3, 1.0e3, 707.0, 500.0, 354.0,
 																	250.0, 177.0, 125.0, 88.4, 62.5, 44.2, 31.3, 22.1, 15.6, 11.1, 7.81, 5.52, 3.91, 2.76,
-																	1.95, 1.38, 0.98, 0.82, 0.69, 0.52, 0.488};
+																	1.95, 1.38, 0.98, 0.82, 0.69, 0.58, 0.488};
 
 /* Example 1: calculate parameter a0,...,a8 used in the non-diff inclusive 
 			gamma-ray cross-section formula */
