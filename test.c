@@ -4,7 +4,7 @@
 		Test app for the parameterization model lib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/test.c,v $
-		$Author: niklas $ $Date: 2006/08/30 14:38:34 $ $Revision: 1.17 $
+		$Author: niklas $ $Date: 2006/10/11 16:21:07 $ $Revision: 1.18 $
 */
 
 #include <stdio.h>
@@ -42,8 +42,8 @@ void example1(void) {
 				gamma_param_nd(Tp, a);
 				for (i = 0; i < 9; i++)
 								printf("a[%d] = %10e\n", i, a[i]);
-				f = sigma_nd(ID_GAMMA, E, Tp, a);
-				printf("Tp = 512TeV and Egamma = 100 GeV => sigma_nd = %10e mb\n", f);
+				f = sigma_incl_nd(ID_GAMMA, E, Tp, a);
+				printf("Tp = 512TeV and Egamma = 100 GeV => sigma_incl_nd = %10e mb\n", f);
 
 				return;
 }
@@ -59,9 +59,9 @@ void example2(void) {
 				E = 1.0e2;     /* gamma-ray energy 100 GeV */
 
 				printf("Example 2: total inclusive gamma-ray cross-section\n");
-				f = sigma(ID_GAMMA, E, Tp);
+				f = sigma_incl(ID_GAMMA, E, Tp);
 				printf("total inclusive gamma-ray cross-section\n");
-				printf("Tp = 512TeV, Egamma = 100 GeV => sigma = %10e mb\n", f);
+				printf("Tp = 512TeV, Egamma = 100 GeV => sigma_incl = %10e mb\n", f);
 
 				return;
 }
@@ -119,14 +119,14 @@ void example3(void) {
 																s_nd = s_diff = s_delta = s_res = 0.0;
 																E = pow(10.0, j*0.05 - 3.0);
 																/* calculate individual contributions */
-																s_nd = sigma_nd(k, E, Tp[i], a);
+																s_nd = sigma_incl_nd(k, E, Tp[i], a);
 
 																if (i < 37)
-																				s_diff = sigma_diff(k, E, Tp[i], b);
+																				s_diff = sigma_incl_diff(k, E, Tp[i], b);
 																if (i > 35)
-																				s_delta = sigma_delta(k, E, Tp[i], c);
+																				s_delta = sigma_incl_delta(k, E, Tp[i], c);
 																if (i > 34 && i < 41)
-																				s_res = sigma_res(k, E, Tp[i], d);
+																				s_res = sigma_incl_res(k, E, Tp[i], d);
 																/* and add them together and add to rest of the spectrum */
 																s = s_nd + s_diff + s_delta + s_res;
 

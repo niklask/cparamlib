@@ -66,7 +66,7 @@ set the correct paths, i.e. change variables SWIG and PYTHON_INCLUDE.
 Using the library
 -----------------
 
-There is one example program, params.c, that uses the library to calculate inclusive cross-sections
+There is one example program, params.c, that uses the library to calculate inclusive cross sections
 for non-diffractive, diffractive, Delta1232 and Reson1600 processes and for all secondary particles.
 
 Generally, the library is linked to your program using something like
@@ -81,7 +81,7 @@ Subroutines
 -----------
 
 The subroutines in the library libcparammodel.a are used to calculate parameters and inclusive
-cross-sections according to tables 3 through 9.
+cross sections according to tables 3 through 9.
 
 Parameter calculation:
 
@@ -152,9 +152,9 @@ ID_NUMU					4
 ID_ANTINUE			5
 ID_ANTINUMU			6
 
-Inclusive cross-sections:
+Inclusive cross sections:
 
-Inclusive cross-sections in mb are calculated separately for the four contributions
+Inclusive cross sections in mb are calculated separately for the four contributions
 (non-diff, diff, delta and res). Note that that delta does not contribute to electrons
 or electrons anti-neutrinos in the present modeling.
 
@@ -167,13 +167,22 @@ Arguments:
 						(note that these depend on the particle species)
 
 Individual contributions are calculated with:
-  double sigma_nd(int particle, double E, double Tp, double* a);
-  double sigma_diff(int particle, double E, double Tp, double* b);
-  double sigma_delta(int particle, double E, double Tp, double* c);
-  double sigma_res(int particle, double E, double Tp, double* d);
+  double sigma_incl_nd(int particle, double E, double Tp, double* a);
+  double sigma_incl_diff(int particle, double E, double Tp, double* b);
+  double sigma_incl_delta(int particle, double E, double Tp, double* c);
+  double sigma_incl_res(int particle, double E, double Tp, double* d);
 
-Total inclusive cross-sections is calculated with:
-  double sigma(int particle, double E, double Tp);
+Total inclusive cross sections is calculated with:
+  double sigma_incl(int particle, double E, double Tp);
+
+Inelastic p-p cross sections:
+
+Functions for calculating sigma_pp according to equations 1-4. Pp is the proton momentum
+in GeV/c.
+  double sigma_pp_nd(double Pp);
+  double sigma_pp_diff(double Pp);
+  double sigma_pp_delta(double Pp);
+  double sigma_pp_res(double Pp);
 
 Test program
 ------------
@@ -194,7 +203,7 @@ spectrum produced by continuum protons with power-law-index of 2 from the pion
 threshold to Tp=512TeV. The first column of gammaspectrum.csv is log10 of gamma-ray
 energy at log(E)=0.05 steps and the log(E*dSigma/dlogE) is log10 of E*dSigma(E)/dlog(E)
 for each bin. Here E is in GeV and Sigma is the inclusive pp-gamma production
-cross-section in mb.  
+cross section in mb.  
 
 You can change the program "test.c" to calculate secondary particle spectra produce
 by any incident proton spectrum. You are reminded to "make clean" and "make all"

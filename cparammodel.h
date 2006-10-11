@@ -4,7 +4,7 @@
 		Header file for cparamlib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/cparammodel.h,v $
-		$Author: niklas $ $Date: 2006/06/05 01:49:25 $ $Revision: 1.9 $
+		$Author: niklas $ $Date: 2006/10/11 16:21:07 $ $Revision: 1.10 $
 */
 
 #ifndef _GAMMA_H_
@@ -56,11 +56,16 @@ void antinumu_param_diff(double Tp, double* b);
 void antinumu_param_delta(double Tp, double* c);
 void antinumu_param_res(double Tp, double* d);
 
-double sigma_nd(int particle, double E, double Tp, double* a);
-double sigma_diff(int particle, double E, double Tp, double* b);
-double sigma_delta(int particle, double E, double Tp, double* c);
-double sigma_res(int particle, double E, double Tp, double* d);
+double sigma_incl_nd(int particle, double E, double Tp, double* a);
+double sigma_incl_diff(int particle, double E, double Tp, double* b);
+double sigma_incl_delta(int particle, double E, double Tp, double* c);
+double sigma_incl_res(int particle, double E, double Tp, double* d);
 
-double sigma(int particle, double E, double Tp);
+double sigma_incl(int particle, double E, double Tp);
+
+double sigma_pp_nd(double Pp);
+double sigma_pp_diff(double Pp);
+double sigma_pp_delta(double Pp);
+double sigma_pp_res(double Pp);
 
 #endif

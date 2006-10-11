@@ -5,8 +5,12 @@
 		cross sections. Functions for inclusive cross sections as well 
 		as kinematic cutoff functions are given in Kamae et al. (2006).
 
+		10/11/2006: On request we have added functions for calculating
+		sigma_pp for the for components as given in the paper. We also
+		changed sigma to sigma_incl.
+
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/sigma.c,v $
-		$Author: niklas $ $Date: 2006/06/22 21:22:51 $ $Revision: 1.8 $
+		$Author: niklas $ $Date: 2006/10/11 16:21:07 $ $Revision: 1.9 $
 */
 
 #include <stdio.h>
@@ -30,7 +34,7 @@ static PARAM_FUNC paramfunc_table[7][4] = {{&gamma_param_nd, &gamma_param_diff, 
 /*
 		Calculate inclusive crosssection from non-diff process
 	*/
-double sigma_nd(int particle, double E, double Tp, double* a) {
+double sigma_incl_nd(int particle, double E, double Tp, double* a) {
 				double Wl, Wh, Lmin, Lmax;
 				double x, xa3, xa8;
 				double y;
@@ -128,7 +132,7 @@ double sigma_nd(int particle, double E, double Tp, double* a) {
 /*
 		Calculate inclusive cross section from diff. dissoc. process
 	*/
-double sigma_diff(int particle, double E, double Tp, double* b) {
+double sigma_incl_diff(int particle, double E, double Tp, double* b) {
 				double Wdiff, Lmax;
 				double x;
 				double pow1, pow2;
@@ -161,7 +165,7 @@ double sigma_diff(int particle, double E, double Tp, double* b) {
 /*
 		Calculate inclusive cross section from either of the two resonance processes
 	*/
-double sigma_delta(int particle, double E, double Tp, double* c) {
+double sigma_incl_delta(int particle, double E, double Tp, double* c) {
 				double Wdiff, Lmax;
 				double x, xc2;
 				double pow;
@@ -191,14 +195,14 @@ double sigma_delta(int particle, double E, double Tp, double* c) {
 				return sigma;
 }
 
-double sigma_res(int particle, double E, double Tp, double* d) {
-				return sigma_delta(particle, E, Tp, d);
+double sigma_incl_res(int particle, double E, double Tp, double* d) {
+				return sigma_incl_delta(particle, E, Tp, d);
 }
 
 /*
-		Calculate sigma from all processes
+		Calculate total inclusive cross section (from all processes)
 */
-double sigma(int particle, double E, double Tp) {
+double sigma_incl(int particle, double E, double Tp) {
 				double f_tot;
 				double f_nd, f_diff, f_d1232, f_r1600;
 
@@ -216,12 +220,110 @@ double sigma(int particle, double E, double Tp) {
 				paramfunc_table[particle][3](Tp, d);
 
 				/* calculate sigmaes */
-				f_nd = sigma_nd(particle, E, Tp, a);
-				f_diff = sigma_diff(particle, E, Tp, b);
-				f_d1232 = sigma_delta(particle, E, Tp, c);
-				f_r1600 = sigma_res(particle, E, Tp, d);
+				f_nd = sigma_incl_nd(particle, E, Tp, a);
+				f_diff = sigma_incl_diff(particle, E, Tp, b);
+				f_d1232 = sigma_incl_delta(particle, E, Tp, c);
+				f_r1600 = sigma_incl_res(particle, E, Tp, d);
 
 				f_tot = f_nd + f_diff + f_d1232 + f_r1600;
 
 				return f_tot;
+}
+
+/*
+  Calculate non-diffractive inelastic p-p cross section
+  as given by equation 1 in Kamae et al. (2006)
+*/
+double sigma_pp_nd(double Pp) {
+				double a[8] = {0.1176, 0.3829, 23.10, 6.454, -5.764, -23.63, 94.75, 0.02667};
+				double b[2] = {11.34, 23.72};
+				double c[3] = {28.5, -6.133, 1.464};
+				double x, sigma;
+
+				x = log10(Pp);
+				sigma = 0.0;
+
+				if ((Pp >= 1.0) && (Pp < 1.3)) {
+								sigma = 0.57*pow(x/a[0], 1.2)*(a[2] + x*x*(a[3] + a[4]*x) + a[5]*exp(-a[6]*(x + a[7])*(x + a[7])));
+				} else if ((Pp >= 1.3) && (Pp < 2.4)) {
+								sigma = (b[0]*abs(a[1] - x) + b[1]*abs(a[0] - x))/(a[1] - a[0]);
+				} else if ((Pp >= 2.4) && (Pp <= 10.0)) {
+								sigma = a[2] + x*x*(a[3] + a[4]*x) + a[5]*exp(-a[6]*(x + a[7])*(x + a[7]));
+				} else if (Pp > 10.0) {
+								sigma = c[0] + c[1]*x + c[2]*x*x;
+				}
+
+				return sigma;
+}
+
+/*
+  Calculate diffractive inelastic p-p cross section
+  as given by equation 2 in Kamae et al. (2006)
+*/
+double sigma_pp_diff(double Pp) {
+				double d[7] = {0.3522, 0.1530, 1.498, 2.0, 30.0, 3.155, 1.042};
+				double e[2] = {5.922, 1.632};
+
+				double x, sigma;
+
+				x = log10(Pp);
+				sigma = 0.0;
+
+				if ((Pp >= 2.25) && (Pp < 3.2)) {
+								sigma = sqrt((x-d[0])/d[1])*(d[2] + d[3]*log10(d[4]*(x - 0.25)) + x*x*(d[5] - d[6]*x));
+				} else if ((Pp >= 3.2) && (Pp <= 100.0)) {
+								sigma = d[2] + d[3]*log10(d[4]*(x - 0.25)) + x*x*(d[5] - d[6]*x);
+				} else if (Pp > 100.0) {
+								sigma = e[0] + e[1]*x;
+				}
+
+				return sigma;
+}
+
+/*
+  Calculate delta(1232) inelastic p-p cross section
+  as given by equation 3 in Kamae et al. (2006)
+*/
+double sigma_pp_delta(double Pp) {
+				double f[5] = {0.0834, 9.5, -5.5, 1.68, 3134.0};
+
+				double Ep, sigma;
+
+				/* proton mass 0.938 GeV/c^2 gives mass squared  0.879844 (GeV/c^2)^2 */
+				Ep = sqrt(Pp*Pp + 0.879844);
+				sigma = 0.0;
+
+				if ((Ep >= 1.4) && (Ep < 1.6)) {
+								sigma = f[0]*pow(Ep, 10);
+				} else if ((Ep >= 1.6) && (Ep < 1.8)) {
+								sigma = f[1]*exp(-f[2]*(Ep - f[3])*(Ep - f[3]));
+				} else if ((Ep >= 1.8) && (Ep <= 10.0)) {
+								sigma = f[4]*pow(Ep, -10);
+				}
+
+				return sigma;
+}
+
+/*
+  Calculate res(1600) inelastic p-p cross section
+  as given by equation 4 in Kamae et al. (2006)
+*/
+double sigma_pp_res(double Pp) {
+				double g[5] = {0.005547, 4.5, -7.0, 2.1, 14089.0};
+
+				double Ep, sigma;
+
+				/* proton mass 0.938 GeV/c^2 gives mass squared  0.879844 (GeV/c^2)^2 */
+				Ep = sqrt(Pp*Pp + 0.879844);
+				sigma = 0.0;
+
+				if ((Ep >= 1.6) && (Ep < 1.9)) {
+								sigma = g[0]*pow(Ep, 14);
+				} else if ((Ep >= 1.9) && (Ep < 2.3)) {
+								sigma = g[1]*exp(-g[2]*(Ep - g[3])*(Ep - g[3]));
+				} else if ((Ep >= 2.3) && (Ep <= 20.0)) {
+								sigma = g[4]*pow(Ep, -6);
+				}
+
+				return sigma;
 }
