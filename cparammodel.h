@@ -4,11 +4,11 @@
 		Header file for cparamlib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/cparammodel.h,v $
-		$Author: niklas $ $Date: 2006/10/11 16:21:07 $ $Revision: 1.10 $
+		$Author: niklas $ $Date: 2006/11/13 21:52:08 $ $Revision: 1.11 $
 */
 
-#ifndef _GAMMA_H_
-#define _GAMMA_H_
+#ifndef CPARAMLIB_H
+#define CPARAMLIB_H
 
 
 /* particle ids */
