@@ -3,8 +3,8 @@
 
 		SWIG interface file for wrapping cparamlib into python
 
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/cparammodel.i,v $
-		$Author: niklas $ $Date: 2006/06/01 15:57:04 $ $Revision: 1.4 $
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/Attic/cparammodel.i,v $
+		$Author: niklas $ $Date: 2006/11/24 23:31:31 $ $Revision: 1.1 $
 */
 
 %module cparammodel
