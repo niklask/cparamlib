@@ -3,8 +3,8 @@
 
 		Parameter calculation for electron anti neutrinos
 
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/antinue.c,v $
-		$Author: niklas $ $Date: 2006/06/22 21:22:09 $ $Revision: 1.8 $
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/antinue.c,v $
+		$Author: niklas $ $Date: 2006/11/24 22:58:11 $ $Revision: 1.1 $
 */
 
 #include <stdio.h>

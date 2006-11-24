@@ -1,0 +1,3 @@
+2006-11-24 Niklas Karlsson <niklas@slac.stanford.edu>
+
+	* Now uses autoconf/automake/libtool.

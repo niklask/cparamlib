@@ -9,8 +9,8 @@
 		sigma_pp for the for components as given in the paper. We also
 		changed sigma to sigma_incl.
 
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/sigma.c,v $
-		$Author: niklas $ $Date: 2006/10/11 16:21:07 $ $Revision: 1.9 $
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
+		$Author: niklas $ $Date: 2006/11/24 22:58:12 $ $Revision: 1.1 $
 */
 
 #include <stdio.h>
@@ -24,16 +24,16 @@ double W_NDH[7] = {44.0, 45.0, 47.0, 42.0, 40.0, 45.0, 40.0};
 
 typedef void (*PARAM_FUNC)(double, double*);
 static PARAM_FUNC paramfunc_table[7][4] = {{&gamma_param_nd, &gamma_param_diff, &gamma_param_delta, &gamma_param_res},
-																																											{&elec_param_nd, &elec_param_diff, &elec_param_delta, &elec_param_res},
-																																											{&posi_param_nd, &posi_param_diff, &posi_param_delta, &posi_param_res},
-																																											{&nue_param_nd, &nue_param_diff, &nue_param_delta, &nue_param_res},
-																																											{&numu_param_nd, &numu_param_diff, &numu_param_delta, &numu_param_res},
-																																											{&antinue_param_nd, &antinue_param_diff, &antinue_param_delta, &antinue_param_res},
-																																											{&antinumu_param_nd, &antinumu_param_diff, &antinumu_param_delta, &antinumu_param_res}};
+																					 {&elec_param_nd, &elec_param_diff, &elec_param_delta, &elec_param_res},
+																					 {&posi_param_nd, &posi_param_diff, &posi_param_delta, &posi_param_res},
+																					 {&nue_param_nd, &nue_param_diff, &nue_param_delta, &nue_param_res},
+																					 {&numu_param_nd, &numu_param_diff, &numu_param_delta, &numu_param_res},
+																					 {&antinue_param_nd, &antinue_param_diff, &antinue_param_delta, &antinue_param_res},
+																					 {&antinumu_param_nd, &antinumu_param_diff, &antinumu_param_delta, &antinumu_param_res}};
 
 /*
 		Calculate inclusive crosssection from non-diff process
-	*/
+*/
 double sigma_incl_nd(int particle, double E, double Tp, double* a) {
 				double Wl, Wh, Lmin, Lmax;
 				double x, xa3, xa8;
@@ -131,7 +131,7 @@ double sigma_incl_nd(int particle, double E, double Tp, double* a) {
 
 /*
 		Calculate inclusive cross section from diff. dissoc. process
-	*/
+*/
 double sigma_incl_diff(int particle, double E, double Tp, double* b) {
 				double Wdiff, Lmax;
 				double x;
@@ -150,7 +150,7 @@ double sigma_incl_diff(int particle, double E, double Tp, double* b) {
 				/* 06/12/06: replaced code involving pow() */
 				pow1 = (x - b[2])/(1.0 + b[3]*(x - b[2]));
 				pow2 = (x - b[6])/(1.0 + b[7]*(x - b[6]));
-    sigma = b[0]*exp(-b[1]*pow1*pow1) + b[4]*exp(-b[5]*pow2*pow2);
+				sigma = b[0]*exp(-b[1]*pow1*pow1) + b[4]*exp(-b[5]*pow2*pow2);
 
 				/* factor is the kinematic limit function as in the paper */
 				factor = 1.0/(1.0 + exp(Wdiff*(x - Lmax)));
@@ -164,7 +164,7 @@ double sigma_incl_diff(int particle, double E, double Tp, double* b) {
 
 /*
 		Calculate inclusive cross section from either of the two resonance processes
-	*/
+*/
 double sigma_incl_delta(int particle, double E, double Tp, double* c) {
 				double Wdiff, Lmax;
 				double x, xc2;

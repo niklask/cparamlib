@@ -3,8 +3,8 @@
 
 		Header file for cparamlib
 
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/cparammodel.h,v $
-		$Author: niklas $ $Date: 2006/11/13 21:52:08 $ $Revision: 1.11 $
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/Attic/cparammodel.h,v $
+		$Author: niklas $ $Date: 2006/11/24 22:58:11 $ $Revision: 1.1 $
 */
 
 #ifndef CPARAMLIB_H

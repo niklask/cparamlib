@@ -3,8 +3,8 @@
 
 		Parameter calculation for electrons
 
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/elec.c,v $
-		$Author: niklas $ $Date: 2006/06/22 21:30:19 $ $Revision: 1.9 $
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/elec.c,v $
+		$Author: niklas $ $Date: 2006/11/24 22:58:12 $ $Revision: 1.1 $
 */
 
 #include <stdio.h>
@@ -47,7 +47,7 @@ void elec_param_nd(double Tp, double* a) {
 */
 void elec_param_diff(double Tp, double* b) {
     double y, z1, z2, pow;
-				int i;
+		int i;
 
     y = log10(Tp*0.001);
 

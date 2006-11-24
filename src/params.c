@@ -4,8 +4,8 @@
 		Test app for the parameterization model lib
 		Calculates parameters as functions of Tp
 
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/params.c,v $
-		$Author: niklas $ $Date: 2006/06/22 21:22:58 $ $Revision: 1.13 $
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/src/Attic/params.c,v $
+		$Author: niklas $ $Date: 2006/11/24 22:58:41 $ $Revision: 1.1 $
 */
 
 #include <stdio.h>

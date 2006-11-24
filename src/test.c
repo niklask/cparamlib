@@ -3,8 +3,8 @@
 
 		Test app for the parameterization model lib
 
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/Attic/test.c,v $
-		$Author: niklas $ $Date: 2006/10/11 16:21:07 $ $Revision: 1.18 $
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/src/Attic/test.c,v $
+		$Author: niklas $ $Date: 2006/11/24 22:58:41 $ $Revision: 1.1 $
 */
 
 #include <stdio.h>
