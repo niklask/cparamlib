@@ -1,13 +1,13 @@
 /*
-		cparammodel.i
+		pycparam.i
 
 		SWIG interface file for wrapping cparamlib into python
 
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/Attic/cparammodel.i,v $
-		$Author: niklas $ $Date: 2006/11/24 23:31:31 $ $Revision: 1.1 $
+		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/Attic/pycparam.i,v $
+		$Author: niklas $ $Date: 2006/11/25 02:29:29 $ $Revision: 1.1 $
 */
 
-%module cparammodel
+%module pycparam
 
 %{
 #include "cparammodel.h"

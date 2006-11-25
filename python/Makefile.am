@@ -4,11 +4,11 @@
 #
 
 BUILT_SOURCES = $(srcdir)/cparammodel_wrap.c
-SWIG_SOURCES = cparammodel.i
+SWIG_SOURCES = pycparam.i
 
-EXTRA_DIST = ParamModel.py __init__.py cparammodel.py
+EXTRA_DIST = ParamModel.py __init__.py pycparam.py
 
-pkgpython_PYTHON = ParamModel.py __init__.py cparammodel.py
+pkgpython_PYTHON = ParamModel.py __init__.py pycparam.py
 pkgpyexec_LTLIBRARIES = _pycparam.la
 _pycparam_la_SOURCES = $(srcdir)/cparammodel_wrap.c $(SWIG_SOURCES)
 _pycparam_la_CPPFLAGS = $(SWIG_PYTHON_CPPFLAGS) -I$(top_srcdir)/cparamlib

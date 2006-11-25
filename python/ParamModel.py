@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2006/07/21 07:32:26 $ $Revision: 1.5 $
+# $Author: niklas $ $Date: 2006/11/25 02:30:04 $ $Revision: 1.6 $
 #
 
 #
@@ -13,7 +13,7 @@
 import sys
 from numarray import *
 
-import cparammodel
+import pycparam
 
 ID_GAMMA = 0
 ID_ELECTRON = 1
