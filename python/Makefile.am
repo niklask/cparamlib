@@ -4,7 +4,7 @@
 #
 
 BUILT_SOURCES = $(srcdir)/cparammodel_wrap.c
-SWIG_SOURCES = pycparam.i
+SWIG_SOURCES = cparammodel.i
 
 EXTRA_DIST = ParamModel.py __init__.py pycparam.py
 
