@@ -58,10 +58,19 @@ installed. SWIG is used to build the python wrapper code.
 Build
 -----
 
-The library is built by running "make all". The makefile is really simple and should be
-self-explaining. Once the library is built, copy it to any location where you want to keep it.
-The makefile also compiles the SWIG wrapper for interfacing the c library in python. For this to work one must
-set the correct paths, i.e. change variables SWIG and PYTHON_INCLUDE.
+The library is now built using the autoconf/automake method:
+./configure
+make
+make install
+
+The user will most probably want to do
+./configure --prefix=/your/path
+to put the library in a non-standard path.
+
+By default, the Python interface is not built. To build it, one would use
+./configure --enable-python
+This will compile the code and when issuing "make install", the Python package will be put
+in ${prefix}/lib/pythonN.N/site-packages.
 
 Using the library
 -----------------
@@ -73,9 +82,8 @@ Generally, the library is linked to your program using something like
 
 gcc yourprogram.c -L. -lm -lcparammodel -o yourprogram.bin
 
-For use with python:
-1. Build the library and python wrapper
-2. Copy the python directory contents to somewhere where python will find it, for example site-packages.
+In Python you import the cparamlib package, like this
+import cparamlib
 
 Subroutines
 -----------
