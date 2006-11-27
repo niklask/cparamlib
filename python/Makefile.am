@@ -8,14 +8,16 @@ SWIG_SOURCES = pycparam.i
 
 EXTRA_DIST = ParamModel.py __init__.py
 
-$(srcdir)/cparamlib_wrap.c : $(SWIG_SOURCES)
+$(srcdir)/cparamlib_wrap.c pycparam.py: $(SWIG_SOURCES)
 	$(SWIG) $(SWIG_PYTHON_OPT) -I$(top_srcdir)/cparamlib -o $@ $<
 
+# don't know if this is the best way of doing this, but having the if statement
+# makes the distribution work
+if enable_python
 pkgpython_PYTHON = ParamModel.py __init__.py pycparam.py
 pkgpyexec_LTLIBRARIES = _pycparam.la
-if enable_python
 _pycparam_la_SOURCES = $(srcdir)/cparamlib_wrap.c $(SWIG_SOURCES)
-endif
 _pycparam_la_CPPFLAGS = $(SWIG_PYTHON_CPPFLAGS) -I$(top_srcdir)/cparamlib
 _pycparam_la_LDFLAGS = -module
-_pycparam_la_LIBADD = $(top_srcdir)/cparamlib/libcparamlib.la
+_pycparam_la_LIBADD = $(top_builddir)/cparamlib/libcparamlib.la
+endif
