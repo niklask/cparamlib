@@ -5,9 +5,6 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = cparamlib
-if enable_python
-  SUBDIRS += python
-endif
+SUBDIRS = cparamlib python
 
 EXTRA_DIST = autogen.sh
