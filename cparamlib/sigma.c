@@ -10,7 +10,7 @@
 		changed sigma to sigma_incl.
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
-		$Author: niklas $ $Date: 2006/11/24 22:58:12 $ $Revision: 1.1 $
+		$Author: niklas $ $Date: 2006/12/18 17:35:19 $ $Revision: 1.2 $
 */
 
 #include <stdio.h>
@@ -309,7 +309,7 @@ double sigma_pp_delta(double Pp) {
   as given by equation 4 in Kamae et al. (2006)
 */
 double sigma_pp_res(double Pp) {
-				double g[5] = {0.005547, 4.5, -7.0, 2.1, 14089.0};
+				double g[5] = {0.0004257, 4.5, -7.0, 2.1, 503.5};
 
 				double Ep, sigma;
 
