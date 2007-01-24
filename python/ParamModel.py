@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2006/11/25 02:30:04 $ $Revision: 1.6 $
+# $Author: niklas $ $Date: 2007/01/24 23:55:39 $ $Revision: 1.7 $
 #
 
 #
@@ -89,22 +89,22 @@ class ParamModel:
         
         paramTable = zeros((n,9), Float32)
 
-        a = cparammodel.doubleArray(9)
+        a = pycparam.doubleArray(9)
         for i in range(n):
             if (self.particle == ID_GAMMA):
-                cparammodel.gamma_param_nd(Tp[i], a)
+                pycparam.gamma_param_nd(Tp[i], a)
             if (self.particle == ID_ELECTRON):
-                cparammodel.elec_param_nd(Tp[i], a)
+                pycparam.elec_param_nd(Tp[i], a)
             if (self.particle == ID_POSITRON):
-                cparammodel.posi_param_nd(Tp[i], a)
+                pycparam.posi_param_nd(Tp[i], a)
             if (self.particle == ID_NUE):
-                cparammodel.nue_param_nd(Tp[i], a)
+                pycparam.nue_param_nd(Tp[i], a)
             if (self.particle == ID_NUMU):
-                cparammodel.numu_param_nd(Tp[i], a)
+                pycparam.numu_param_nd(Tp[i], a)
             if (self.particle == ID_ANTINUE):
-                cparammodel.nue_param_nd(Tp[i], a)
+                pycparam.nue_param_nd(Tp[i], a)
             if (self.particle == ID_ANTINUMU):
-                cparammodel.numu_param_nd(Tp[i], a)
+                pycparam.numu_param_nd(Tp[i], a)
 
             for j in range(9):
                 paramTable[i,j] = a[j]
@@ -122,22 +122,22 @@ class ParamModel:
         
         paramTable = zeros((n,8), Float32)
 
-        b = cparammodel.doubleArray(8)
+        b = pycparam.doubleArray(8)
         for i in range(n):
             if (self.particle == ID_GAMMA):
-                cparammodel.gamma_param_diff(Tp[i], b)
+                pycparam.gamma_param_diff(Tp[i], b)
             if (self.particle == ID_ELECTRON):
-                cparammodel.elec_param_diff(Tp[i], b)
+                pycparam.elec_param_diff(Tp[i], b)
             if (self.particle == ID_POSITRON):
-                cparammodel.posi_param_diff(Tp[i], b)
+                pycparam.posi_param_diff(Tp[i], b)
             if (self.particle == ID_NUE):
-                cparammodel.nue_param_diff(Tp[i], b)
+                pycparam.nue_param_diff(Tp[i], b)
             if (self.particle == ID_NUMU):
-                cparammodel.numu_param_diff(Tp[i], b)
+                pycparam.numu_param_diff(Tp[i], b)
             if (self.particle == ID_ANTINUE):
-                cparammodel.nue_param_diff(Tp[i], b)
+                pycparam.nue_param_diff(Tp[i], b)
             if (self.particle == ID_ANTINUMU):
-                cparammodel.numu_param_diff(Tp[i], b)
+                pycparam.numu_param_diff(Tp[i], b)
 
             for j in range(8):
                 paramTable[i,j] = b[j]
@@ -155,22 +155,22 @@ class ParamModel:
         
         paramTable = zeros((n,5), Float32)
 
-        c = cparammodel.doubleArray(5)
+        c = pycparam.doubleArray(5)
         for i in range(n):
             if (self.particle == ID_GAMMA):
-                cparammodel.gamma_param_delta(Tp[i], c)
+                pycparam.gamma_param_delta(Tp[i], c)
             if (self.particle == ID_ELECTRON):
-                cparammodel.elec_param_delta(Tp[i], c)
+                pycparam.elec_param_delta(Tp[i], c)
             if (self.particle == ID_POSITRON):
-                cparammodel.posi_param_delta(Tp[i], c)
+                pycparam.posi_param_delta(Tp[i], c)
             if (self.particle == ID_NUE):
-                cparammodel.nue_param_delta(Tp[i], c)
+                pycparam.nue_param_delta(Tp[i], c)
             if (self.particle == ID_NUMU):
-                cparammodel.numu_param_delta(Tp[i], c)
+                pycparam.numu_param_delta(Tp[i], c)
             if (self.particle == ID_ANTINUE):
-                cparammodel.nue_param_delta(Tp[i], c)
+                pycparam.nue_param_delta(Tp[i], c)
             if (self.particle == ID_ANTINUMU):
-                cparammodel.numu_param_delta(Tp[i], c)
+                pycparam.numu_param_delta(Tp[i], c)
 
             for j in range(5):
                 paramTable[i,j] = c[j]
@@ -188,22 +188,22 @@ class ParamModel:
         
         paramTable = zeros((n,5), Float32)
 
-        d = cparammodel.doubleArray(5)
+        d = pycparam.doubleArray(5)
         for i in range(n):
             if (self.particle == ID_GAMMA):
-                cparammodel.gamma_param_res(Tp[i], d)
+                pycparam.gamma_param_res(Tp[i], d)
             if (self.particle == ID_ELECTRON):
-                cparammodel.elec_param_res(Tp[i], d)
+                pycparam.elec_param_res(Tp[i], d)
             if (self.particle == ID_POSITRON):
-                cparammodel.posi_param_res(Tp[i], d)
+                pycparam.posi_param_res(Tp[i], d)
             if (self.particle == ID_NUE):
-                cparammodel.nue_param_res(Tp[i], d)
+                pycparam.nue_param_res(Tp[i], d)
             if (self.particle == ID_NUMU):
-                cparammodel.numu_param_res(Tp[i], d)
+                pycparam.numu_param_res(Tp[i], d)
             if (self.particle == ID_ANTINUE):
-                cparammodel.nue_param_res(Tp[i], d)
+                pycparam.nue_param_res(Tp[i], d)
             if (self.particle == ID_ANTINUMU):
-                cparammodel.numu_param_res(Tp[i], d)
+                pycparam.numu_param_res(Tp[i], d)
 
             for j in range(5):
                 paramTable[i,j] = d[j]
