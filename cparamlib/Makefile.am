@@ -15,4 +15,4 @@ INCLUDES = -I$(top_srcdir)
 
 lib_LTLIBRARIES= libcparamlib.la
 libcparamlib_la_SOURCES= $(cparamlib_HEADERS) $(cparamlib_SOURCE)
-libcparamlib_la_LDFLAGS= -version-info 1.6.0 -release 1.6
+libcparamlib_la_LDFLAGS= -version-info 1.7.2 -release 1.7
