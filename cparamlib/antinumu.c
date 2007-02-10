@@ -4,7 +4,7 @@
 		Parameter calculation for muon anti neutrinos
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/antinumu.c,v $
-		$Author: niklas $ $Date: 2006/11/24 22:58:11 $ $Revision: 1.1 $
+		$Author: niklas $ $Date: 2007/02/10 00:23:52 $ $Revision: 1.2 $
 */
 
 #include <stdio.h>
@@ -117,7 +117,7 @@ void antinumu_param_res(double Tp, double* d) {
 
 				/* 06/06/06: removed unneccessary use of pow() to increase performance
 							          also added use of pow = <expression> */
-    if ((Tp < 0.69) || (Tp >= 2.76)) {
+    if ((Tp < 0.69) || (Tp > 2.76)) {
 								for (i = 0; i < 5; i++)
 												d[i] = 0.0;
 				} else {
