@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2007/01/24 23:55:39 $ $Revision: 1.7 $
+# $Author: niklas $ $Date: 2007/02/10 00:48:19 $ $Revision: 1.8 $
 #
 
 #
@@ -102,9 +102,9 @@ class ParamModel:
             if (self.particle == ID_NUMU):
                 pycparam.numu_param_nd(Tp[i], a)
             if (self.particle == ID_ANTINUE):
-                pycparam.nue_param_nd(Tp[i], a)
+                pycparam.antinue_param_nd(Tp[i], a)
             if (self.particle == ID_ANTINUMU):
-                pycparam.numu_param_nd(Tp[i], a)
+                pycparam.antinumu_param_nd(Tp[i], a)
 
             for j in range(9):
                 paramTable[i,j] = a[j]
@@ -135,9 +135,9 @@ class ParamModel:
             if (self.particle == ID_NUMU):
                 pycparam.numu_param_diff(Tp[i], b)
             if (self.particle == ID_ANTINUE):
-                pycparam.nue_param_diff(Tp[i], b)
+                pycparam.antinue_param_diff(Tp[i], b)
             if (self.particle == ID_ANTINUMU):
-                pycparam.numu_param_diff(Tp[i], b)
+                pycparam.antinumu_param_diff(Tp[i], b)
 
             for j in range(8):
                 paramTable[i,j] = b[j]
@@ -168,9 +168,9 @@ class ParamModel:
             if (self.particle == ID_NUMU):
                 pycparam.numu_param_delta(Tp[i], c)
             if (self.particle == ID_ANTINUE):
-                pycparam.nue_param_delta(Tp[i], c)
+                pycparam.antinue_param_delta(Tp[i], c)
             if (self.particle == ID_ANTINUMU):
-                pycparam.numu_param_delta(Tp[i], c)
+                pycparam.antinumu_param_delta(Tp[i], c)
 
             for j in range(5):
                 paramTable[i,j] = c[j]
@@ -201,9 +201,9 @@ class ParamModel:
             if (self.particle == ID_NUMU):
                 pycparam.numu_param_res(Tp[i], d)
             if (self.particle == ID_ANTINUE):
-                pycparam.nue_param_res(Tp[i], d)
+                pycparam.antinue_param_res(Tp[i], d)
             if (self.particle == ID_ANTINUMU):
-                pycparam.numu_param_res(Tp[i], d)
+                pycparam.antinumu_param_res(Tp[i], d)
 
             for j in range(5):
                 paramTable[i,j] = d[j]
