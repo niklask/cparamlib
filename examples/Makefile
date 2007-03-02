@@ -2,8 +2,8 @@ SHELL = /bin/sh
 
 CC = gcc
 
-INCLUDE_DIR = ${HOME}/usr/include
-LIB_DIR = ${HOME}/usr/lib
+INCLUDE_DIR = /usr/include
+LIB_DIR = /usr/lib
 
 BIN_PARAMS = params
 BIN_TEST = test
