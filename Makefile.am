@@ -7,4 +7,5 @@ ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = cparamlib python
 
-EXTRA_DIST = autogen.sh
+#EXTRA_DIST = autogen.sh
+EXTRA_DIST = examples/Makefile examples/params.c examples/test.c
