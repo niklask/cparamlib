@@ -4,12 +4,12 @@
 		Test app for the parameterization model lib
 
 		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/test.c,v $
-		$Author: niklas $ $Date: 2007/03/02 03:37:17 $ $Revision: 1.1 $
+		$Author: niklas $ $Date: 2007/03/02 04:12:47 $ $Revision: 1.2 $
 */
 
 #include <stdio.h>
 #include <math.h>
-#include "cparammodel.h"
+#include "cparamlib/cparammodel.h"
 
 typedef void (*PARAM_FUNC)(double, double*);
 static PARAM_FUNC paramfunc_table[7][4] = {{&gamma_param_nd, &gamma_param_diff, &gamma_param_delta, &gamma_param_res},
