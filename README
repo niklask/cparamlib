@@ -80,16 +80,31 @@ for non-diffractive, diffractive, Delta1232 and Reson1600 processes and for all 
 
 Generally, the library is linked to your program using something like
 
-gcc yourprogram.c -L. -lm -lcparammodel -o yourprogram.bin
+gcc yourprogram.c -L/usr/lib -lm -lcparamlib -o yourprogram.bin
+
+In the directory examples/ you will find two example programs that builds with the library and an
+example Makefile. This Makefile must be modified so that the two lines
+
+  INCLUDE_DIR = /usr/include
+  LIB_DIR = /usr/lib
+
+points to the location where you installed the library (--prefix option with ./configure). The
+default is /usr/include and /usr/lib.
+
+We have chosen not to build these example binaries with autoconf for two reasons:
+
+  1) This way a normal user can use the Makefile as a template
+  2) This does not clutter /usr/bin with unwanted binaries
 
 In Python you import the cparamlib package, like this
+
 import cparamlib
 
 Subroutines
 -----------
 
-The subroutines in the library libcparammodel.a are used to calculate parameters and inclusive
-cross sections according to tables 3 through 9.
+The subroutines in the libraryare used to calculate parameters and inclusive cross sections
+according to tables 3 through 9.
 
 Parameter calculation:
 
@@ -195,7 +210,7 @@ in GeV/c.
 Test program
 ------------
 
-A test program "test.c" shows how subroutines in the library lcparammodel can be used. 
+A test program "test.c" shows how subroutines in the library lcparamlib can be used. 
 
 To run the program, make sure that two executables "params" and "test" are made by
 the "make all" command you have executed. In the directory where the two executables
