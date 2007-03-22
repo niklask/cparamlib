@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/03/02 04:21:24 $ $Revision: 1.10 $
+dnl $Author: niklas $ $Date: 2007/03/22 19:29:46 $ $Revision: 1.11 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -17,43 +17,24 @@ dnl disable static building
 dnl AM_DISABLE_STATIC
 AM_PROG_LIBTOOL
 
-dnl
-dnl Some user defined macros
-dnl
+dnl Option to enable python extension build
+AC_ARG_ENABLE(pythonbuild,
+[  --enable-pythonbuild    build Python interface code (default = no)],
+[case "${enableval}" in
+  yes) AC_MSG_WARN(foo1) ; pythonbuild=true ;;
+  no)  AC_MSG_WARN(foo1) ; pythonbuild=false ;;
+  *) AC_MSG_ERROR(bad value ${enableval} for --enable-python) ;;
+esac],[pythonbuild=false])
 
-dnl CPL_ARG_ENABLE(enable-option, help-string, default-value)
-AC_DEFUN([CPL_ARG_ENABLE],[
-  AC_ARG_ENABLE($1,
-    AS_HELP_STRING([--enable-$1], [$2]m4_if($3,,[],[ @<:@default=$3@:>@])),
-    [enable_[]translit($1, [-], [_])=$enableval],
-    [enable_[]translit($1, [-], [_])=$3])])
+if test x$pythonbuild != xfalse; then
+	AM_PATH_PYTHON(2.2)
+	AC_PYTHON_DEVEL
 
-dnl List --enable-python as option
-CPL_ARG_ENABLE(python, [compile Python interface code], no)
-
-dnl Test if --enable-python is set
-if test "$enable_python" = "yes"; then
-    ### Redefine AC_MSG_ERROR as AC_MSG_WARN around the call to
-    ### AM_PATH_PYTHON, such that if python is not found, configure will
-    ### not stop.
-    pushdef([AC_MSG_ERROR],defn([AC_MSG_WARN]))
-    AM_PATH_PYTHON(2.2)
-    AC_PYTHON_DEVEL
-    popdef([AC_MSG_ERROR])
+	AC_PROG_SWIG(1.3)
+	SWIG_PYTHON
 fi
 
-AC_SUBST(PYTHON_INSTDIR)
-
-AC_SUBST(enable_python)
-
-AM_CONDITIONAL(enable_python, [test "$enable_python" = yes])
-
-dnl swig normally only used by python and java so far, but always do the
-dnl AC_PROG_SWIG check since swig also used to generate files for distribution.
-pushdef([AC_MSG_WARN],[true])
-AC_PROG_SWIG(1.3.21)
-SWIG_PYTHON
-popdef([AC_MSG_WARN])
+AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
 
 AM_SANITY_CHECK
 
@@ -73,6 +54,10 @@ AC_OUTPUT(Makefile \
 AC_MSG_RESULT([
 cparamlib successfully configured.])
 				  
-AC_MSG_RESULT([  compile Python interface code: $enable_python
-])
+if test x$pythonbuild != xfalse; then
+  AC_MSG_RESULT( compile Python interface code: yes )
+else
+  AC_MSG_RESULT( compile Python interface code: no )
+fi
+
 
