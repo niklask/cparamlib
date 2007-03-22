@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/03/22 19:29:46 $ $Revision: 1.11 $
+dnl $Author: niklas $ $Date: 2007/03/22 20:39:56 $ $Revision: 1.12 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -9,7 +9,7 @@ dnl
 AC_INIT(cparamlib/cparammodel.h)
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_AUX_DIR(config)
-AM_INIT_AUTOMAKE(cparamlib, 1.7.4)
+AM_INIT_AUTOMAKE(cparamlib, 1.7.5)
 
 dnl Checks for programs
 AC_PROG_CC
