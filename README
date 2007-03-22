@@ -68,7 +68,7 @@ The user will most probably want to do
 to put the library in a non-standard path.
 
 By default, the Python interface is not built. To build it, one would use
-./configure --enable-python
+./configure --enable-pythonbuild
 This will compile the code and when issuing "make install", the Python package will be put
 in ${prefix}/lib/pythonN.N/site-packages.
 
