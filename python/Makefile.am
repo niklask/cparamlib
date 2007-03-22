@@ -13,7 +13,7 @@ $(srcdir)/cparamlib_wrap.c pycparam.py: $(SWIG_SOURCES)
 
 # don't know if this is the best way of doing this, but having the if statement
 # makes the distribution work
-if enable_python
+if PYTHONBUILD
 pkgpython_PYTHON = ParamModel.py __init__.py pycparam.py
 pkgpyexec_LTLIBRARIES = _pycparam.la
 _pycparam_la_SOURCES = $(srcdir)/cparamlib_wrap.c $(SWIG_SOURCES)
