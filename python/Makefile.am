@@ -18,6 +18,6 @@ pkgpython_PYTHON = ParamModel.py __init__.py pycparam.py
 pkgpyexec_LTLIBRARIES = _pycparam.la
 _pycparam_la_SOURCES = $(srcdir)/cparamlib_wrap.c $(SWIG_SOURCES)
 _pycparam_la_CPPFLAGS = $(SWIG_PYTHON_CPPFLAGS) -I$(top_srcdir)/cparamlib
-_pycparam_la_LDFLAGS = -module
+_pycparam_la_LDFLAGS = -module -version-info 1:0:0
 _pycparam_la_LIBADD = $(top_builddir)/cparamlib/libcparamlib.la
 endif

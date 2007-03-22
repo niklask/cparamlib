@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/03/22 20:39:56 $ $Revision: 1.12 $
+dnl $Author: niklas $ $Date: 2007/03/22 22:27:31 $ $Revision: 1.13 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -59,5 +59,3 @@ if test x$pythonbuild != xfalse; then
 else
   AC_MSG_RESULT( compile Python interface code: no )
 fi
-
-
