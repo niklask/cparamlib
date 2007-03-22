@@ -8,8 +8,8 @@ LIB_DIR = /usr/lib
 BIN_PARAMS = params
 BIN_TEST = test
 
-CCFLAGS = -O2 -I$(HOME)/usr/include -c -g
-CLFLAGS = -I$(HOME)/usr/include -o
+CCFLAGS = -O2 -c -g
+CLFLAGS = -o
 
 %.o : %.c
 	${CC} -I$(INCLUDE_DIR) $(CCFLAGS) $< -o $@
