@@ -9,7 +9,6 @@ cparamlib_HEADERS = cparammodel.h
 cparamlib_SOURCE = antinue.c antinumu.c elec.c gamma.c nue.c numu.c posi.c sigma.c
 
 library_includedir=$(includedir)/cparamlib
-library_include_HEADERS = $(h_sources)
 
 INCLUDES = -I$(top_srcdir)
 
