@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/03/22 23:11:49 $ $Revision: 1.15 $
+dnl $Author: niklas $ $Date: 2007/03/23 00:07:36 $ $Revision: 1.16 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -29,12 +29,12 @@ esac],[pythonbuild=false])
 if test x$pythonbuild != xfalse; then
 	AM_PATH_PYTHON(2.2)
 	AC_PYTHON_DEVEL
-
-	AC_PROG_SWIG(1.3)
-	SWIG_PYTHON
 fi
-
+	
 AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
+
+AC_PROG_SWIG(1.3)
+SWIG_PYTHON
 
 AM_SANITY_CHECK
 
