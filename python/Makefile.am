@@ -12,7 +12,7 @@ $(srcdir)/cparamlib_wrap.c pycparam.py: $(SWIG_SOURCES)
 	$(SWIG) $(SWIG_PYTHON_OPT) -I$(top_srcdir)/cparamlib -o $@ $<
 
 if PYTHONBUILD
-pkgpython_PYTHON = ParamModel.py __init__.py pycparam.py
+pkgpyexec_PYTHON = ParamModel.py __init__.py pycparam.py
 pkgpyexec_LTLIBRARIES = _pycparam.la
 _pycparam_la_SOURCES = $(srcdir)/cparamlib_wrap.c $(SWIG_SOURCES)
 _pycparam_la_CPPFLAGS = $(SWIG_PYTHON_CPPFLAGS) -I$(top_srcdir)/cparamlib
