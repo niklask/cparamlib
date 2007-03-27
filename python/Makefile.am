@@ -9,13 +9,13 @@ SWIG_SOURCES = pycparam.i
 EXTRA_DIST = ParamModel.py __init__.py
 
 $(srcdir)/cparamlib_wrap.c pycparam.py: $(SWIG_SOURCES)
-	$(SWIG) $(SWIG_PYTHON_OPT) -I$(top_srcdir)/cparamlib -o $@ $<
+	$(SWIG) -python -I$(top_srcdir)/cparamlib -o $@ $<
 
 if PYTHONBUILD
 pkgpyexec_PYTHON = ParamModel.py __init__.py pycparam.py
 pkgpyexec_LTLIBRARIES = _pycparam.la
 _pycparam_la_SOURCES = $(srcdir)/cparamlib_wrap.c $(SWIG_SOURCES)
-_pycparam_la_CPPFLAGS = $(SWIG_PYTHON_CPPFLAGS) -I$(top_srcdir)/cparamlib
+_pycparam_la_CPPFLAGS = -I$(PYTHON_INCLUDE) -I$(top_srcdir)/cparamlib
 _pycparam_la_LDFLAGS = -version-info 1:0:0 -module
 _pycparam_la_LIBADD = $(top_builddir)/cparamlib/libcparamlib.la
 endif
