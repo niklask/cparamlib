@@ -72,6 +72,11 @@ By default, the Python interface is not built. To build it, one would use
 This will compile the code and when issuing "make install", the Python package will be put
 in ${prefix}/lib/pythonN.N/site-packages.
 
+On 64-bit systems the library directory might be ${prefix}/lib64 rather than ${prefix}/lib. To make
+sure the library is installed in the correct directory, pass the --libdir=${prefix}/lib64 option to
+./configure. For example
+./configure --prefix=/your/path --libdir=/your/path/lib64 --enable-pythonbuild
+
 Using the library
 -----------------
 
