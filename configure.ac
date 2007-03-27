@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/03/23 00:07:36 $ $Revision: 1.16 $
+dnl $Author: niklas $ $Date: 2007/03/27 19:33:18 $ $Revision: 1.17 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -9,7 +9,7 @@ dnl
 AC_INIT(cparamlib/cparammodel.h)
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_AUX_DIR(config)
-AM_INIT_AUTOMAKE(cparamlib, 1.7.5)
+AM_INIT_AUTOMAKE(cparamlib, 1.7.6)
 
 dnl Checks for programs
 AC_PROG_CC
@@ -26,15 +26,30 @@ AC_ARG_ENABLE(pythonbuild,
   *) AC_MSG_ERROR(bad value ${enableval} for --enable-python) ;;
 esac],[pythonbuild=false])
 
+dnl If --enable-pythonbuild then make sure Python is installed with version >= 2.2
+dnl and set variables $(PYTHON_INCLUDE) and $(PYTHON_LIB)
 if test x$pythonbuild != xfalse; then
-	AM_PATH_PYTHON(2.2)
-	AC_PYTHON_DEVEL
+  AM_PATH_PYTHON(2.2)
+
+	dnl The following code adopted from HippoDraw by Paul F. Kunz
+	python_include_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_inc()"`
+	python_lib_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_lib(standard_lib=True)"`
+
+  AC_SUBST([PYTHON_INCLUDE],[$python_include_path] )
+  AC_SUBST([PYTHON_LIB],[$python_lib_path])
 fi
 	
 AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
 
-AC_PROG_SWIG(1.3)
-SWIG_PYTHON
+dnl Make sure SWIG is installed and set variable $(SWIG)
+dnl Only warn "not found" if --enable-pythonbuild was used
+dnl (Do not care about version number for now)
+AC_PATH_PROG([SWIG],[swig])
+if test x$pythonbuild != false; then
+  if test -z "$SWIG" ; then
+	  AC_MSG_WARN([cannot find the 'swig' executable, please install it])
+	fi
+fi
 
 AM_SANITY_CHECK
 
@@ -59,3 +74,4 @@ if test x$pythonbuild != xfalse; then
 else
   AC_MSG_RESULT(  compile Python interface code: no )
 fi
+
