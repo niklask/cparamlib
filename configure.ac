@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/03/27 19:33:18 $ $Revision: 1.17 $
+dnl $Author: niklas $ $Date: 2007/03/27 19:36:55 $ $Revision: 1.18 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -23,7 +23,7 @@ AC_ARG_ENABLE(pythonbuild,
 [case "${enableval}" in
   yes) pythonbuild=true ;;
   no)  pythonbuild=false ;;
-  *) AC_MSG_ERROR(bad value ${enableval} for --enable-python) ;;
+  *) AC_MSG_ERROR(bad value ${enableval} for --enable-pythonbuild) ;;
 esac],[pythonbuild=false])
 
 dnl If --enable-pythonbuild then make sure Python is installed with version >= 2.2
