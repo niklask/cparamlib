@@ -1,19 +1,20 @@
 /*
-	 posi.c
-
-		Parameter calculation for positrons
-
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/posi.c,v $
-		$Author: niklas $ $Date: 2006/11/24 22:58:12 $ $Revision: 1.1 $
-*/
+	* posi.c
+	*
+	*	Parameter calculation for positrons
+	*
+	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/posi.c,v $
+	*	$Author: niklas $ $Date: 2007/05/02 22:41:40 $ $Revision: 1.2 $
+	*
+	*/
 
 #include <stdio.h>
 #include <math.h>
 #include "cparammodel.h"
 
 /*
-		Calculate parameters for positrons from non-diff
-*/
+	*	Calculate parameter set for positrons from non-diff
+	*/
 void posi_param_nd(double Tp, double* a) {
     double y, z;
 				int i;
@@ -41,8 +42,8 @@ void posi_param_nd(double Tp, double* a) {
 }
 
 /*
-		Calculate parameters for positrons from diff. dissoc.
-*/
+ *	Calculate parameter set for positrons from diff. dissoc.
+	*/
 void posi_param_diff(double Tp, double* b) {
     double y, z1, z2, pow;
 				int i;
@@ -82,8 +83,8 @@ void posi_param_diff(double Tp, double* b) {
 }
 
 /*
-		Calculate parameters for positrons from delta(1232)
-*/
+	*	Calculate parameter set for positrons from delta(1232)
+	*/
 void posi_param_delta(double Tp, double* c) {
     double y, pow;
 		int i;
@@ -106,8 +107,8 @@ void posi_param_delta(double Tp, double* c) {
 }
 
 /*
-		Calculate parameters for positrons from res(1600)
-*/
+	*	Calculate parameter set for positrons from res(1600)
+	*/
 void posi_param_res(double Tp, double* d) {
     double y, pow;
 				int i;

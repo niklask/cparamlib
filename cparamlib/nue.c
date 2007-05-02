@@ -1,19 +1,20 @@
 /*
-	 nue.c
-
-		Parameter calculation for electron neutrinos
-
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/nue.c,v $
-		$Author: niklas $ $Date: 2007/02/10 00:23:52 $ $Revision: 1.2 $
-*/
+	* nue.c
+	*
+	*	Parameter calculation for electron neutrinos
+	*
+	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/nue.c,v $
+	*	$Author: niklas $ $Date: 2007/05/02 22:41:40 $ $Revision: 1.3 $
+	*
+	*/
 
 #include <stdio.h>
 #include <math.h>
 #include "cparammodel.h"
 
 /*
-		Calculate parameters for electron neutrino from non-diff
-*/
+	*	Calculate parameter set for electron neutrinos from non-diff
+	*/
 void nue_param_nd(double Tp, double* a) {
     double y, z;
 				int i;
@@ -42,8 +43,8 @@ void nue_param_nd(double Tp, double* a) {
 }
 
 /*
-		Calculate parameters for electron neutrino from diff. dissoc.
-*/
+	*	Calculate parameter set for electron neutrinos from diff. dissoc.
+	*/
 void nue_param_diff(double Tp, double* b) {
     double y, z1, z2, pow;
 				int i;
@@ -83,8 +84,8 @@ void nue_param_diff(double Tp, double* b) {
 }
 
 /*
-		Calculate parameters for electron neutrino from delta(1232)
-*/
+	*	Calculate parameter set for electron neutrinos from delta(1232)
+	*/
 void nue_param_delta(double Tp, double* c) {
     double y, pow;
 				int i;
@@ -107,8 +108,8 @@ void nue_param_delta(double Tp, double* c) {
 }
 
 /*
-		Calculate parameters for electron neutrino from res(1600)
-*/
+	*	Calculate parameter set for electron neutrinos from res(1600)
+	*/
 void nue_param_res(double Tp, double* d) {
     double y, pow;
 				int i;

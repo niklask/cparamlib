@@ -1,19 +1,20 @@
 /*
-	 elec.c
-
-		Parameter calculation for electrons
-
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/elec.c,v $
-		$Author: niklas $ $Date: 2006/11/24 22:58:12 $ $Revision: 1.1 $
-*/
+	* elec.c
+ *
+	*	Parameter calculation for electrons
+ *
+	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/elec.c,v $
+	*	$Author: niklas $ $Date: 2007/05/02 22:41:40 $ $Revision: 1.2 $
+ *
+	*/
 
 #include <stdio.h>
 #include <math.h>
 #include "cparammodel.h"
 
 /*
-		Calculate parameters for electrons from non-diff
-*/
+	*	Calculate parameter set for electrons from non-diff
+	*/
 void elec_param_nd(double Tp, double* a) {
     double y, z;
 				int i;
@@ -43,8 +44,8 @@ void elec_param_nd(double Tp, double* a) {
 }
 
 /*
-		Calculate parameters for electrons from diff. dissoc.
-*/
+	*	Calculate parameter set for electrons from diff. dissoc.
+	*/
 void elec_param_diff(double Tp, double* b) {
     double y, z1, z2, pow;
 		int i;
@@ -83,15 +84,15 @@ void elec_param_diff(double Tp, double* b) {
 }
 
 /*
-		Calculate parameters for electrons from delta(1232)
-*/
+	*	Calculate parameter set for electrons from delta(1232)
+	*/
 void elec_param_delta(double Tp, double* c) {
 				c[0] = c[1] = c[2] = c[3] = c[4] = 0.0;
 }
 
 /*
-		Calculate parameters for electrons from res(1600)
-*/
+	*	Calculate parameter set for electrons from res(1600)
+	*/
 void elec_param_res(double Tp, double* d) {
     double y, pow;
 				int i;

@@ -1,19 +1,20 @@
 /*
-	 antinue.c
-
-		Parameter calculation for electron anti neutrinos
-
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/antinue.c,v $
-		$Author: niklas $ $Date: 2007/02/10 00:23:52 $ $Revision: 1.2 $
-*/
+	* antinue.c
+ *
+	*	Parameter calculation for electron anti-neutrinos
+ *
+	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/antinue.c,v $
+	*	$Author: niklas $ $Date: 2007/05/02 22:41:40 $ $Revision: 1.3 $
+ *
+	*/
 
 #include <stdio.h>
 #include <math.h>
 #include "cparammodel.h"
 
 /*
-		Calculate parameters for electron anti neutrino from non-diff
-*/
+	*	Calculate parameter set for electron anti-neutrinos from non-diff
+	*/
 void antinue_param_nd(double Tp, double* a) {
     double y, z;
 				int i;
@@ -41,8 +42,8 @@ void antinue_param_nd(double Tp, double* a) {
 }
 
 /*
-		Calculate parameters for electron anti neutrino from diff. dissoc.
-*/
+	*	Calculate parameter set for electron anti-neutrinos from diff. dissoc.
+	*/
 void antinue_param_diff(double Tp, double* b) {
     double y, z1, z2, pow;
 				int i;
@@ -82,15 +83,15 @@ void antinue_param_diff(double Tp, double* b) {
 }
 
 /*
-		Calculate parameters for electron anti neutrino from delta(1232)
-*/
+	*	Calculate parameter set for electron anti-neutrinos from delta(1232)
+	*/
 void antinue_param_delta(double Tp, double* c) {
 				c[0] = c[1] = c[2] = c[3] = c[4] = 0.0;
 }
 
 /*
-		Calculate parameters for electron anti neutrino from res(1600)
-*/
+	*	Calculate parameter set for electron anti-neutrinos from res(1600)
+	*/
 void antinue_param_res(double Tp, double* d) {
     double y, pow;
 				int i;
