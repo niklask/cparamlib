@@ -1,12 +1,13 @@
 /*
-		params.c
-
-		Test app for the parameterization model lib
-		Calculates parameters as functions of Tp
-
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/params.c,v $
-		$Author: niklas $ $Date: 2007/03/02 04:12:47 $ $Revision: 1.2 $
-*/
+	*	params.c
+ *
+	*	Test app for the parameterization model lib
+	*	Calculates parameters as functions of Tp
+ *
+	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/params.c,v $
+	*	$Author: niklas $ $Date: 2007/05/02 22:05:12 $ $Revision: 1.3 $
+ *
+	*/
 
 #include <stdio.h>
 #include <math.h>

@@ -1,11 +1,12 @@
 /*
-		test.c
-
-		Test app for the parameterization model lib
-
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/test.c,v $
-		$Author: niklas $ $Date: 2007/03/02 04:12:47 $ $Revision: 1.2 $
-*/
+	*	test.c
+	*
+	*	Test app for the parameterization model lib
+	*
+	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/test.c,v $
+	*	$Author: niklas $ $Date: 2007/05/02 22:05:11 $ $Revision: 1.3 $
+	*
+	*/
 
 #include <stdio.h>
 #include <math.h>
@@ -27,8 +28,10 @@ double Tp[43] = {512.0e3, 362.0e3, 256.0e3, 181.0e3, 128.0e3, 90.5e3, 64.0e3, 45
 																	250.0, 177.0, 125.0, 88.4, 62.5, 44.2, 31.3, 22.1, 15.6, 11.1, 7.81, 5.52, 3.91, 2.76,
 																	1.95, 1.38, 0.98, 0.82, 0.69, 0.58, 0.488};
 
-/* Example 1: calculate parameter a0,...,a8 used in the non-diff inclusive 
-			gamma-ray cross-section formula */
+/* 
+	* Example 1: calculate parameter a0,...,a8 used in the non-diff inclusive 
+	*	gamma-ray cross-section formula 
+	*/
 void example1(void) {
 				double Tp, E;
 				double f;
@@ -48,7 +51,9 @@ void example1(void) {
 				return;
 }
 
-/* Example 2: inclusive gamma-ray cross-section */
+/* 
+ * Example 2: inclusive gamma-ray cross-section
+	*/
 void example2(void) {
 				double Tp, E;
 				double f;
@@ -66,7 +71,9 @@ void example2(void) {
 				return;
 }
 
-/* Example 3: secondary particle spectra due to power-law protons */
+/*
+ * Example 3: secondary particle spectra due to power-law protons
+ */
 void example3(void) {
 				double *spectrum;
 				double *spectrum_nd;
