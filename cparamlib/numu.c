@@ -1,19 +1,20 @@
 /*
-	 numu.c
-
-		Parameter calculation for electron neutrinos
-
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/numu.c,v $
-		$Author: niklas $ $Date: 2007/02/10 00:23:52 $ $Revision: 1.2 $
-*/
+	* numu.c
+ *
+	*	Parameter calculation for electron neutrinos
+	*
+	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/numu.c,v $
+	*	$Author: niklas $ $Date: 2007/05/02 22:46:40 $ $Revision: 1.3 $
+	*
+	*/
 
 #include <stdio.h>
 #include <math.h>
 #include "cparammodel.h"
 
 /*
-		Calculate parameters for muon neutrino from non-diff
-*/
+	*	Calculate parameter set for muon neutrinos from non-diff
+	*/
 void numu_param_nd(double Tp, double* a) {
     double y, z;
 				int i;
@@ -42,8 +43,8 @@ void numu_param_nd(double Tp, double* a) {
 }
 
 /*
-		Calculate parameters for muon neutrino from diff. dissoc.
-*/
+	*	Calculate parameter set for muon neutrinos from diff. dissoc.
+	*/
 void numu_param_diff(double Tp, double* b) {
     double y, z1, z2, pow;
 				int i;
@@ -83,8 +84,8 @@ void numu_param_diff(double Tp, double* b) {
 }
 
 /*
-		Calculate parameters for muon neutrino from delta(1232)
-*/
+	*	Calculate parameter set for muon neutrinos from delta(1232)
+	*/
 void numu_param_delta(double Tp, double* c) {
     double y, pow;
 				int i;
@@ -107,8 +108,8 @@ void numu_param_delta(double Tp, double* c) {
 }
 
 /*
-		Calculate parameters for muon neutrino from res(1600)
-*/
+	*	Calculate parameter set for muon neutrinos from res(1600)
+	*/
 void numu_param_res(double Tp, double* d) {
     double y, pow;
 				int i;
