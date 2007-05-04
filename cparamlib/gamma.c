@@ -1,19 +1,20 @@
 /*
-		gamma.c
-
-		Parameter calculation for gamma-rays
-
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/gamma.c,v $
-		$Author: niklas $ $Date: 2006/11/24 22:58:12 $ $Revision: 1.1 $
-*/
+	*	gamma.c
+ *
+	*	Parameter calculation for gamma-rays
+ *
+	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/gamma.c,v $
+	*	$Author: niklas $ $Date: 2007/05/04 21:30:49 $ $Revision: 1.2 $
+	*
+	*/
 
 #include <stdio.h>
 #include <math.h>
 #include "cparammodel.h"
 
 /*
-		Calculate parameters for gamma-ray from non-diff
-*/
+	*	Calculate parameters for gamma rays from non-diff
+	*/
 void gamma_param_nd(double Tp, double* a) {
     double y, z;
 				int i;
@@ -42,8 +43,8 @@ void gamma_param_nd(double Tp, double* a) {
 }
 
 /*
-		Calculate parameters for gamma-ray from diff. dissoc.
-*/
+	*	Calculate parameters for gamma rays from diff. dissoc.
+	*/
 void gamma_param_diff(double Tp, double* b) {
     double y, z1, z2, pow;
 				int i;
@@ -84,8 +85,8 @@ void gamma_param_diff(double Tp, double* b) {
 }
 
 /*
-		Calculate parameters for gamma-ray from delta(1232)
-*/
+	*	Calculate parameters for gamma rays from delta(1232)
+	*/
 void gamma_param_delta(double Tp, double* c) {
     double y, pow;
 				int i;
@@ -108,8 +109,8 @@ void gamma_param_delta(double Tp, double* c) {
 }
 
 /*
-		Calculate parameters for gamma-ray from res(1600)
-*/
+	*	Calculate parameters for gamma rays from res(1600)
+	*/
 void gamma_param_res(double Tp, double* d) {
     double y, pow;
 				int i;

@@ -1,17 +1,18 @@
 /*
-		sigma.c
-
-		Main part of cparamlib; methods for calculations of inclusive
-		cross sections. Functions for inclusive cross sections as well 
-		as kinematic cutoff functions are given in Kamae et al. (2006).
-
-		10/11/2006: On request we have added functions for calculating
-		sigma_pp for the for components as given in the paper. We also
-		changed sigma to sigma_incl.
-
-		$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
-		$Author: niklas $ $Date: 2006/12/18 17:35:19 $ $Revision: 1.2 $
-*/
+	*	sigma.c
+	*
+	*	Main part of cparamlib; methods for calculations of inclusive
+	*	cross sections. Functions for inclusive cross sections as well 
+	*	as kinematic cutoff functions are given in Kamae et al. (2006).
+	*
+	*	10/11/2006: On request we have added functions for calculating
+	*	sigma_pp for the for components as given in the paper. We also
+	*	changed sigma to sigma_incl.
+	*
+	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
+	*	$Author: niklas $ $Date: 2007/05/04 21:30:49 $ $Revision: 1.3 $
+	*
+	*/
 
 #include <stdio.h>
 #include <math.h>
@@ -32,8 +33,8 @@ static PARAM_FUNC paramfunc_table[7][4] = {{&gamma_param_nd, &gamma_param_diff, 
 																					 {&antinumu_param_nd, &antinumu_param_diff, &antinumu_param_delta, &antinumu_param_res}};
 
 /*
-		Calculate inclusive crosssection from non-diff process
-*/
+	*	Calculate inclusive crosssection from non-diff process
+	*/
 double sigma_incl_nd(int particle, double E, double Tp, double* a) {
 				double Wl, Wh, Lmin, Lmax;
 				double x, xa3, xa8;
@@ -130,8 +131,8 @@ double sigma_incl_nd(int particle, double E, double Tp, double* a) {
 }
 
 /*
-		Calculate inclusive cross section from diff. dissoc. process
-*/
+	*	Calculate inclusive cross section from diff. dissoc. process
+	*/
 double sigma_incl_diff(int particle, double E, double Tp, double* b) {
 				double Wdiff, Lmax;
 				double x;
@@ -163,8 +164,8 @@ double sigma_incl_diff(int particle, double E, double Tp, double* b) {
 }
 
 /*
-		Calculate inclusive cross section from either of the two resonance processes
-*/
+	*	Calculate inclusive cross section from either of the two resonance processes
+	*/
 double sigma_incl_delta(int particle, double E, double Tp, double* c) {
 				double Wdiff, Lmax;
 				double x, xc2;
@@ -200,8 +201,8 @@ double sigma_incl_res(int particle, double E, double Tp, double* d) {
 }
 
 /*
-		Calculate total inclusive cross section (from all processes)
-*/
+	*	Calculate total inclusive cross section (from all processes)
+	*/
 double sigma_incl(int particle, double E, double Tp) {
 				double f_tot;
 				double f_nd, f_diff, f_d1232, f_r1600;
@@ -231,9 +232,9 @@ double sigma_incl(int particle, double E, double Tp) {
 }
 
 /*
-  Calculate non-diffractive inelastic p-p cross section
-  as given by equation 1 in Kamae et al. (2006)
-*/
+ * Calculate non-diffractive inelastic p-p cross section
+ * as given by equation 1 in Kamae et al. (2006)
+	*/
 double sigma_pp_nd(double Pp) {
 				double a[8] = {0.1176, 0.3829, 23.10, 6.454, -5.764, -23.63, 94.75, 0.02667};
 				double b[2] = {11.34, 23.72};
@@ -257,9 +258,9 @@ double sigma_pp_nd(double Pp) {
 }
 
 /*
-  Calculate diffractive inelastic p-p cross section
-  as given by equation 2 in Kamae et al. (2006)
-*/
+ * Calculate diffractive inelastic p-p cross section
+ * as given by equation 2 in Kamae et al. (2006)
+	*/
 double sigma_pp_diff(double Pp) {
 				double d[7] = {0.3522, 0.1530, 1.498, 2.0, 30.0, 3.155, 1.042};
 				double e[2] = {5.922, 1.632};
@@ -281,9 +282,9 @@ double sigma_pp_diff(double Pp) {
 }
 
 /*
-  Calculate delta(1232) inelastic p-p cross section
-  as given by equation 3 in Kamae et al. (2006)
-*/
+ * Calculate delta(1232) inelastic p-p cross section
+ * as given by equation 3 in Kamae et al. (2006)
+	*/
 double sigma_pp_delta(double Pp) {
 				double f[5] = {0.0834, 9.5, -5.5, 1.68, 3134.0};
 
@@ -305,9 +306,9 @@ double sigma_pp_delta(double Pp) {
 }
 
 /*
-  Calculate res(1600) inelastic p-p cross section
-  as given by equation 4 in Kamae et al. (2006)
-*/
+ * Calculate res(1600) inelastic p-p cross section
+ * as given by equation 4 in Kamae et al. (2006)
+	*/
 double sigma_pp_res(double Pp) {
 				double g[5] = {0.0004257, 4.5, -7.0, 2.1, 503.5};
 
