@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2007/02/10 00:48:19 $ $Revision: 1.8 $
+# $Author: niklas $ $Date: 2007/05/04 17:24:30 $ $Revision: 1.9 $
 #
 
 #
@@ -34,7 +34,7 @@ W_NDH = [44.0, 45.0, 47.0, 42.0, 40.0, 45.0, 40.0]
 # Description:
 # The class ParamModel is a presentation of the parametric model for a given secondary particle and a
 # set of proton kinetic energies. On instantiation, the particle species is set and tables for
-# parameter values are precalculated. This is done using the SWIG wrapper for libcparammodel. Once
+# parameter values are precalculated. This is done using the SWIG wrapper for libcparamlib. Once
 # the class has been instantiated, one can calculate inclusive cross sections for any set of secondary
 # particles. Note that those methods also take Tp as argument and this Tp must be the same as used
 # when instantiating.
