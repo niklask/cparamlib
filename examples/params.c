@@ -5,7 +5,7 @@
 	*	Calculates parameters as functions of Tp
  *
 	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/params.c,v $
-	*	$Author: niklas $ $Date: 2007/05/02 22:05:12 $ $Revision: 1.3 $
+	*	$Author: niklas $ $Date: 2007/06/04 22:22:38 $ $Revision: 1.4 $
  *
 	*/
 
@@ -32,39 +32,41 @@ char *filenames[7][4] = {{"GammaNonDiff.dat", "GammaDiffDiss.dat", "GammaDelta12
 void nondiff(int p) {
 				double Tp;
 				double f;
-				double a[9];
 				int i, j;
 				FILE *fp;
+				PARAMSET params;
+
+				memset(&params, 0, sizeof(PARAMSET));
 
 				fp = fopen(filenames[p][0], "w");
 				for (i = 0; i < 43; i++) {
 								Tp = Tp_list[i]*1000.0;
 								switch (p) {
 												case ID_GAMMA:
-																gamma_param_nd(Tp, a);
+																gamma_param_nd(Tp, &params);
 																break;
 												case ID_ELECTRON:
-																elec_param_nd(Tp, a);
+																elec_param_nd(Tp, &params);
 																break;
 												case ID_POSITRON:
-																posi_param_nd(Tp, a);
+																posi_param_nd(Tp, &params);
 																break;
 												case ID_NUE:
-																nue_param_nd(Tp, a);
+																nue_param_nd(Tp, &params);
 																break;
 												case ID_NUMU:
-																numu_param_nd(Tp, a);
+																numu_param_nd(Tp, &params);
 																break;
 												case ID_ANTINUE:
-																antinue_param_nd(Tp, a);
+																antinue_param_nd(Tp, &params);
 																break;
 												case ID_ANTINUMU:
-																antinumu_param_nd(Tp, a);
+																antinumu_param_nd(Tp, &params);
 																break;
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 9; j++) {
-												fprintf(fp, "%10e", a[j]);
+												fprintf(fp, "%10e", params.a[j]);
 												if (j < 8)
 																fprintf(fp, " ");
 												else
@@ -77,39 +79,41 @@ void nondiff(int p) {
 void diffdiss(int p) {
 				double Tp;
 				double f;
-				double b[8];
 				int i, j;
 				FILE *fp;
+				PARAMSET params;
+
+				memset(&params, 0, sizeof(PARAMSET));
 
 				fp = fopen(filenames[p][1], "w");
 				for (i = 0; i < 37; i++) {
 								Tp = Tp_list[i]*1000.0;
 								switch (p) {
 												case ID_GAMMA: 
-																gamma_param_diff(Tp, b);
+																gamma_param_diff(Tp, &params);
 																break;
 												case ID_ELECTRON:
-																elec_param_diff(Tp, b);
+																elec_param_diff(Tp, &params);
 																break;
 												case ID_POSITRON:
-																posi_param_diff(Tp, b);
+																posi_param_diff(Tp, &params);
 																break;
 												case ID_NUE:
-																nue_param_diff(Tp, b);
+																nue_param_diff(Tp, &params);
 																break;
 												case ID_NUMU:
-																numu_param_diff(Tp, b);
+																numu_param_diff(Tp, &params);
 																break;
 												case ID_ANTINUE:
-																antinue_param_diff(Tp, b);
+																antinue_param_diff(Tp, &params);
 																break;
 												case ID_ANTINUMU:
-																antinumu_param_diff(Tp, b);
+																antinumu_param_diff(Tp, &params);
 																break;
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 8; j++) {
-												fprintf(fp, "%10e", b[j]);
+												fprintf(fp, "%10e", params.b[j]);
 												if (j < 7)
 																fprintf(fp, " ");
 												else
@@ -122,39 +126,41 @@ void diffdiss(int p) {
 void delta1232(int p) {
 				double Tp;
 				double f;
-				double c[5];
 				int i, j;
 				FILE *fp;
+				PARAMSET params;
+
+				memset(&params, 0, sizeof(PARAMSET));
 
 				fp = fopen(filenames[p][2], "w");
 				for (i = 36; i < 43; i++) {
 								Tp = Tp_list[i]*1000.0;
 								switch (p) {
 												case ID_GAMMA:
-																gamma_param_delta(Tp, c);
+																gamma_param_delta(Tp, &params);
 																break;
 												case ID_ELECTRON:
-																elec_param_delta(Tp, c);
+																elec_param_delta(Tp, &params);
 																break;
 												case ID_POSITRON:
-																posi_param_delta(Tp, c);
+																posi_param_delta(Tp, &params);
 																break;
 												case ID_NUE:
-																nue_param_delta(Tp, c);
+																nue_param_delta(Tp, &params);
 																break;
 												case ID_NUMU:
-																numu_param_delta(Tp, c);
+																numu_param_delta(Tp, &params);
 																break;
 												case ID_ANTINUE:
-																antinue_param_delta(Tp, c);
+																antinue_param_delta(Tp, &params);
 																break;
 												case ID_ANTINUMU:
-																antinumu_param_delta(Tp, c);
+																antinumu_param_delta(Tp, &params);
 																break;
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 5; j++) {
-												fprintf(fp, "%10e", c[j]);
+												fprintf(fp, "%10e", params.c[j]);
 												if (j < 4)
 																fprintf(fp, " ");
 												else
@@ -167,39 +173,41 @@ void delta1232(int p) {
 void delta1600(int p) {
 				double Tp;
 				double f;
-				double d[5];
 				int i, j;
 				FILE *fp;
+				PARAMSET params;
+
+				memset(&params, 0, sizeof(PARAMSET));
 
 				fp = fopen(filenames[p][3], "w");
 				for (i = 35; i < 41; i++) {
 								Tp = Tp_list[i]*1000.0;
 								switch (p) {
 												case ID_GAMMA:
-																gamma_param_res(Tp, d);
+																gamma_param_res(Tp, &params);
 																break;
 												case ID_ELECTRON:
-																elec_param_res(Tp, d);
+																elec_param_res(Tp, &params);
 																break;
 												case ID_POSITRON:
-																posi_param_res(Tp, d);
+																posi_param_res(Tp, &params);
 																break;
 												case ID_NUE:
-																nue_param_res(Tp, d);
+																nue_param_res(Tp, &params);
 																break;
 												case ID_NUMU:
-																numu_param_res(Tp, d);
+																numu_param_res(Tp, &params);
 																break;
 												case ID_ANTINUE:
-																antinue_param_res(Tp, d);
+																antinue_param_res(Tp, &params);
 																break;
 												case ID_ANTINUMU:
-																antinumu_param_res(Tp, d);
+																antinumu_param_res(Tp, &params);
 																break;
 								}
 								fprintf(fp, "%f ", Tp_list[i]);
 								for (j = 0; j < 5; j++) {
-												fprintf(fp, "%10e", d[j]);
+												fprintf(fp, "%10e", params.d[j]);
 												if (j < 4)
 																fprintf(fp, " ");
 												else

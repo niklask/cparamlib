@@ -4,7 +4,7 @@
 	*	Test app for the parameterization model lib
 	*
 	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/test.c,v $
-	*	$Author: niklas $ $Date: 2007/05/02 22:05:11 $ $Revision: 1.3 $
+	*	$Author: niklas $ $Date: 2007/06/04 22:22:38 $ $Revision: 1.4 $
 	*
 	*/
 
@@ -12,16 +12,12 @@
 #include <math.h>
 #include "cparamlib/cparammodel.h"
 
-typedef void (*PARAM_FUNC)(double, double*);
-static PARAM_FUNC paramfunc_table[7][4] = {{&gamma_param_nd, &gamma_param_diff, &gamma_param_delta, &gamma_param_res},
-																																											{&elec_param_nd, &elec_param_diff, &elec_param_delta, &elec_param_res},
-																																											{&posi_param_nd, &posi_param_diff, &posi_param_delta, &posi_param_res},
-																																											{&nue_param_nd, &nue_param_diff, &nue_param_delta, &nue_param_res},
-																																											{&numu_param_nd, &numu_param_diff, &numu_param_delta, &numu_param_res},
-																																											{&antinue_param_nd, &antinue_param_diff, &antinue_param_delta, &antinue_param_res},
-																																											{&antinumu_param_nd, &antinumu_param_diff, &antinumu_param_delta, &antinumu_param_res}};
+typedef void (*PARAM_FUNC)(double, PARAMSET*);
+static PARAM_FUNC paramfunc_table[7] = {&gamma_param, &elec_param, &posi_param, &nue_param, 
+																																								&numu_param, &antinue_param, &antinumu_param};
 
-char *filenames[7] = {"gammaspectrum.csv", "elecspectrum.csv", "posispectrum.csv", "nuespectrum.csv", "numuspectrum.csv", "antinuespectrum.csv", "antinumuspectrum.csv"};
+char *filenames[7] = {"gammaspectrum.csv", "elecspectrum.csv", "posispectrum.csv", 
+																						"nuespectrum.csv", "numuspectrum.csv", "antinuespectrum.csv", "antinumuspectrum.csv"};
 
 double Tp[43] = {512.0e3, 362.0e3, 256.0e3, 181.0e3, 128.0e3, 90.5e3, 64.0e3, 45.3e3, 32.0e3, 22.6e3, 
 																	16.0e3, 11.3e3, 8.0e3, 5.66e3, 4.0e3, 2.8e3, 2.0e3, 1.41e3, 1.0e3, 707.0, 500.0, 354.0,
@@ -35,17 +31,19 @@ double Tp[43] = {512.0e3, 362.0e3, 256.0e3, 181.0e3, 128.0e3, 90.5e3, 64.0e3, 45
 void example1(void) {
 				double Tp, E;
 				double f;
-				double a[9];
 				int i;
+				PARAMSET params;
+
+				memset(&params, 0, sizeof(PARAMSET));
 
 				Tp = 512000.0; /* proton kinetic energy 512 TeV */
 				E = 1.0e2;     /* gamma-ray energy 100 GeV */
 
 				printf("Example 1: non-diff\n");
-				gamma_param_nd(Tp, a);
+				gamma_param_nd(Tp, &params);
 				for (i = 0; i < 9; i++)
-								printf("a[%d] = %10e\n", i, a[i]);
-				f = sigma_incl_nd(ID_GAMMA, E, Tp, a);
+								printf("a[%d] = %10e\n", i, params.a[i]);
+				f = sigma_incl_nd(ID_GAMMA, E, Tp, &params);
 				printf("Tp = 512TeV and Egamma = 100 GeV => sigma_incl_nd = %10e mb\n", f);
 
 				return;
@@ -57,14 +55,13 @@ void example1(void) {
 void example2(void) {
 				double Tp, E;
 				double f;
-				double a[9];
 				int i;
 
 				Tp = 512000.0; /* proton kinetic energy 512 TeV */
 				E = 1.0e2;     /* gamma-ray energy 100 GeV */
 
 				printf("Example 2: total inclusive gamma-ray cross-section\n");
-				f = sigma_incl(ID_GAMMA, E, Tp);
+				f = sigma_incl_tot(ID_GAMMA, E, Tp);
 				printf("total inclusive gamma-ray cross-section\n");
 				printf("Tp = 512TeV, Egamma = 100 GeV => sigma_incl = %10e mb\n", f);
 
@@ -80,15 +77,15 @@ void example3(void) {
 				double *spectrum_diff;
 				double *spectrum_delta;
 				double *spectrum_res;
-				double a[9], b[8], c[5], d[5];
 				double E;
 				double s, s_nd, s_diff, s_delta, s_res;
 				double ind2factor;
 				double widthfactor;
-
 				FILE *file;
-
 				int i, j, k;
+				PARAMSET params;
+
+				memset(&params, 0, sizeof(PARAMSET));
 
 				printf("Example 3: secondary particle spectra from power-law protons\n");
 
@@ -108,10 +105,7 @@ void example3(void) {
 
 								for (i = 0; i < 43; i++) {
 												/* calculate parameters for this Tp */
-												paramfunc_table[k][0](Tp[i], a);
-												paramfunc_table[k][1](Tp[i], b);
-												paramfunc_table[k][2](Tp[i], c);
-												paramfunc_table[k][3](Tp[i], d);
+												paramfunc_table[k](Tp[i], &params);
 
 												ind2factor = 1.0/(Tp[i]*1.0e-3);
 												if (i < 38)
@@ -126,14 +120,14 @@ void example3(void) {
 																s_nd = s_diff = s_delta = s_res = 0.0;
 																E = pow(10.0, j*0.05 - 3.0);
 																/* calculate individual contributions */
-																s_nd = sigma_incl_nd(k, E, Tp[i], a);
+																s_nd = sigma_incl_nd(k, E, Tp[i], &params);
 
 																if (i < 37)
-																				s_diff = sigma_incl_diff(k, E, Tp[i], b);
+																				s_diff = sigma_incl_diff(k, E, Tp[i], &params);
 																if (i > 35)
-																				s_delta = sigma_incl_delta(k, E, Tp[i], c);
+																				s_delta = sigma_incl_delta(k, E, Tp[i], &params);
 																if (i > 34 && i < 41)
-																				s_res = sigma_incl_res(k, E, Tp[i], d);
+																				s_res = sigma_incl_res(k, E, Tp[i], &params);
 																/* and add them together and add to rest of the spectrum */
 																s = s_nd + s_diff + s_delta + s_res;
 

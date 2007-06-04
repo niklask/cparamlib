@@ -2,395 +2,389 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2007/05/04 17:24:30 $ $Revision: 1.9 $
+# $Author: niklas $ $Date: 2007/06/04 22:22:23 $ $Revision: 1.10 $
 #
 
 #
-# Provides a class that implements calculations of cross sections based on the
-# parametric model published in ApJ
+# Provides convencience classes that implements calculations of cross sections
+# based on the parametric model published in ApJ. The classes are wrappers around
+# the c functions implemented in cparamlib.
 #
 
 import sys
-from numarray import *
-
-import pycparam
-
-ID_GAMMA = 0
-ID_ELECTRON = 1
-ID_POSITRON = 2
-ID_NUE = 3
-ID_NUMU = 4
-ID_ANTINUE = 5
-ID_ANTINUMU = 6
-
-L_MAX = [0.96, 0.96, 0.94, 0.98, 0.98, 0.94, 0.98]
-W_NDL = [15.0, 20.0, 15.0, 15.0, 15.0, 20.0, 15.0]
-W_NDH = [44.0, 45.0, 47.0, 42.0, 40.0, 45.0, 40.0]
 
 # --------------------------------------------------------------------------------
 #  Class definitions
 # --------------------------------------------------------------------------------
 
-# Description:
-# The class ParamModel is a presentation of the parametric model for a given secondary particle and a
-# set of proton kinetic energies. On instantiation, the particle species is set and tables for
-# parameter values are precalculated. This is done using the SWIG wrapper for libcparamlib. Once
-# the class has been instantiated, one can calculate inclusive cross sections for any set of secondary
-# particles. Note that those methods also take Tp as argument and this Tp must be the same as used
-# when instantiating.
-
 #
 # Class ParamModel
 #
+# Description:
+# The class ParamModel is a python representation of the parameteric model implemented
+# in cparamlib. It is just a convenience class which wraps the implemented functions.
+# On instantiation, the parameters are caluclated for the given Tp and particle.
+#
+# Inclusive cross section calculated with calls to sigma_incl_<process> which takes the
+# secondary particle energy E and proton kinetic energy as arguments. If Tp is different
+# than from instantiation or previous call, then parameters are recalculated and Tp stored.
+#
 class ParamModel:
+
     #
     # Constructor
-    #
-    # Tp should be a numarray containing the proton kinetic energies (Tp) for which
-    # the parameter table is calculated
     #
     def __init__(self, Tp, particle = None):
         if (particle == None):
             # default to gamma-rays
-            self.particle = ID_GAMMA
+            self.particle = cparamlib.ID_GAMMA
         else:
             self.particle = particle
-            
-        self.__paramTableND = self.paramND(Tp)
-        self.__paramTableDiff = self.paramDiff(Tp)
-        self.__paramTableDelta = self.paramDelta(Tp)
-        self.__paramTableRes = self.paramRes(Tp)
+
+        self.Tp = Tp
+
+        # create struct for parameter storage
+        self.params = cparamlib.PARAMSET()
+
+        # initialize parameters for the given Tp
+        self.param_all(self.Tp)
 
     #
-    # Method reinit
+    # Method param_all
     #
-    # Recalculates the parameter tables and sets new particle species
+    # Calculates the parameters for all four components at the given Tp
+    # This is a wrapper around cparamlib.<particle>_param(Tp, params)
     #
-    def reinit(self, Tp, particle = None):
-        if (particle == None):
-            # default to gamma-rays
-            self.particle = ID_GAMMA
-        else:
-            self.particle = particle
-            
-        self.__paramTableND = self.paramND(Tp)
-        self.__paramTableDiff = self.paramDiff(Tp)
-        self.__paramTableDelta = self.paramDelta(Tp)
-        self.__paramTableRes = self.paramRes(Tp)
+    def param_all(self, Tp):
+        if (self.particle == cparamlib.ID_GAMMA):
+            cparamlib.gamma_param(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ELECTRON):
+            cparamlib.elec_param(Tp, self.params)
+        elif (self.particle == cparamlib.ID_POSITRON):
+            cparamlib.posi_param(Tp, self.params)
+        elif (self.particle == cparamlib.ID_NUE):
+            cparamlib.nue_param(Tp, self.params)
+        elif (self.particle == cparamlib.ID_NUMU):
+            cparamlib.numu_param(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ANTINUE):
+            cparamlib.antinue_param(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ANTINUMU):
+            cparamlib.antinumu_param(Tp, self.params)
 
     #
-    # Method paramND
+    # Method param_nd
     #
-    # Create a table with the non-diffraction parameter values for all Tp:s
-    # This is a wrapper around <particle>_param_nd(Tp, a)
+    # Calculates the parameters for the non-diffraction parameter set at the given Tp
+    # This is a wrapper around cparamlib.<particle>_param_nd(Tp, params)
     #
-    def paramND(self, Tp):
-        n = Tp.shape[0]
-        
-        paramTable = zeros((n,9), Float32)
-
-        a = pycparam.doubleArray(9)
-        for i in range(n):
-            if (self.particle == ID_GAMMA):
-                pycparam.gamma_param_nd(Tp[i], a)
-            if (self.particle == ID_ELECTRON):
-                pycparam.elec_param_nd(Tp[i], a)
-            if (self.particle == ID_POSITRON):
-                pycparam.posi_param_nd(Tp[i], a)
-            if (self.particle == ID_NUE):
-                pycparam.nue_param_nd(Tp[i], a)
-            if (self.particle == ID_NUMU):
-                pycparam.numu_param_nd(Tp[i], a)
-            if (self.particle == ID_ANTINUE):
-                pycparam.antinue_param_nd(Tp[i], a)
-            if (self.particle == ID_ANTINUMU):
-                pycparam.antinumu_param_nd(Tp[i], a)
-
-            for j in range(9):
-                paramTable[i,j] = a[j]
-                
-        return paramTable
+    def param_nd(self, Tp):
+        if (self.particle == cparamlib.ID_GAMMA):
+            cparamlib.gamma_param_nd(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ELECTRON):
+            cparamlib.elec_param_nd(Tp, self.params)
+        elif (self.particle == cparamlib.ID_POSITRON):
+            cparamlib.posi_param_nd(Tp, self.params)
+        elif (self.particle == cparamlib.ID_NUE):
+            cparamlib.nue_param_nd(Tp, self.params)
+        elif (self.particle == cparamlib.ID_NUMU):
+            cparamlib.numu_param_nd(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ANTINUE):
+            cparamlib.antinue_param_nd(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ANTINUMU):
+            cparamlib.antinumu_param_nd(Tp, self.params)
 
     #
-    # Method paramDiff
+    # Method param_diff
     #
-    # Create a table with the diffraction parameter values for all Tp:s
-    # This is a wrapper around <particle>_param_diff(Tp, a)
+    # Calculates the parameters for the diffraction parameter set at the given Tp
+    # This is a wrapper around cparamlib.<particle>_param_diff(Tp, params)
     #
-    def paramDiff(self, Tp):
-        n = Tp.shape[0]
-        
-        paramTable = zeros((n,8), Float32)
-
-        b = pycparam.doubleArray(8)
-        for i in range(n):
-            if (self.particle == ID_GAMMA):
-                pycparam.gamma_param_diff(Tp[i], b)
-            if (self.particle == ID_ELECTRON):
-                pycparam.elec_param_diff(Tp[i], b)
-            if (self.particle == ID_POSITRON):
-                pycparam.posi_param_diff(Tp[i], b)
-            if (self.particle == ID_NUE):
-                pycparam.nue_param_diff(Tp[i], b)
-            if (self.particle == ID_NUMU):
-                pycparam.numu_param_diff(Tp[i], b)
-            if (self.particle == ID_ANTINUE):
-                pycparam.antinue_param_diff(Tp[i], b)
-            if (self.particle == ID_ANTINUMU):
-                pycparam.antinumu_param_diff(Tp[i], b)
-
-            for j in range(8):
-                paramTable[i,j] = b[j]
-                
-        return paramTable
+    def param_diff(self, Tp):
+        if (self.particle == cparamlib.ID_GAMMA):
+            cparamlib.gamma_param_diff(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ELECTRON):
+            cparamlib.elec_param_diff(Tp, self.params)
+        elif (self.particle == cparamlib.ID_POSITRON):
+            cparamlib.posi_param_diff(Tp, self.params)
+        elif (self.particle == cparamlib.ID_NUE):
+            cparamlib.nue_param_diff(Tp, self.params)
+        elif (self.particle == cparamlib.ID_NUMU):
+            cparamlib.numu_param_diff(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ANTINUE):
+            cparamlib.antinue_param_diff(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ANTINUMU):
+            cparamlib.antinumu_param_diff(Tp, self.params)
 
     #
-    # Method paramDelta
+    # Method param_delta
     #
-    # Create a table with the delta(1232) parameter values for all Tp:s
-    # This is a wrapper around <particle>_param_delta(Tp, a)
+    # Calculates the parameters for the delta(1232) parameter set at the given Tp
+    # This is a wrapper around cparamlib.<particle>_param_delta(Tp, params)
     #
-    def paramDelta(self, Tp):
-        n = Tp.shape[0]
-        
-        paramTable = zeros((n,5), Float32)
-
-        c = pycparam.doubleArray(5)
-        for i in range(n):
-            if (self.particle == ID_GAMMA):
-                pycparam.gamma_param_delta(Tp[i], c)
-            if (self.particle == ID_ELECTRON):
-                pycparam.elec_param_delta(Tp[i], c)
-            if (self.particle == ID_POSITRON):
-                pycparam.posi_param_delta(Tp[i], c)
-            if (self.particle == ID_NUE):
-                pycparam.nue_param_delta(Tp[i], c)
-            if (self.particle == ID_NUMU):
-                pycparam.numu_param_delta(Tp[i], c)
-            if (self.particle == ID_ANTINUE):
-                pycparam.antinue_param_delta(Tp[i], c)
-            if (self.particle == ID_ANTINUMU):
-                pycparam.antinumu_param_delta(Tp[i], c)
-
-            for j in range(5):
-                paramTable[i,j] = c[j]
-                
-        return paramTable
+    def param_delta(self, Tp):
+        if (self.particle == cparamlib.ID_GAMMA):
+            cparamlib.gamma_param_delta(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ELECTRON):
+            cparamlib.elec_param_delta(Tp, self.params)
+        elif (self.particle == cparamlib.ID_POSITRON):
+            cparamlib.posi_param_delta(Tp, self.params)
+        elif (self.particle == cparamlib.ID_NUE):
+            cparamlib.nue_param_delta(Tp, self.params)
+        elif (self.particle == cparamlib.ID_NUMU):
+            cparamlib.numu_param_delta(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ANTINUE):
+            cparamlib.antinue_param_delta(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ANTINUMU):
+            cparamlib.antinumu_param_delta(Tp, self.params)
     
     #
-    # Method paramRes
+    # Method param_res
     #
-    # Create a table with the res(1600) parameter values for all Tp:s
-    # This is a wrapper around <particle>_param_res(Tp, a)
+    # Calculates the parameters for the res(1600) parameter set at the given Tp
+    # This is a wrapper around cparamlib.<particle>_param_res(Tp, params)
     #
-    def paramRes(self, Tp):
-        n = Tp.shape[0]
+    def param_res(self, Tp):
+        if (self.particle == cparamlib.ID_GAMMA):
+            cparamlib.gamma_param_res(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ELECTRON):
+            cparamlib.elec_param_res(Tp, self.params)
+        elif (self.particle == cparamlib.ID_POSITRON):
+            cparamlib.posi_param_res(Tp, self.params)
+        elif (self.particle == cparamlib.ID_NUE):
+            cparamlib.nue_param_res(Tp, self.params)
+        elif (self.particle == cparamlib.ID_NUMU):
+            cparamlib.numu_param_res(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ANTINUE):
+            cparamlib.antinue_param_res(Tp, self.params)
+        elif (self.particle == cparamlib.ID_ANTINUMU):
+            cparamlib.antinumu_param_res(Tp, self.params)
+
+    #
+    # Method sigma_incl_nd
+    #
+    # Calculates the inclusive non-diffraction cross section at the given E and Tp
+    # This is a wrapper around cparamlib.sigma_incl_nd(particle, E, Tp, params)
+    #
+    def sigma_incl_nd(self, E, Tp):
+        if (Tp != self.Tp):
+            self.Tp = Tp
+            self.param_nd(self.Tp)
+
+        sigma = cparamlib.sigma_incl_nd(self.particle, E, self.Tp, self.params)
+            
+        return sigma
+            
+    #
+    # Method sigma_incl_diff
+    #
+    # Calculates the inclusive diffraction cross section at the given E and Tp
+    # This is a wrapper around cparamlib.sigma_incl_diff(particle, E, Tp, params)
+    #
+    def sigma_incl_diff(self, E, Tp):
+        if (Tp != self.Tp):
+            self.Tp = Tp
+            self.param_diff(self.Tp)
+
+        sigma = cparamlib.sigma_incl_diff(self.particle, E, self.Tp, self.params)
+            
+        return sigma
+
+    #
+    # Method sigma_incl_delta
+    #
+    # Calculates the inclusive delta(1232) cross section at the given E and Tp
+    # This is a wrapper around cparamlib.sigma_incl_delta(particle, E, Tp, params)
+    #
+    def sigma_incl_delta(self, E, Tp):
+        if (Tp != self.Tp):
+            self.Tp = Tp
+            self.param_delta(self.Tp)
+
+        sigma = cparamlib.sigma_incl_delta(self.particle, E, self.Tp, self.params)
+            
+        return sigma
+
+    #
+    # Method sigma_incl_res
+    #
+    # Calculates the inclusive res(1600) cross section at given E and Tp
+    # This is a wrapper around cparamlib.sigma_incl_res(particle, E, Tp, params)
+    #
+    def sigma_incl_res(self, E, Tp):
+        if (Tp != self.Tp):
+            self.Tp = Tp
+            self.param_res(self.Tp)
+
+        sigma = cparamlib.sigma_incl_res(self.particle, E, self.Tp, self.params)
+            
+        return sigma
+
+    #
+    # Method sigma_incl_tot
+    #
+    # Calculates the total inclusive cross section, i.e. from all four components,
+    # at the given E and Tp
+    # This is a wrapper around cparamlib.sigma_incl_tot(particle, E, Tp, params)
+    #
+    def sigma_incl_tot(self, E, Tp):
+        if (Tp != self.Tp):
+            self.Tp = Tp
+            self.param_all(self.Tp)
+            
+        sigma = cparamlib.sigma_incl_tot(E, self.Tp, self.params)
+            
+        return sigma
+
+#
+# Class AngularParamModel
+#
+# Description:
+# The class AngularParamModel is a python representation of the parameteric model for
+# the angular distribution implemented in cparamlib. It is jus ta convenience class
+# which wraps the implemented functions. On instantiation, the parameters are caluclated
+# for the given Tp, E and particle.
+#
+# Calculate the differential cross section d^2sigma/dlogEdpT for gamma rays at given
+# pT, E and Tp. Consecutive calls checks if E and Tp changed and recalculates parameters
+# only as neccesary.
+#
+class AngularParamModel:
+
+    #
+    # Constructor
+    #
+    def __init__(self, E, Tp, particle = None):
+        if (particle == None):
+            # default to gamma-rays
+            self.particle = cparamlib.ID_GAMMA
+        else:
+            self.particle = particle
+
+        self.Tp = Tp
+        self.E = E
+
+        # create struct for parameter storage
+        self.pt_params = cparamlib.PARAMSET_PT()
+            
+        # initialize parameters for the given Tp and E
+        self.param_pt_all(self.E, self.Tp)
         
-        paramTable = zeros((n,5), Float32)
-
-        d = pycparam.doubleArray(5)
-        for i in range(n):
-            if (self.particle == ID_GAMMA):
-                pycparam.gamma_param_res(Tp[i], d)
-            if (self.particle == ID_ELECTRON):
-                pycparam.elec_param_res(Tp[i], d)
-            if (self.particle == ID_POSITRON):
-                pycparam.posi_param_res(Tp[i], d)
-            if (self.particle == ID_NUE):
-                pycparam.nue_param_res(Tp[i], d)
-            if (self.particle == ID_NUMU):
-                pycparam.numu_param_res(Tp[i], d)
-            if (self.particle == ID_ANTINUE):
-                pycparam.antinue_param_res(Tp[i], d)
-            if (self.particle == ID_ANTINUMU):
-                pycparam.antinumu_param_res(Tp[i], d)
-
-            for j in range(5):
-                paramTable[i,j] = d[j]
+    #
+    # Method param_pt_all
+    #
+    # Calculates the pT parameters for all three components at the given Tp and E
+    # This is a wrapper around cparamlib.<particle>_pt_param(E, Tp, params)
+    #
+    def param_pt_all(self, E, Tp):
+        if (self.particle == cparamlib.ID_GAMMA):
+            cparamlib.gamma_pt_param(Tp, self.pt_params)
                 
-        return paramTable
+    #
+    # Method param_pt_nr
+    #
+    # Creates the list containing the non-resonance pT parameter set at the given Tp
+    # This is a wrapper around cparamlib.<particle>_pt_param_nr(E, Tp, params)
+    #
+    def param_pt_nr(self, E, Tp):
+        if (self.particle == cparamlib.ID_GAMMA):
+            cparamlib.gamma_pt_param_nr(Tp, self.pt_params)
 
     #
-    # Method sigmaND
+    # Method param_pt_delta
     #
-    # Calculates the inclusive non-diffraction cross section for given E and Tp values
-    # E and Tp are numarrays, returns a numarray
+    # Creates the list containing the Delta(1232) pT parameter set at the given Tp
+    # This is a wrapper around cparamlib.<particle>_pt_param_delta(E, Tp, params)
     #
-    def sigmaND(self, E, Tp):
-        n = E.shape[0]
-        m = Tp.shape[0]
+    def param_pt_delta(self, E, Tp):
+        if (self.particle == cparamlib.ID_GAMMA):
+            cparamlib.gamma_pt_param_delta(Tp, self.pt_params)
 
-        sigma = zeros((n,m), Float32)
-        
-				# init some variables, given in table 2
-        Lmin = -2.6
-        Lmax = L_MAX[self.particle]*log10(Tp)
-        Wl = W_NDL[self.particle]
-        Wh = W_NDH[self.particle]
-        
-				# calculate the log of E and Tp
-        x = log10(E)
-        y = log10(Tp*0.001)
+    #
+    # Method param_pt_res
+    #
+    # Creates the list containing the res(1232) pT parameter set at the given Tp
+    # This is a wrapper around cparamlib.<particle>_pt_param_res(E, Tp, params)
+    #
+    def param_pt_res(self, E, Tp):
+        if (self.particle == cparamlib.ID_GAMMA):
+            cparamlib.gamma_pt_param_res(Tp, self.pt_params)
 
-        a = self.__paramTableND
-        
-        #
-        # calculate inclusive cross section
-        #
-        for i in range(m):
-            s = a[i,0]*exp(-a[i,1]*(x - a[i,3] + a[i,2]*(x - a[i,3])**2)**2) + a[i,4]*exp(-a[i,5]*(x - a[i,8] + a[i,6]*(x - a[i,8])**2 + a[i,7]*(x - a[i,8])**3)**2)
+    #
+    # Method sigma_pt_nr
+    #
+    # Calculates the differential cross section d^2sigma/dlogEdpT for the non-resonance
+    # component at given pT, E and Tp
+    # This is a wrapper around cparamlib.sigma_pt_nr(particle, E, Tp, params)
+    #
+    def sigma_pt_res(self, pT, E, Tp):
+        # check if Tp or E has changes since last call
+        # we only need to recalculate if either one has changed
+        if ((Tp != self.Tp) or (E != self.E)):
+            self.E = E
+            self.Tp = Tp
+            self.param_pt_nr(self.E, self.Tp)
+
+        sigma = cparamlib.sigma_pt_nr(self.particle, pT, self.E, self.Tp, self.pt_params)
             
-            cutoff = (1.0/(1.0 + exp(Wl*(Lmin - x))))*(1.0/(1.0 + exp(Wh*(x - Lmax[i]))))
-        
-            # multiply with cutoff
-            s = s*cutoff
-            # if any element is less than zero then set equal to zero
-            choose(less(s, 0.0), (s, 0.0))
-            sigma[:,i] = s
+        return sigma
 
-        #
-        # do the renormalization
-        #
-        if (self.particle == ID_GAMMA):
-            renorm = 3.05*exp(-107.0*((y + 3.25)/(1.0 + 8.08*(y + 3.25)))**2)
-            renorm = choose(less_equal(Tp, 1.95), (1.01, renorm))
-        elif (self.particle == ID_ELECTRON):
-            renorm = 3.63*exp(-106*((y + 3.26)/(1.0 + 9.21*(y + 3.26)))**2) - 0.182*y - 0.175*y**2
-            renorm = choose(less_equal(Tp, 15.6), (1.01, renorm))
-        elif (self.particle == ID_POSITRON):
-            renorm = 2.22*exp(-98.9*((y + 3.25)/(1.0 + 1.04*(y + 3.25)))**2)
-            renorm = choose(less_equal(Tp, 5.52), (1.0, renorm))
-        elif (self.particle == ID_NUE):
-            renorm = 0.329*exp(-249*((y + 3.26)/(1.0 + 6.56*(y + 3.26)))**2) - 9.57*y - 0.229*y**2
-            renorm = choose(less_equal(Tp, 7.81), (1.0, renorm))
-        elif (self.particle == ID_NUMU):
-            renorm = 2.23*exp(-93.4*((y + 3.25)/(1.0 + 8.38*(y + 3.25)))**2) - 0.376*y - 0.121*y**2
-            renorm = choose(less_equal(Tp, 15.6), (1.0, renorm))
-        elif (self.particle == ID_ANTINUME):
-            renorm = 2.67*exp(-45.7*((y + 3.27)/(1.0 + 6.59*(y + 3.27)))**2) - 0.301*y - 0.208*y**2
-            renorm = choose(less_equal(Tp, 15.6), (1.0, renorm))    
-        elif (self.particle == ID_ANTINUMU):
-            renorm = 2.56*exp(-107*((y + 3.25)/(1.0 + 8.34*(y + 3.25)))**2) - 0.385*y - 0.125*y**2
-            renorm = choose(less_equal(Tp, 15.6), (1.0, renorm))
+    #
+    # Method sigma_pt_delta
+    #
+    # Calculates the differential cross section d^2sigma/dlogEdpT for Delta(1232)
+    # at given pT, E and Tp
+    # This is a wrapper around cparamlib.sigma_pt_delta(particle, E, Tp, params)
+    #
+    def sigma_pt_res(self, pT, E, Tp):
+        # check if Tp or E has changes since last call
+        # we only need to recalculate if either one has changed
+        if ((Tp != self.Tp) or (E != self.E)):
+            self.E = E
+            self.Tp = Tp
+            self.param_pt_delta(self.E, self.Tp)
+
+        sigma = cparamlib.sigma_pt_delta(self.particle, pT, self.E, self.Tp, self.pt_params)
             
-        for i in range(n):
-            sigma[i,:] = sigma[i,:]*renorm
-
         return sigma
+
+    #
+    # Method sigma_pt_res
+    #
+    # Calculates the differential cross section d^2sigma/dlogEdpT for res(1600)
+    # at given pT, E and Tp
+    # This is a wrapper around cparamlib.sigma_pt_res(particle, E, Tp, params)
+    #
+    def sigma_pt_res(self, pT, E, Tp):
+        # check if Tp or E has changes since last call
+        # we only need to recalculate if either one has changed
+        if ((Tp != self.Tp) or (E != self.E)):
+            self.E = E
+            self.Tp = Tp
+            self.param_pt_res(self.E, self.Tp)
+
+        sigma = cparamlib.sigma_pt_res(self.particle, pT, self.E, self.Tp, self.pt_params)
             
-    #
-    # Method sigmaDiff
-    #
-    # Calculates the inclusive diffraction cross section for given E and Tp values
-    # E and Tp are numarrays, returns a numarray
-    #
-    def sigmaDiff(self, E, Tp):
-        n = E.shape[0]
-        m = Tp.shape[0]
-
-        sigma = zeros((n,m), Float32)
-
-				# init some variables, given in table 2
-        Lmax = log10(Tp)
-        Wdiff = 75.0
-
-				# calculate the log of E and Tp
-        x = log10(E)
-        y = log10(Tp*0.001)
-
-        b = self.__paramTableDiff
-        
-        #
-        # calculate inclusive cross section
-        #
-        for i in range(m):
-            s = b[i,0]*exp(-b[i,1]*((x - b[i,2])/(1.0 + b[i,3]*(x - b[i,2])))**2) + b[i,4]*exp(-b[i,5]*((x - b[i,6])/(1.0 + b[i,7]*(x - b[i,6])))**2)
-
-            cutoff = 1.0/(1.0 + exp(Wdiff*(x - Lmax[i])))
-
-            # multiply with cutoff
-            s = s*cutoff
-            # if any element is less than zero then set equal to zero
-            choose(less(s, 0.0), (s, 0.0))
-            sigma[:,i] = s
-
         return sigma
 
     #
-    # Method sigmaDelta
+    # Method sigma_pt_tot
     #
-    # Calculates the inclusive delta(1232) cross section for given E and Tp values
-    # E and Tp are numarrays, returns a numarray
+    # Calculates the differential cross section d^2sigma/dlogEdpT from all three
+    # components at the given pT, E and Tp
+    # This is a wrapper around cparamlib.sigma_pt_tot(particle, E, Tp, params)
     #
-    def sigmaDelta(self, E, Tp):
-        n = E.shape[0]
-        m = Tp.shape[0]
+    def sigma_pt_tot(self, pT, E, Tp):
+        # check if Tp or E has changes since last call
+        # we only need to recalculate if either one has changed
+        if ((Tp != self.Tp) or (E != self.E)):
+            self.E = E
+            self.Tp = Tp
+            self.param_pt_res(self.E, self.Tp)
 
-        sigma = zeros((n,m), Float32)
-
-				# init some variables, given in table 2
-        Lmax = log10(Tp)
-        Wdelta = 75.0
-
-				# calculate the log of E and Tp
-        x = log10(E)
-        y = log10(Tp*0.001)
-
-        c = self.__paramTableDelta
-        
-        #
-        # calculate inclusive cross section
-        #
-        for i in range(m):
-            s = c[i,0]*exp(-c[i,1]*((x - c[i,2])/(1.0 + c[i,3]*(x - c[i,2]) + c[i,4]*(x - c[i,2])**2))**2)
-
-            cutoff = 1.0/(1.0 + exp(Wdelta*(x - Lmax[i])))
-
-            # multiply with cutoff
-            s = s*cutoff
-            # if any element is less than zero then set equal to zero
-            choose(less(s, 0.0), (s, 0.0))
-            sigma[:,i] = s
-
+        sigma = cparamlib.sigma_pt_tot(self.particle, pT, self.E, self.Tp, params)
+            
         return sigma
-
-    #
-    # Method sigmaRes
-    #
-    # Calculates the inclusive res(1600) cross section for given E and Tp values
-    # E and Tp are numarrays, returns a numarray
-    #
-    def sigmaRes(self, E, Tp):
-        n = E.shape[0]
-        m = Tp.shape[0]
-
-        sigma = zeros((n,m), Float32)
-
-				# init some variables, given in table 2
-        Lmax = log10(Tp)
-        Wres = 75.0
-
-				# calculate the log of E and Tp
-        x = log10(E)
-        y = log10(Tp*0.001)
-
-        d = self.__paramTableRes
-        
-        #
-        # calculate inclusive cross section
-        #
-        for i in range(m):
-            s = d[i,0]*exp(-d[i,1]*((x - d[i,2])/(1.0 + d[i,3]*(x - d[i,2]) + d[i,4]*(x - d[i,2])**2))**2)
-
-            cutoff = 1.0/(1.0 + exp(Wres*(x - Lmax[i])))
-
-            # multiply with cutoff
-            s = s*cutoff
-            # if any element is less than zero then set equal to zero
-            choose(less(s, 0.0), (s, 0.0))
-            sigma[:,i] = s
-
-        return sigma
+    
         
 if (__name__ == "__main__"):
     sys.exit(0)
