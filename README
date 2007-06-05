@@ -1,39 +1,3 @@
-================================================================================
-Title: Parameterization of {gamma}, e^{+/-}^ and Neutrino Spectra Produced
-       by p-p Interaction in Astronomical Environment
-Authors: Kamae T., Karlsson N., Mizuno T., Abe T., Koi T.
-================================================================================
-
-Code names: 
-
-antinue.c  
-antinumu.c  
-elec.c  
-nue.c  
-numu.c  
-params.c  
-posi.c  
-sigma.c  
-test.c
-
-Language: C
-
-Code tested under the following compilers/operating systems:
-  RedHat Enterprise Linux 3.0 (Linux kernel 2.4.21) with gcc 3.2.3
-  RedHat Linux 7.3 (Linux kernel 2.4.18) with gcc 3.2 (on VMWare 3)
-
-Description of input data: See below.
-
-Description of output data: See below.
-
-System requirements: See below.
-
-Calls to external routines: None
-
-Additional comments: 
-
-Optimization contributions by John Houck (houck@space.mit.edu)
-
 Description
 -----------
 
@@ -42,23 +6,25 @@ created in proton-proton interactions in astronomical environment according to t
 described in 
   Tuneyoshi Kamae, Niklas Karlsson, Tsunefumi Mizuno, Toshinori Abe, and Tatsumi Koi; 
   "Parameterization of $\gamma$, $e^{\pm}$ and Neutrino Spectra Produced by $p-p$ Interaction in Astronomical Environment"
-to appear in Astrophysical Journal (2006).
-
-Feel free to include the source code within your own program.
+to appear in Astrophysical Journal (2006) and
+  Niklas Karlsson and Tuneyoshi Kamae;
+  "Parameterization of the Angular Distribution of Gamma Rays Produced by P-P Interaction in Astronomical Environment"
+to by submitted to Astrophysical Journal (2007).
 
 IMPORTANT! The maintainer cannot be held responsible for anything that is caused by using
-this piece of code.
+this library or its extension.
 
 Requirements
 ------------
 
-To build this library and the python wrapper one needs a working compiler, such as gcc, and must have SWIG
-installed. SWIG is used to build the python wrapper code.
+To build this library and the python wrapper one needs a working compiler, such as gcc, and must
+have SWIG installed. SWIG is used to build the python wrapper code.
 
 Build
 -----
 
 The library is now built using the autoconf/automake method:
+
 ./configure
 make
 make install
@@ -119,56 +85,61 @@ through 9. Do this by calling the four functions for each of the secondary
 particle species. Suffices for the functions are:
   nd		 contribution from non-diffractive process 
   diff	 contribution from diffractive process 
+	nr		 sum of non-diffractive and diffraction 
   delta	 contribution from Delta(1232) excitation process 
-  res		 contribution from Res(1600) excitation process
-				 (note that Res(1600) represents a collaction of resonances) 
+  res		 contribution from res(1600) excitation process
+				 (note that res(1600) represents a collaction of resonances) 
 
 Arguments:
   Tp			proton kinetic energy in GeV
-  a,b,c,d pointer to where the parameter array will be stored
-					dimensions are a[9], b[8], c[5], d[5]
+  params  pointer to a struct PARAMSET or a struct PARAMSET_PT where parameter 
+					arrays are stored
 
-Gamma-rays (table 3):
-  void gamma_param_nd(double Tp, double* a);
-  void gamma_param_diff(double Tp, double* b);
-  void gamma_param_delta(double Tp, double* c);
-  void gamma_param_res(double Tp, double* d);
+Gamma rays (table 3, Kamae et al. 2006 and table 1, Karlsson and Kamae 2007):
+  void gamma_param_nd(double Tp, PARAMSET* params);
+  void gamma_param_diff(double Tp, PARAMSET* params);
+  void gamma_param_delta(double Tp, PARAMSET* params);
+  void gamma_param_res(double Tp, PARAMSET* params);
 
-Electrons (table 4):
-  void elec_param_nd(double Tp, double* a);
-  void elec_param_diff(double Tp, double* b);
-  void elec_param_delta(double Tp, double* c);
-  void elec_param_res(double Tp, double* d);
+  void gamma_param_nr(double Tp, PARAMSET_PT* params);
+  void gamma_param_delta(double Tp, PARAMSET_PT* params);
+  void gamma_param_res(double Tp, PARAMSET_PT* params);
 
-Positrons (table 5):
-  void posi_param_nd(double Tp, double* a);
-  void posi_param_diff(double Tp, double* b);
-  void posi_param_delta(double Tp, double* c);
-  void posi_param_res(double Tp, double* d);
+Electrons (table 4, Kamae et al. 2006):
+  void elec_param_nd(double Tp, PARAMSET* params);
+  void elec_param_diff(double Tp, PARAMSET* params);
+  void elec_param_delta(double Tp, PARAMSET* params);
+  void elec_param_res(double Tp, PARAMSET* params);
 
-Electron neutrinos (table 6):
-	void nue_param_nd(double Tp, double* a);
-  void nue_param_diff(double Tp, double* b);
-  void nue_param_delta(double Tp, double* c);
-  void nue_param_res(double Tp, double* d);
+Positrons (table 5, Kamae et al. 2006):
+  void posi_param_nd(double Tp, PARAMSET* params);
+  void posi_param_diff(double Tp, PARAMSET* params);
+  void posi_param_delta(double Tp, PARAMSET* params);
+  void posi_param_res(double Tp, PARAMSET* params);
 
-Electron anti-neutrinos (table 7):
-  void antinue_param_nd(double Tp, double* a);
-  void antinue_param_diff(double Tp, double* b);
-  void antinue_param_delta(double Tp, double* c);
-  void antinue_param_res(double Tp, double* d);
+Electron neutrinos (table 6, Kamae et al. 2006):
+	void nue_param_nd(double Tp, PARAMSET* params);
+  void nue_param_diff(double Tp, PARAMSET* params);
+  void nue_param_delta(double Tp, PARAMSET* params);
+  void nue_param_res(double Tp, PARAMSET* params);
 
-Muon neutrinos (table 8):
-  void numu_param_nd(double Tp, double* a);
-  void numu_param_diff(double Tp, double* b);
-  void numu_param_delta(double Tp, double* c);
-  void numu_param_res(double Tp, double* d);
+Electron anti-neutrinos (table 7, Kamae et al. 2006):
+  void antinue_param_nd(double Tp, PARAMSET* params);
+  void antinue_param_diff(double Tp, PARAMSET* params);
+  void antinue_param_delta(double Tp, PARAMSET* params);
+  void antinue_param_res(double Tp, PARAMSET* params);
 
-Muon neutrinos (table 8):
-  void antinumu_param_nd(double Tp, double* a);
-  void antinumu_param_diff(double Tp, double* b);
-  void antinumu_param_delta(double Tp, double* c);
-  void antinumu_param_res(double Tp, double* d);
+Muon neutrinos (table 8, Kamae et al. 2006):
+  void numu_param_nd(double Tp, PARAMSET* params);
+  void numu_param_diff(double Tp, PARAMSET* params);
+  void numu_param_delta(double Tp, PARAMSET* params);
+  void numu_param_res(double Tp, PARAMSET* params);
+
+Muon neutrinos (table 8, Kamae et al. 2006):
+  void antinumu_param_nd(double Tp, PARAMSET* params);
+  void antinumu_param_diff(double Tp, PARAMSET* params);
+  void antinumu_param_delta(double Tp, PARAMSET* params);
+  void antinumu_param_res(double Tp, PARAMSET* params);
 
 Secondary particle id's:
 
@@ -180,6 +151,7 @@ ID_NUE					3
 ID_NUMU					4
 ID_ANTINUE			5
 ID_ANTINUMU			6
+which are all defined in the header file.
 
 Inclusive cross sections:
 
@@ -192,17 +164,37 @@ Arguments:
 						(see list above)
   E					energy of the secondary particle in GeV
   Tp				proton kinetic energy in GeV
-  a,b,c,d		parameter array for each species
-						(note that these depend on the particle species)
+  params		pointer to a struct PARAMSET where parameter arrays are stored
 
 Individual contributions are calculated with:
-  double sigma_incl_nd(int particle, double E, double Tp, double* a);
-  double sigma_incl_diff(int particle, double E, double Tp, double* b);
-  double sigma_incl_delta(int particle, double E, double Tp, double* c);
-  double sigma_incl_res(int particle, double E, double Tp, double* d);
+  double sigma_incl_nd(int particle, double E, double Tp, PARAMSET* params);
+  double sigma_incl_diff(int particle, double E, double Tp, PARAMSET* params);
+  double sigma_incl_delta(int particle, double E, double Tp, PARAMSET* params);
+  double sigma_incl_res(int particle, double E, double Tp, PARAMSET* params);
 
 Total inclusive cross sections is calculated with:
-  double sigma_incl(int particle, double E, double Tp);
+  double sigma_incl_tot(int particle, double E, double Tp);
+
+pT Distributions:
+
+pT distributions, i.e. differential cross section dsigma^2/dlogEdpT, are calculated for
+gamma rays only.
+
+Arguments:
+  particle  id of the secondary particle to calculate for
+						(see list above)
+	pT				transverse momentum of particle in GeV/c
+  E					energy of the secondary particle in GeV
+  Tp				proton kinetic energy in GeV
+  params		pointer to a struct PARAMSET_PT where parameters are stored
+
+Individual contributions are calculated with:
+  double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* params);
+  double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT* params);
+  double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* params);
+
+Total inclusive cross sections is calculated with:
+  double sigma_pt_tot(int particle, double pT, double E, double Tp);
 
 Inelastic p-p cross sections:
 
@@ -237,14 +229,3 @@ cross section in mb.
 You can change the program "test.c" to calculate secondary particle spectra produce
 by any incident proton spectrum. You are reminded to "make clean" and "make all"
 to create a new executable.
-
-================================================================================
-The AAS gives permission to anyone who wishes to use these subroutines
-to run their own calculations.  Permission to republish or reuse these
-routines should be directed to the Executive Officer of the AAS.
-
-Note that the AAS does not take responsibility for the content of the 
-source code.  Potential users should be wary of applying the code
-to conditions that the code was not written to model and the accuracy of
-the code may be affected when compiled and executed on different systems.
-================================================================================
