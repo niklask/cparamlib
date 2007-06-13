@@ -4,7 +4,7 @@
  * Parameter calculation for muon anti-neutrinos
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/antinumu.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.6 $
+ * $Author: niklas $ $Date: 2007/06/13 20:05:51 $ $Revision: 1.7 $
  *
  */
 
@@ -97,7 +97,7 @@ void antinumu_param_diff(double Tp, PARAMSET* params)
  * Calculate parameter set for muon anti-neutrinos from delta(1232)
  */
 void antinumu_param_delta(double Tp, PARAMSET* params)
-7{
+{
     double y, p;
     int i;
 
