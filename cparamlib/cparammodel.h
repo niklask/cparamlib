@@ -1,13 +1,13 @@
 /*
 
-	*	cparammodel.h
-	*
-	*	Header file for cparamlib
-	*
-	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/Attic/cparammodel.h,v $
-	*	$Author: niklas $ $Date: 2007/06/04 22:21:24 $ $Revision: 1.3 $
-	*
-	*/
+ * cparammodel.h
+ *
+ * Header file for cparamlib
+ *
+ * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/Attic/cparammodel.h,v $
+ * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.4 $
+ *
+ */
 
 #ifndef CPARAMLIB_H
 #define CPARAMLIB_H
@@ -26,45 +26,45 @@
 
 /*
  * struct Definitions
-	*/
+ */
 
 /* 
-	* PARAMSET
+ * PARAMSET
  *
-	* Contains four double arrays used for calculating inclusive cross sections 
-	* (dsigma/dlogE) according to Kamae et al. (2006). Each double array
-	* corresponds to a parameter set in the paper.
-	*/
+ * Contains four double arrays used for calculating inclusive cross sections 
+ * (dsigma/dlogE) according to Kamae et al. (2006). Each double array
+ * corresponds to a parameter set in the paper.
+ */
 typedef struct {
-				double a[9];
-				double b[8];
-				double c[5];
-				double d[5];
+    double a[9];
+    double b[8];
+    double c[5];
+    double d[5];
 } PARAMSET;
 
 /* 
-	* PARAMSET_PT
+ * PARAMSET_PT
  *
-	* Contains doubles and double arrays used for calculating pT distributions
-	* (differential cross section d^2sigma/dlogEdpT) according to Karlsson & 
-	* Kamae (2007).
-	*/
+ * Contains doubles and double arrays used for calculating pT distributions
+ * (differential cross section d^2sigma/dlogEdpT) according to Karlsson & 
+ * Kamae (2007).
+ */
 typedef struct {
-				double a0, a1;
-				double a1i[4];
-				double b0, b1, b2;
-				double b1i[4], b2i[4];
-				double c0, c1, c2;
-				double c1i[4], c2i[4];
+    double a0, a1;
+    double a1i[4];
+    double b0, b1, b2;
+    double b1i[4], b2i[4];
+    double c0, c1, c2;
+    double c1i[4], c2i[4];
 
-				PARAMSET params;
+    PARAMSET params;
 } PARAMSET_PT;
 
 /* 
-	*	API Definitions
-	*		
-	*	Listed below are all the functions implemented in this library
-	*/
+ * API Definitions
+ *  
+ * Listed below are all the functions implemented in this library
+ */
 
 /*
  * Gamma-rays
@@ -137,7 +137,7 @@ void antinumu_param(double Tp, PARAMSET* params);
 /*
  * Calculation of the inclusive cross section, dsigma/dlogE, for any given secondary
  * particle and any given energy of that secondary particle
-	*
+ *
  * Proton kinetic energy Tp is passed as well as a pointer to a struct holding the
  * parameters (at that Tp)
  */
@@ -149,9 +149,9 @@ double sigma_incl_tot(int particle, double E, double Tp, PARAMSET* params);
 
 /*
  * Calculation of the differential cross section dsigma/dlogEdpT, for any gamma ray
-	*
+ *
  * Proton kinetic energy Tp is passed as well as a pointer to a struct keeping all the 
-	* parameters (at given Tp and log(E))
+ * parameters (at given Tp and log(E))
  */
 double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params);
 double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params);

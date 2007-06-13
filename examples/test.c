@@ -1,12 +1,12 @@
 /*
-	*	test.c
-	*
-	*	Test app for the parameterization model lib
-	*
-	*	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/test.c,v $
-	*	$Author: niklas $ $Date: 2007/06/04 22:22:38 $ $Revision: 1.4 $
-	*
-	*/
+ * test.c
+ *
+ * Test app for the parameterization model lib
+ *
+ * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/test.c,v $
+ * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.5 $
+ *
+ */
 
 #include <stdio.h>
 #include <math.h>
@@ -14,163 +14,163 @@
 
 typedef void (*PARAM_FUNC)(double, PARAMSET*);
 static PARAM_FUNC paramfunc_table[7] = {&gamma_param, &elec_param, &posi_param, &nue_param, 
-																																								&numu_param, &antinue_param, &antinumu_param};
+                                        &numu_param, &antinue_param, &antinumu_param};
 
 char *filenames[7] = {"gammaspectrum.csv", "elecspectrum.csv", "posispectrum.csv", 
-																						"nuespectrum.csv", "numuspectrum.csv", "antinuespectrum.csv", "antinumuspectrum.csv"};
+                      "nuespectrum.csv", "numuspectrum.csv", "antinuespectrum.csv", "antinumuspectrum.csv"};
 
 double Tp[43] = {512.0e3, 362.0e3, 256.0e3, 181.0e3, 128.0e3, 90.5e3, 64.0e3, 45.3e3, 32.0e3, 22.6e3, 
-																	16.0e3, 11.3e3, 8.0e3, 5.66e3, 4.0e3, 2.8e3, 2.0e3, 1.41e3, 1.0e3, 707.0, 500.0, 354.0,
-																	250.0, 177.0, 125.0, 88.4, 62.5, 44.2, 31.3, 22.1, 15.6, 11.1, 7.81, 5.52, 3.91, 2.76,
-																	1.95, 1.38, 0.98, 0.82, 0.69, 0.58, 0.488};
+                 16.0e3, 11.3e3, 8.0e3, 5.66e3, 4.0e3, 2.8e3, 2.0e3, 1.41e3, 1.0e3, 707.0, 500.0, 354.0,
+                 250.0, 177.0, 125.0, 88.4, 62.5, 44.2, 31.3, 22.1, 15.6, 11.1, 7.81, 5.52, 3.91, 2.76,
+                 1.95, 1.38, 0.98, 0.82, 0.69, 0.58, 0.488};
 
 /* 
-	* Example 1: calculate parameter a0,...,a8 used in the non-diff inclusive 
-	*	gamma-ray cross-section formula 
-	*/
+ * Example 1: calculate parameter a0,...,a8 used in the non-diff inclusive 
+ * gamma-ray cross-section formula 
+ */
 void example1(void) {
-				double Tp, E;
-				double f;
-				int i;
-				PARAMSET params;
+    double Tp, E;
+    double f;
+    int i;
+    PARAMSET params;
 
-				memset(&params, 0, sizeof(PARAMSET));
+    memset(&params, 0, sizeof(PARAMSET));
 
-				Tp = 512000.0; /* proton kinetic energy 512 TeV */
-				E = 1.0e2;     /* gamma-ray energy 100 GeV */
+    Tp = 512000.0; /* proton kinetic energy 512 TeV */
+    E = 1.0e2;     /* gamma-ray energy 100 GeV */
 
-				printf("Example 1: non-diff\n");
-				gamma_param_nd(Tp, &params);
-				for (i = 0; i < 9; i++)
-								printf("a[%d] = %10e\n", i, params.a[i]);
-				f = sigma_incl_nd(ID_GAMMA, E, Tp, &params);
-				printf("Tp = 512TeV and Egamma = 100 GeV => sigma_incl_nd = %10e mb\n", f);
+    printf("Example 1: non-diff\n");
+    gamma_param_nd(Tp, &params);
+    for (i = 0; i < 9; i++)
+        printf("a[%d] = %10e\n", i, params.a[i]);
+    f = sigma_incl_nd(ID_GAMMA, E, Tp, &params);
+    printf("Tp = 512TeV and Egamma = 100 GeV => sigma_incl_nd = %10e mb\n", f);
 
-				return;
+    return;
 }
 
 /* 
  * Example 2: inclusive gamma-ray cross-section
-	*/
+ */
 void example2(void) {
-				double Tp, E;
-				double f;
-				int i;
+    double Tp, E;
+    double f;
+    int i;
 
-				Tp = 512000.0; /* proton kinetic energy 512 TeV */
-				E = 1.0e2;     /* gamma-ray energy 100 GeV */
+    Tp = 512000.0; /* proton kinetic energy 512 TeV */
+    E = 1.0e2;     /* gamma-ray energy 100 GeV */
 
-				printf("Example 2: total inclusive gamma-ray cross-section\n");
-				f = sigma_incl_tot(ID_GAMMA, E, Tp);
-				printf("total inclusive gamma-ray cross-section\n");
-				printf("Tp = 512TeV, Egamma = 100 GeV => sigma_incl = %10e mb\n", f);
+    printf("Example 2: total inclusive gamma-ray cross-section\n");
+    f = sigma_incl_tot(ID_GAMMA, E, Tp);
+    printf("total inclusive gamma-ray cross-section\n");
+    printf("Tp = 512TeV, Egamma = 100 GeV => sigma_incl = %10e mb\n", f);
 
-				return;
+    return;
 }
 
 /*
  * Example 3: secondary particle spectra due to power-law protons
  */
 void example3(void) {
-				double *spectrum;
-				double *spectrum_nd;
-				double *spectrum_diff;
-				double *spectrum_delta;
-				double *spectrum_res;
-				double E;
-				double s, s_nd, s_diff, s_delta, s_res;
-				double ind2factor;
-				double widthfactor;
-				FILE *file;
-				int i, j, k;
-				PARAMSET params;
+    double *spectrum;
+    double *spectrum_nd;
+    double *spectrum_diff;
+    double *spectrum_delta;
+    double *spectrum_res;
+    double E;
+    double s, s_nd, s_diff, s_delta, s_res;
+    double ind2factor;
+    double widthfactor;
+    FILE *file;
+    int i, j, k;
+    PARAMSET params;
 
-				memset(&params, 0, sizeof(PARAMSET));
+    memset(&params, 0, sizeof(PARAMSET));
 
-				printf("Example 3: secondary particle spectra from power-law protons\n");
+    printf("Example 3: secondary particle spectra from power-law protons\n");
 
-				/* allocate memory for the spectrum (180 bins) */
-				spectrum = (double*)malloc(180 * sizeof(double));
-				spectrum_nd = (double*)malloc(180 * sizeof(double));
-				spectrum_diff = (double*)malloc(180 * sizeof(double));
-				spectrum_delta = (double*)malloc(180 * sizeof(double));
-				spectrum_res = (double*)malloc(180 * sizeof(double));
+    /* allocate memory for the spectrum (180 bins) */
+    spectrum = (double*)malloc(180 * sizeof(double));
+    spectrum_nd = (double*)malloc(180 * sizeof(double));
+    spectrum_diff = (double*)malloc(180 * sizeof(double));
+    spectrum_delta = (double*)malloc(180 * sizeof(double));
+    spectrum_res = (double*)malloc(180 * sizeof(double));
 
-				for (k = 0; k < 7; k++) {
-								memset(spectrum, 0, 180 * sizeof(double));
-								memset(spectrum_nd, 0, 180 * sizeof(double));
-								memset(spectrum_diff, 0, 180 * sizeof(double));
-								memset(spectrum_delta, 0, 180 * sizeof(double));
-								memset(spectrum_res, 0, 180 * sizeof(double));
+    for (k = 0; k < 7; k++) {
+        memset(spectrum, 0, 180 * sizeof(double));
+        memset(spectrum_nd, 0, 180 * sizeof(double));
+        memset(spectrum_diff, 0, 180 * sizeof(double));
+        memset(spectrum_delta, 0, 180 * sizeof(double));
+        memset(spectrum_res, 0, 180 * sizeof(double));
 
-								for (i = 0; i < 43; i++) {
-												/* calculate parameters for this Tp */
-												paramfunc_table[k](Tp[i], &params);
+        for (i = 0; i < 43; i++) {
+            /* calculate parameters for this Tp */
+            paramfunc_table[k](Tp[i], &params);
 
-												ind2factor = 1.0/(Tp[i]*1.0e-3);
-												if (i < 38)
-																widthfactor = 1.0;
-												else if (i == 38)
-																widthfactor = 0.75;
-												else if (i > 38)
-																widthfactor = 0.5;
+            ind2factor = 1.0/(Tp[i]*1.0e-3);
+            if (i < 38)
+                widthfactor = 1.0;
+            else if (i == 38)
+                widthfactor = 0.75;
+            else if (i > 38)
+                widthfactor = 0.5;
 
-												/* calculate the inclusive cross section in each bin of Enue */
-												for (j = 0; j < 180; j++) {
-																s_nd = s_diff = s_delta = s_res = 0.0;
-																E = pow(10.0, j*0.05 - 3.0);
-																/* calculate individual contributions */
-																s_nd = sigma_incl_nd(k, E, Tp[i], &params);
+            /* calculate the inclusive cross section in each bin of Enue */
+            for (j = 0; j < 180; j++) {
+                s_nd = s_diff = s_delta = s_res = 0.0;
+                E = pow(10.0, j*0.05 - 3.0);
+                /* calculate individual contributions */
+                s_nd = sigma_incl_nd(k, E, Tp[i], &params);
 
-																if (i < 37)
-																				s_diff = sigma_incl_diff(k, E, Tp[i], &params);
-																if (i > 35)
-																				s_delta = sigma_incl_delta(k, E, Tp[i], &params);
-																if (i > 34 && i < 41)
-																				s_res = sigma_incl_res(k, E, Tp[i], &params);
-																/* and add them together and add to rest of the spectrum */
-																s = s_nd + s_diff + s_delta + s_res;
+                if (i < 37)
+                    s_diff = sigma_incl_diff(k, E, Tp[i], &params);
+                if (i > 35)
+                    s_delta = sigma_incl_delta(k, E, Tp[i], &params);
+                if (i > 34 && i < 41)
+                    s_res = sigma_incl_res(k, E, Tp[i], &params);
+                /* and add them together and add to rest of the spectrum */
+                s = s_nd + s_diff + s_delta + s_res;
 
-																/* store in spectrum for index 2 */
-																spectrum[j] += s*ind2factor*widthfactor;
-																spectrum_nd[j] += s_nd*ind2factor*widthfactor;
-																spectrum_diff[j] += s_diff*ind2factor*widthfactor;
-																spectrum_delta[j] += s_delta*ind2factor*widthfactor;
-																spectrum_res[j] += s_res*ind2factor*widthfactor;
-												}
-								}
+                /* store in spectrum for index 2 */
+                spectrum[j] += s*ind2factor*widthfactor;
+                spectrum_nd[j] += s_nd*ind2factor*widthfactor;
+                spectrum_diff[j] += s_diff*ind2factor*widthfactor;
+                spectrum_delta[j] += s_delta*ind2factor*widthfactor;
+                spectrum_res[j] += s_res*ind2factor*widthfactor;
+            }
+        }
 
-								/* save to a file */
-								file = fopen(filenames[k], "w");
-								fprintf(file, "#spectrum due to power-law proton index 2.0\n");
-								fprintf(file, "logE\ttot\tnd\tdiff\tdelta\tres\n");
-								for (i = 0; i < 180; i++) {
-												s = log10(spectrum[i] + 1.0e-12) + (i*0.05 - 3.0);
-												s_nd = log10(spectrum_nd[i] + 1.0e-12) + (i*0.05 - 3.0);
-												s_diff = log10(spectrum_diff[i] + 1.0e-12) + (i*0.05 - 3.0);
-												s_delta = log10(spectrum_delta[i] + 1.0e-12) + (i*0.05 - 3.0);
-												s_res = log10(spectrum_res[i] + 1.0e-12) + (i*0.05 - 3.0);
-												fprintf(file, "%e %e %e %e %e %e\n", i*0.05 - 3.0, s, s_nd, s_diff, s_delta, s_res);
-								}
-								fclose(file);
-								
-				}
+        /* save to a file */
+        file = fopen(filenames[k], "w");
+        fprintf(file, "#spectrum due to power-law proton index 2.0\n");
+        fprintf(file, "logE\ttot\tnd\tdiff\tdelta\tres\n");
+        for (i = 0; i < 180; i++) {
+            s = log10(spectrum[i] + 1.0e-12) + (i*0.05 - 3.0);
+            s_nd = log10(spectrum_nd[i] + 1.0e-12) + (i*0.05 - 3.0);
+            s_diff = log10(spectrum_diff[i] + 1.0e-12) + (i*0.05 - 3.0);
+            s_delta = log10(spectrum_delta[i] + 1.0e-12) + (i*0.05 - 3.0);
+            s_res = log10(spectrum_res[i] + 1.0e-12) + (i*0.05 - 3.0);
+            fprintf(file, "%e %e %e %e %e %e\n", i*0.05 - 3.0, s, s_nd, s_diff, s_delta, s_res);
+        }
+        fclose(file);
+        
+    }
 
-				/* free allocated memory */
-				free(spectrum);
-				free(spectrum_nd);
-				free(spectrum_diff);
-				free(spectrum_delta);
-				free(spectrum_res);
+    /* free allocated memory */
+    free(spectrum);
+    free(spectrum_nd);
+    free(spectrum_diff);
+    free(spectrum_delta);
+    free(spectrum_res);
 
-				return;
+    return;
 }
 
 int main(void) {
-				example1();
-				example2();
-				example3();
+    example1();
+    example2();
+    example3();
 
-				return 0;
+    return 0;
 }
 
