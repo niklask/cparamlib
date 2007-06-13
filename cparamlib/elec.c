@@ -4,7 +4,7 @@
  * Parameter calculation for electrons
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/elec.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.4 $
+ * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.5 $
  *
  */
 
@@ -15,7 +15,8 @@
 /*
  * Calculate parameter set for electrons from non-diff
  */
-void elec_param_nd(double Tp, PARAMSET* params) {
+void elec_param_nd(double Tp, PARAMSET* params)
+{
     double y, z;
     int i;
 
@@ -94,7 +95,8 @@ void elec_param_diff(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for electrons from delta(1232)
  */
-void elec_param_delta(double Tp, PARAMSET* params) {
+void elec_param_delta(double Tp, PARAMSET* params)
+{
     int i;
 
     /* check whether params is a null pointer or not */
@@ -108,7 +110,8 @@ void elec_param_delta(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for electrons from res(1600)
  */
-void elec_param_res(double Tp, PARAMSET* params) {
+void elec_param_res(double Tp, PARAMSET* params)
+{
     double y, pow;
     int i;
 
@@ -136,7 +139,8 @@ void elec_param_res(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for electrons
  */
-void elec_param(double Tp, PARAMSET* params) {
+void elec_param(double Tp, PARAMSET* params)
+{
     /* check whether params is a null pointer or not */
     if (params == NULL)
         return;

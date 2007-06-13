@@ -4,7 +4,7 @@
  * Test app for the parameterization model lib
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/test.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.5 $
+ * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.6 $
  *
  */
 
@@ -28,7 +28,8 @@ double Tp[43] = {512.0e3, 362.0e3, 256.0e3, 181.0e3, 128.0e3, 90.5e3, 64.0e3, 45
  * Example 1: calculate parameter a0,...,a8 used in the non-diff inclusive 
  * gamma-ray cross-section formula 
  */
-void example1(void) {
+void example1(void)
+{
     double Tp, E;
     double f;
     int i;
@@ -52,7 +53,8 @@ void example1(void) {
 /* 
  * Example 2: inclusive gamma-ray cross-section
  */
-void example2(void) {
+void example2(void)
+{
     double Tp, E;
     double f;
     int i;
@@ -71,7 +73,8 @@ void example2(void) {
 /*
  * Example 3: secondary particle spectra due to power-law protons
  */
-void example3(void) {
+void example3(void)
+{
     double *spectrum;
     double *spectrum_nd;
     double *spectrum_diff;
@@ -166,7 +169,8 @@ void example3(void) {
     return;
 }
 
-int main(void) {
+int main(void)
+{
     example1();
     example2();
     example3();

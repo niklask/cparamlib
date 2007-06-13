@@ -18,7 +18,7 @@
  * arrays.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.5 $
+ * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.6 $
  *
  */
 
@@ -36,7 +36,8 @@ double W_NDH[7] = {44.0, 45.0, 47.0, 42.0, 40.0, 45.0, 40.0};
 /*
  * Calculate inclusive cross section from the non-diff process
  */
-double sigma_incl_nd(int particle, double E, double Tp, PARAMSET* params) {
+double sigma_incl_nd(int particle, double E, double Tp, PARAMSET* params)
+{
     double Wl, Wh, Lmin, Lmax;
     double x, y;
     double xa3, xa8;
@@ -138,7 +139,8 @@ double sigma_incl_nd(int particle, double E, double Tp, PARAMSET* params) {
 /*
  * Calculate inclusive cross section from the diffraction dissociation process
  */
-double sigma_incl_diff(int particle, double E, double Tp, PARAMSET* params) {
+double sigma_incl_diff(int particle, double E, double Tp, PARAMSET* params)
+{
     double Wdiff, Lmax;
     double x, y;
     double pow1, pow2;
@@ -176,7 +178,8 @@ double sigma_incl_diff(int particle, double E, double Tp, PARAMSET* params) {
 /*
  * Calculate inclusive cross section from the Delta(1232) resonance
  */
-double sigma_incl_delta(int particle, double E, double Tp, PARAMSET* params) {
+double sigma_incl_delta(int particle, double E, double Tp, PARAMSET* params)
+{
     double Wdiff, Lmax;
     double x, y;
     double xc2;
@@ -211,7 +214,8 @@ double sigma_incl_delta(int particle, double E, double Tp, PARAMSET* params) {
 /*
  * Calculate inclusive cross section from the res(1600) resonance
  */
-double sigma_incl_res(int particle, double E, double Tp, PARAMSET* params) {
+double sigma_incl_res(int particle, double E, double Tp, PARAMSET* params)
+{
     double Wdiff, Lmax;
     double x, y;
     double xd2;
@@ -250,7 +254,8 @@ double sigma_incl_res(int particle, double E, double Tp, PARAMSET* params) {
 /*
  * Calculate total inclusive cross section (sum of all processes)
  */
-double sigma_incl_tot(int particle, double E, double Tp, PARAMSET* params) {
+double sigma_incl_tot(int particle, double E, double Tp, PARAMSET* params)
+{
     double f_tot;
     double f_nd, f_diff, f_delta, f_res;
 
@@ -275,7 +280,8 @@ double sigma_incl_tot(int particle, double E, double Tp, PARAMSET* params) {
  * Calculate the differential cross section dsigma/dlogEdpT from non-res process
  * (i.e. non-diffractive + diffractive)
  */
-double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* params) {
+double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* params)
+{
     double x;
     double x1, Lp, W;
     double sigma;
@@ -316,7 +322,8 @@ double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* pa
 /*
  * Calculate the differential cross section dsigma/dlogEdpT from the Delta(1232) resonance
  */
-double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT* params) {
+double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT* params)
+{
     double x;
     double pow;
     double x1, Lp, W;
@@ -359,7 +366,8 @@ double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT*
 /*
  * Calculate the differential cross section dsigma/dlogEdpT from the res(1600) resonance
  */
-double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* params) {
+double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* params)
+{
     double x;
     double pow;
     double x1, Lp, W;
@@ -402,7 +410,8 @@ double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* p
 /*
  * Calculate the differential cross section dsigma/dlogEdp from all processes
  */
-double sigma_pt_tot(int particle, double pT, double E, double Tp, PARAMSET_PT* params) {
+double sigma_pt_tot(int particle, double pT, double E, double Tp, PARAMSET_PT* params)
+{
     double f_tot;
     double f_nr, f_delta, f_res;
 
@@ -426,7 +435,8 @@ double sigma_pt_tot(int particle, double pT, double E, double Tp, PARAMSET_PT* p
  * Calculate non-diffractive inelastic p-p cross section
  * as given by equation 1 in Kamae et al. (2006)
  */
-double sigma_pp_nd(double Pp) {
+double sigma_pp_nd(double Pp)
+{
     double a[8] = {0.1176, 0.3829, 23.10, 6.454, -5.764, -23.63, 94.75, 0.02667};
     double b[2] = {11.34, 23.72};
     double c[3] = {28.5, -6.133, 1.464};
@@ -452,7 +462,8 @@ double sigma_pp_nd(double Pp) {
  * Calculate diffractive inelastic p-p cross section
  * as given by equation 2 in Kamae et al. (2006)
  */
-double sigma_pp_diff(double Pp) {
+double sigma_pp_diff(double Pp)
+{
     double d[7] = {0.3522, 0.1530, 1.498, 2.0, 30.0, 3.155, 1.042};
     double e[2] = {5.922, 1.632};
 
@@ -476,7 +487,8 @@ double sigma_pp_diff(double Pp) {
  * Calculate delta(1232) inelastic p-p cross section
  * as given by equation 3 in Kamae et al. (2006)
  */
-double sigma_pp_delta(double Pp) {
+double sigma_pp_delta(double Pp)
+{
     double f[5] = {0.0834, 9.5, -5.5, 1.68, 3134.0};
 
     double Ep, sigma;
@@ -500,7 +512,8 @@ double sigma_pp_delta(double Pp) {
  * Calculate res(1600) inelastic p-p cross section
  * as given by equation 4 in Kamae et al. (2006)
  */
-double sigma_pp_res(double Pp) {
+double sigma_pp_res(double Pp)
+{
     double g[5] = {0.0004257, 4.5, -7.0, 2.1, 503.5};
 
     double Ep, sigma;

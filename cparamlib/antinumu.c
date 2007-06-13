@@ -4,7 +4,7 @@
  * Parameter calculation for muon anti-neutrinos
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/antinumu.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.5 $
+ * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.6 $
  *
  */
 
@@ -15,7 +15,8 @@
 /*
  * Calculate parameter set for muon anti-neutrinos from non-diff
  */
-void antinumu_param_nd(double Tp, PARAMSET* params) {
+void antinumu_param_nd(double Tp, PARAMSET* params)
+{
     double y, z;
     int i;
 
@@ -49,7 +50,8 @@ void antinumu_param_nd(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for muon anti-neutrinos from diff. dissoc.
  */
-void antinumu_param_diff(double Tp, PARAMSET* params) {
+void antinumu_param_diff(double Tp, PARAMSET* params)
+{
     double y, z1, z2, pow;
     int i;
 
@@ -94,7 +96,8 @@ void antinumu_param_diff(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for muon anti-neutrinos from delta(1232)
  */
-void antinumu_param_delta(double Tp, PARAMSET* params) {
+void antinumu_param_delta(double Tp, PARAMSET* params)
+7{
     double y, p;
     int i;
 
@@ -122,7 +125,8 @@ void antinumu_param_delta(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for muon anti-neutrinos from res(1600)
  */
-void antinumu_param_res(double Tp, PARAMSET* params) {
+void antinumu_param_res(double Tp, PARAMSET* params)
+{
     double y, pow;
     int i;
 
@@ -150,7 +154,8 @@ void antinumu_param_res(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for muon anti-neutrinos
  */
-void antinumu_param(double Tp, PARAMSET* params) {
+void antinumu_param(double Tp, PARAMSET* params)
+{
     /* check whether params is a null pointer or not */
     if (params == NULL)
         return;

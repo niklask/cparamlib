@@ -4,7 +4,7 @@
  * Parameter calculation for positrons
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/posi.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.4 $
+ * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.5 $
  *
  */
 
@@ -15,7 +15,8 @@
 /*
  * Calculate parameter set for positrons from non-diff
  */
-void posi_param_nd(double Tp, PARAMSET* params) {
+void posi_param_nd(double Tp, PARAMSET* params)
+{
     double y, z;
     int i;
 
@@ -48,7 +49,8 @@ void posi_param_nd(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for positrons from diff. dissoc.
  */
-void posi_param_diff(double Tp, PARAMSET* params) {
+void posi_param_diff(double Tp, PARAMSET* params)
+{
     double y, z1, z2, pow;
     int i;
 
@@ -93,7 +95,8 @@ void posi_param_diff(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for positrons from delta(1232)
  */
-void posi_param_delta(double Tp, PARAMSET* params) {
+void posi_param_delta(double Tp, PARAMSET* params)
+{
     double y, pow;
     int i;
 
@@ -121,7 +124,8 @@ void posi_param_delta(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for positrons from res(1600)
  */
-void posi_param_res(double Tp, PARAMSET* params) {
+void posi_param_res(double Tp, PARAMSET* params)
+{
     double y, pow;
     int i;
 
@@ -149,7 +153,8 @@ void posi_param_res(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for positrons
  */
-void posi_param(double Tp, PARAMSET* params) {
+void posi_param(double Tp, PARAMSET* params)
+{
     /* check whether params is a null pointer or not */
     if (params == NULL)
         return;

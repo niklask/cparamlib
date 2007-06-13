@@ -4,7 +4,7 @@
  * Parameter calculation for electron neutrinos
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/numu.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.5 $
+ * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.6 $
  *
  */
 
@@ -15,7 +15,8 @@
 /*
  * Calculate parameter set for muon neutrinos from non-diff
  */
-void numu_param_nd(double Tp, PARAMSET* params) {
+void numu_param_nd(double Tp, PARAMSET* params)
+{
     double y, z;
     int i;
 
@@ -49,7 +50,8 @@ void numu_param_nd(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for muon neutrinos from diff. dissoc.
  */
-void numu_param_diff(double Tp, PARAMSET* params) {
+void numu_param_diff(double Tp, PARAMSET* params)
+{
     double y, z1, z2, pow;
     int i;
 
@@ -94,7 +96,8 @@ void numu_param_diff(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for muon neutrinos from delta(1232)
  */
-void numu_param_delta(double Tp, PARAMSET* params) {
+void numu_param_delta(double Tp, PARAMSET* params)
+{
     double y, pow;
     int i;
 
@@ -122,7 +125,8 @@ void numu_param_delta(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for muon neutrinos from res(1600)
  */
-void numu_param_res(double Tp, PARAMSET* params) {
+void numu_param_res(double Tp, PARAMSET* params)
+{
     double y, pow;
     int i;
 
@@ -150,7 +154,8 @@ void numu_param_res(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for muon neutrinos
  */
-void numu_param(double Tp, PARAMSET* params) {
+void numu_param(double Tp, PARAMSET* params)
+{
     /* check whether params is a null pointer or not */
     if (params == NULL)
         return;

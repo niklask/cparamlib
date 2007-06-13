@@ -5,7 +5,7 @@
  * Calculates parameters as functions of Tp
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/params.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.5 $
+ * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.6 $
  *
  */
 
@@ -29,7 +29,8 @@ char *filenames[7][4] = {{"GammaNonDiff.dat", "GammaDiffDiss.dat", "GammaDelta12
                          {"AntiNuENonDiff.dat", "AntiNuEDiffDiss.dat", "AntiNuEDelta1232.dat", "AntiNuEDelta1600.dat"},
                          {"AntiNuMuNonDiff.dat", "AntiNuMuDiffDiss.dat", "AntiNuMuDelta1232.dat", "AntiNuMuDelta1600.dat"}};
 
-void nondiff(int p) {
+void nondiff(int p)
+{
     double Tp;
     double f;
     int i, j;
@@ -76,7 +77,8 @@ void nondiff(int p) {
     fclose(fp);
 }
 
-void diffdiss(int p) {
+void diffdiss(int p)
+{
     double Tp;
     double f;
     int i, j;
@@ -123,7 +125,8 @@ void diffdiss(int p) {
     fclose(fp);
 }
 
-void delta1232(int p) {
+void delta1232(int p)
+{
     double Tp;
     double f;
     int i, j;
@@ -170,7 +173,8 @@ void delta1232(int p) {
     fclose(fp);
 }
 
-void delta1600(int p) {
+void delta1600(int p)
+{
     double Tp;
     double f;
     int i, j;
@@ -217,7 +221,8 @@ void delta1600(int p) {
     fclose(fp);
 }
 
-int main(void) {
+int main(void)
+{
     int i;
 
     for (i = 0; i <= 6; i++) {

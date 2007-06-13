@@ -4,7 +4,7 @@
  * Parameter calculation for gamma-rays
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/gamma.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.4 $
+ * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.5 $
  *
  */
 
@@ -15,7 +15,8 @@
 /*
  * Calculate parameter set for gamma rays from non-diff
  */
-void gamma_param_nd(double Tp, PARAMSET* params) {
+void gamma_param_nd(double Tp, PARAMSET* params)
+{
     double y, z;
     int i;
 
@@ -49,7 +50,8 @@ void gamma_param_nd(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for gamma rays from diff. dissoc.
  */
-void gamma_param_diff(double Tp, PARAMSET* params) {
+void gamma_param_diff(double Tp, PARAMSET* params)
+{
     double y, z1, z2, pow;
     int i;
 
@@ -95,7 +97,8 @@ void gamma_param_diff(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for gamma-rays from delta(1232)
  */
-void gamma_param_delta(double Tp, PARAMSET* params) {
+void gamma_param_delta(double Tp, PARAMSET* params)
+{
     double y, pow;
     int i;
 
@@ -123,7 +126,8 @@ void gamma_param_delta(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for gamma rays from res(1600)
  */
-void gamma_param_res(double Tp, PARAMSET* params) {
+void gamma_param_res(double Tp, PARAMSET* params)
+{
     double y, pow;
     int i;
 
@@ -151,7 +155,8 @@ void gamma_param_res(double Tp, PARAMSET* params) {
 /*
  * Calculate parameter set for gamma rays
  */
-void gamma_param(double Tp, PARAMSET* params) {
+void gamma_param(double Tp, PARAMSET* params)
+{
     /* check whether params is a null pointer or not */
     if (params == NULL)
         return;
@@ -165,7 +170,8 @@ void gamma_param(double Tp, PARAMSET* params) {
 /*
  * Calculate pT parameter set for gamma rays from non-res
  */
-void gamma_pt_param_nr(double E, double Tp, PARAMSET_PT* pt_params, int flag) {
+void gamma_pt_param_nr(double E, double Tp, PARAMSET_PT* pt_params, int flag)
+{
     double a14;
     double x, xp, xa, pow;
     double y;
@@ -219,7 +225,8 @@ void gamma_pt_param_nr(double E, double Tp, PARAMSET_PT* pt_params, int flag) {
 /*
  * Calculate pT parameter set for gamma rays from delta(1232)
  */
-void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag) {
+void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
+{
     double x, xb;
     double y;
     double pow;
@@ -284,7 +291,8 @@ void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
 /*
  * Calculate pT parameter set for gamma rays from res(1600)
  */
-void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag) {
+void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag)
+{
     double x, xc;
     double y;
     double pow;
@@ -349,7 +357,8 @@ void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag) {
 /*
  * Calculate pT parameter set for gamma rays
  */
-void gamma_pt_param(double E, double Tp, PARAMSET_PT* pt_params, int flag) {
+void gamma_pt_param(double E, double Tp, PARAMSET_PT* pt_params, int flag)
+{
     /* check whether params is a null pointer or not */
     if (pt_params == NULL)
         return;
