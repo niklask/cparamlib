@@ -4,7 +4,7 @@
  * Parameter calculation for gamma-rays
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/gamma.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.5 $
+ * $Author: niklas $ $Date: 2007/06/13 20:04:52 $ $Revision: 1.6 $
  *
  */
 
@@ -213,7 +213,11 @@ void gamma_pt_param_nr(double E, double Tp, PARAMSET_PT* pt_params, int flag)
         sigma_incl += sigma_incl_diff(ID_GAMMA, E, Tp, &(pt_params->params));
 
         /* finally calculate a0 from a1 and sigma_incl*/
-        pt_params->a0 = 1/(pt_params->a1*pt_params->a1)*sigma_incl;
+        if (pt_params->a1 != 0) {
+            pt_params->a0 = 1/(pt_params->a1*pt_params->a1)*sigma_incl;
+        } else {
+            pt_params->a0 = 0;
+        }
     } else {
         for (i = 0; i < 4; i++) {
             pt_params->a1i[i] = 0;
@@ -278,8 +282,12 @@ void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
             sigma_incl = sigma_incl_delta(ID_GAMMA, E, Tp, &(pt_params->params));
         
             /* calculate b0 from b1 and b2 */
-            pt_params->b0 = 2*sigma_incl/(pt_params->b1*sqrt(M_PI*pt_params->b2)*(erf(pt_params->b1/sqrt(pt_params->b2)) + 1) + 
-                                          pt_params->b2*exp(-pt_params->b1*pt_params->b1/pt_params->b2));
+            if ((pt_params->b1 != 0) || (pt_params->b2 != 0)) {
+                pt_params->b0 = 2*sigma_incl/(pt_params->b1*sqrt(M_PI*pt_params->b2)*(erf(pt_params->b1/sqrt(pt_params->b2)) + 1) + 
+                                              pt_params->b2*exp(-pt_params->b1*pt_params->b1/pt_params->b2));
+            } else {
+                pt_params->b0 = 0;
+            }
         } else {
             pt_params->b0 = 0;
             pt_params->b1 = 0;
@@ -344,8 +352,12 @@ void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag)
             sigma_incl = sigma_incl_res(ID_GAMMA, E, Tp, &(pt_params->params));
 
             /* calculate c0 from c1 and c2 */
-            pt_params->c0 = 2*sigma_incl/(pt_params->c1*sqrt(M_PI*pt_params->c2)*(erf(pt_params->c1/sqrt(pt_params->c2)) + 1) + 
-                                          pt_params->c2*exp(-pt_params->c1*pt_params->c1/pt_params->c2));
+            if ((pt_params->c1 != 0) || (pt_params->c2 != 0)) {
+                pt_params->c0 = 2*sigma_incl/(pt_params->c1*sqrt(M_PI*pt_params->c2)*(erf(pt_params->c1/sqrt(pt_params->c2)) + 1) + 
+                                              pt_params->c2*exp(-pt_params->c1*pt_params->c1/pt_params->c2));
+            } else {
+                pt_params->c0 = 0;
+            }
         } else {
             pt_params->c0 = 0;
             pt_params->c1 = 0;
