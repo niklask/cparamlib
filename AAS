@@ -1,12 +1,16 @@
 ================================================================================
 Title: Parameterization of {gamma}, e^{+/-}^ and Neutrino Spectra Produced
        by p-p Interaction in Astronomical Environment
-Authors: Kamae T., Karlsson N., Mizuno T., Abe T., Koi T.
+Authors: T. Kamae, N. Karlsson, T. Mizuno, T. Abe, T. Koi
+
+Title: Parameterization of the Angular Distribution of Gamma Rays Produced
+	   by p-p Interaction in Astronomical Environment
+Authors: N. Karlsson and T. Kamae
 ================================================================================
 
 Code names:
 
-Library: antinue.c, antinumu.c, elec.c, nue.c, numu.c, params.c, posi.c, sigma.c  
+c library: antinue.c, antinumu.c, elec.c, nue.c, numu.c, params.c, posi.c, sigma.c  
 Python: ParamModel.py, __init__.py, cparamlib.i
 Examples: test.c, params.c
 
