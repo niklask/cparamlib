@@ -5,7 +5,7 @@
  * Header file for cparamlib
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/Attic/cparammodel.h,v $
- * $Author: niklas $ $Date: 2007/06/13 17:43:58 $ $Revision: 1.4 $
+ * $Author: niklas $ $Date: 2007/06/21 15:50:21 $ $Revision: 1.5 $
  *
  */
 
@@ -148,7 +148,7 @@ double sigma_incl_res(int particle, double E, double Tp, PARAMSET* params);
 double sigma_incl_tot(int particle, double E, double Tp, PARAMSET* params);
 
 /*
- * Calculation of the differential cross section dsigma/dlogEdpT, for any gamma ray
+ * Calculation of the differential cross section dsigma/dlogEdpT, for any gamma-ray energy
  *
  * Proton kinetic energy Tp is passed as well as a pointer to a struct keeping all the 
  * parameters (at given Tp and log(E))
