@@ -4,7 +4,7 @@
  * Parameter calculation for gamma-rays
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/gamma.c,v $
- * $Author: niklas $ $Date: 2007/06/13 20:04:52 $ $Revision: 1.6 $
+ * $Author: niklas $ $Date: 2007/06/25 20:25:07 $ $Revision: 1.7 $
  *
  */
 
@@ -249,6 +249,7 @@ void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
             pt_params->b1i[i] = 0;
             pt_params->b2i[i] = 0;
         }
+        pt_params->b0 = 0;
         pt_params->b1 = 0;
         pt_params->b2 = 0;
     } else {
@@ -319,6 +320,7 @@ void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag)
             pt_params->c1i[i] = 0;
             pt_params->c2i[i] = 0;
         }
+        pt_params->c0 = 0;
         pt_params->c1 = 0;
         pt_params->c2 = 0;
     } else {
