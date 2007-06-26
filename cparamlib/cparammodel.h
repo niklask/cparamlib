@@ -5,13 +5,12 @@
  * Header file for cparamlib
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/Attic/cparammodel.h,v $
- * $Author: niklas $ $Date: 2007/06/21 15:50:21 $ $Revision: 1.5 $
+ * $Author: niklas $ $Date: 2007/06/26 17:17:53 $ $Revision: 1.6 $
  *
  */
 
 #ifndef CPARAMLIB_H
 #define CPARAMLIB_H
-
 
 /* 
  * Definition of particle ids

@@ -4,7 +4,7 @@
  * Parameter calculation for gamma-rays
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/gamma.c,v $
- * $Author: niklas $ $Date: 2007/06/25 20:25:07 $ $Revision: 1.7 $
+ * $Author: niklas $ $Date: 2007/06/26 17:17:53 $ $Revision: 1.8 $
  *
  */
 
@@ -281,9 +281,9 @@ void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
             pt_params->b2 = pt_params->b2i[0]*exp(-pt_params->b2i[1]*pow*pow);
 
             sigma_incl = sigma_incl_delta(ID_GAMMA, E, Tp, &(pt_params->params));
-        
+
             /* calculate b0 from b1 and b2 */
-            if ((pt_params->b1 != 0) || (pt_params->b2 != 0)) {
+            if ((pt_params->b1 != 0) && (pt_params->b2 != 0)) {
                 pt_params->b0 = 2*sigma_incl/(pt_params->b1*sqrt(M_PI*pt_params->b2)*(erf(pt_params->b1/sqrt(pt_params->b2)) + 1) + 
                                               pt_params->b2*exp(-pt_params->b1*pt_params->b1/pt_params->b2));
             } else {
@@ -354,7 +354,7 @@ void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag)
             sigma_incl = sigma_incl_res(ID_GAMMA, E, Tp, &(pt_params->params));
 
             /* calculate c0 from c1 and c2 */
-            if ((pt_params->c1 != 0) || (pt_params->c2 != 0)) {
+            if ((pt_params->c1 != 0) && (pt_params->c2 != 0)) {
                 pt_params->c0 = 2*sigma_incl/(pt_params->c1*sqrt(M_PI*pt_params->c2)*(erf(pt_params->c1/sqrt(pt_params->c2)) + 1) + 
                                               pt_params->c2*exp(-pt_params->c1*pt_params->c1/pt_params->c2));
             } else {

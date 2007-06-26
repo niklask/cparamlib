@@ -18,7 +18,7 @@
  * arrays.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.6 $
+ * $Author: niklas $ $Date: 2007/06/26 17:17:53 $ $Revision: 1.7 $
  *
  */
 
@@ -280,7 +280,7 @@ double sigma_incl_tot(int particle, double E, double Tp, PARAMSET* params)
  * Calculate the differential cross section dsigma/dlogEdpT from non-res process
  * (i.e. non-diffractive + diffractive)
  */
-double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* params)
+double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params)
 {
     double x;
     double x1, Lp, W;
@@ -288,7 +288,7 @@ double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* pa
     double cutoff;
 
     /* check whether params is a null pointer or not */
-    if (params == NULL)
+    if (pt_params == NULL)
         return 0;
 
     sigma = 0;
@@ -298,7 +298,7 @@ double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* pa
     x = log10(E);
 
     if (particle == ID_GAMMA) {
-        sigma = params->a0*pT*exp(-pT/params->a1);
+        sigma = pt_params->a0*pT*exp(-pT/pt_params->a1);
         
         /* cutoff is the kinematic limit function as in the paper */
         if (x > 0.5) {
@@ -322,7 +322,7 @@ double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* pa
 /*
  * Calculate the differential cross section dsigma/dlogEdpT from the Delta(1232) resonance
  */
-double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT* params)
+double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params)
 {
     double x;
     double pow;
@@ -331,7 +331,7 @@ double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT*
     double cutoff;
 
     /* check whether params is a null pointer or not */
-    if (params == NULL)
+    if (pt_params == NULL)
         return 0;
 
     sigma = 0;
@@ -341,8 +341,8 @@ double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT*
     x = log10(E);
 
     if (particle == ID_GAMMA) {
-        pow = pT - params->b1;
-        sigma = params->b0*pT*exp(-pow*pow/params->b2);
+        pow = pT - pt_params->b1;
+        sigma = pt_params->b0*pT*exp(-pow*pow/pt_params->b2);
 
         /* cutoff is the kinematic limit function as in the paper */
         if (x > 0.5) {
@@ -354,6 +354,7 @@ double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT*
             Lp = 0.09755 + 0.670*exp(1.81*x);
         }
         cutoff = 1/(1 + exp(W*(pT - Lp)));
+
         sigma = sigma*cutoff;
 
         if (sigma < 0)
@@ -366,7 +367,7 @@ double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT*
 /*
  * Calculate the differential cross section dsigma/dlogEdpT from the res(1600) resonance
  */
-double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* params)
+double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params)
 {
     double x;
     double pow;
@@ -375,7 +376,7 @@ double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* p
     double cutoff;
 
     /* check whether params is a null pointer or not */
-    if (params == NULL)
+    if (pt_params == NULL)
         return 0;
 
     sigma = 0;
@@ -385,8 +386,8 @@ double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* p
     x = log10(E);
 
     if (particle == ID_GAMMA) {
-        pow = pT - params->c1;
-        sigma = params->c0*pT*exp(-pow*pow/params->c2);
+        pow = pT - pt_params->c1;
+        sigma = pt_params->c0*pT*exp(-pow*pow/pt_params->c2);
 
         /* cutoff is the kinematic limit function as in the paper */
         if (x > 0.5) {
@@ -410,21 +411,21 @@ double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* p
 /*
  * Calculate the differential cross section dsigma/dlogEdp from all processes
  */
-double sigma_pt_tot(int particle, double pT, double E, double Tp, PARAMSET_PT* params)
+double sigma_pt_tot(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params)
 {
     double f_tot;
     double f_nr, f_delta, f_res;
 
     /* check whether params is a null pointer or not */
-    if (params == NULL)
+    if (pt_params == NULL)
         return 0;
 
     f_tot = f_nr = f_delta = f_res = 0;
 
     /* calculate sigmas */
-    f_nr = sigma_pt_nr(particle, pT, E, Tp, params);
-    f_delta = sigma_pt_delta(particle, pT, E, Tp, params);
-    f_res = sigma_pt_res(particle, pT, E, Tp, params);
+    f_nr = sigma_pt_nr(particle, pT, E, Tp, pt_params);
+    f_delta = sigma_pt_delta(particle, pT, E, Tp, pt_params);
+    f_res = sigma_pt_res(particle, pT, E, Tp, pt_params);
     
     f_tot = f_nr + f_delta + f_res;
 
