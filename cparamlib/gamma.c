@@ -4,7 +4,7 @@
  * Parameter calculation for gamma-rays
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/gamma.c,v $
- * $Author: niklas $ $Date: 2007/06/26 17:17:53 $ $Revision: 1.8 $
+ * $Author: niklas $ $Date: 2007/06/29 21:35:35 $ $Revision: 1.9 $
  *
  */
 
@@ -233,6 +233,7 @@ void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
 {
     double x, xb;
     double y;
+    double A;
     double pow;
     double sigma_incl;
     int i;
@@ -271,7 +272,8 @@ void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
 
         /* then calculate b1 and b2 using b10,...,b24
            when x > 0.5 bi = 0; i=0,1,2 */
-        if (x < 0.5) {
+        A = 0.81*(y + 3.32) - 0.5;
+        if (x < A) {
             xb = x - pt_params->b1i[2];
             pow = xb/(1.0 + pt_params->b1i[3]*xb);
             pt_params->b1 = pt_params->b1i[0]*exp(-pt_params->b1i[1]*pow*pow);
@@ -304,6 +306,7 @@ void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag)
 {
     double x, xc;
     double y;
+    double A;
     double pow;
     double sigma_incl;
     int i;
@@ -342,6 +345,7 @@ void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag)
 
         /* then calculate c1 and c2 using c10,...,c24
            when x > 0.5 ci = 0; i=0,1,2 */
+        A = 0.82*(x + 3.17) - 0.25;
         if (x < 0.5) {
             xc = x - pt_params->c1i[2];
             pow = xc/(1.0 + pt_params->c1i[3]*xc);
