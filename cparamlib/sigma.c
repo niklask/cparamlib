@@ -18,7 +18,7 @@
  * arrays.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
- * $Author: niklas $ $Date: 2007/06/26 17:17:53 $ $Revision: 1.7 $
+ * $Author: niklas $ $Date: 2007/07/25 23:43:15 $ $Revision: 1.8 $
  *
  */
 
@@ -438,7 +438,7 @@ double sigma_pt_tot(int particle, double pT, double E, double Tp, PARAMSET_PT* p
  */
 double sigma_pp_nd(double Pp)
 {
-    double a[8] = {0.1176, 0.3829, 23.10, 6.454, -5.764, -23.63, 94.75, 0.02667};
+    double a[9] = {0.57, 0.1176, 0.3829, 23.10, 6.454, -5.764, -23.63, 94.75, 0.02667};
     double b[2] = {11.34, 23.72};
     double c[3] = {28.5, -6.133, 1.464};
     double x, sigma;
@@ -447,11 +447,11 @@ double sigma_pp_nd(double Pp)
     sigma = 0;
 
     if ((Pp >= 1) && (Pp < 1.3)) {
-        sigma = 0.57*pow(x/a[0], 1.2)*(a[2] + x*x*(a[3] + a[4]*x) + a[5]*exp(-a[6]*(x + a[7])*(x + a[7])));
+        sigma = a[0]*pow(x/a[1], 1.2)*(a[3] + x*x*(a[4] + a[5]*x) + a[6]*exp(-a[7]*(x + a[8])*(x + a[8])));
     } else if ((Pp >= 1.3) && (Pp < 2.4)) {
-        sigma = (b[0]*abs(a[1] - x) + b[1]*abs(a[0] - x))/(a[1] - a[0]);
+        sigma = (b[0]*abs(a[2] - x) + b[1]*abs(a[1] - x))/(a[2] - a[1]);
     } else if ((Pp >= 2.4) && (Pp <= 10.0)) {
-        sigma = a[2] + x*x*(a[3] + a[4]*x) + a[5]*exp(-a[6]*(x + a[7])*(x + a[7]));
+        sigma = a[3] + x*x*(a[4] + a[5]*x) + a[6]*exp(-a[7]*(x + a[8])*(x + a[8]));
     } else if (Pp > 10.0) {
         sigma = c[0] + c[1]*x + c[2]*x*x;
     }
