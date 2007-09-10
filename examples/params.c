@@ -5,13 +5,13 @@
  * Calculates parameters as functions of Tp
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/params.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.6 $
+ * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.7 $
  *
  */
 
 #include <stdio.h>
 #include <math.h>
-#include "cparamlib/cparammodel.h"
+#include "cparamlib/cparamlib.h"
 
 double Tp_list[43] = {512.0, 362.0, 256.0, 181.0, 128.0, 90.5, 64.0, 45.3, 32.0,
                       22.6, 16.0, 11.3, 8.0, 5.66, 4.0, 2.8, 2.0, 1.41, 1.0,

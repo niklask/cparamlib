@@ -18,13 +18,13 @@
  * arrays.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
- * $Author: niklas $ $Date: 2007/07/25 23:43:15 $ $Revision: 1.8 $
+ * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.9 $
  *
  */
 
 #include <stdio.h>
 #include <math.h>
-#include "cparammodel.h"
+#include "cparamlib.h"
 
 /* 
  * Table 2 of Kamae et al. 

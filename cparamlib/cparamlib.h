@@ -1,16 +1,21 @@
 /*
 
- * cparammodel.h
+ * cparamlib.h
  *
  * Header file for cparamlib
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/cparamlib.h,v $
- * $Author: niklas $ $Date: 2007/09/10 20:53:35 $ $Revision: 1.1 $
+ * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.2 $
  *
  */
 
 #ifndef CPARAMLIB_H
 #define CPARAMLIB_H
+
+/* make the library linkable with c++ programs */
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* 
  * Definition of particle ids
@@ -164,5 +169,9 @@ double sigma_pp_nd(double Pp);
 double sigma_pp_diff(double Pp);
 double sigma_pp_delta(double Pp);
 double sigma_pp_res(double Pp);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

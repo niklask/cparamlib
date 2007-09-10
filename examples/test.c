@@ -4,13 +4,13 @@
  * Test app for the parameterization model lib
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/test.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.6 $
+ * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.7 $
  *
  */
 
 #include <stdio.h>
 #include <math.h>
-#include "cparamlib/cparammodel.h"
+#include "cparamlib/cparamlib.h"
 
 typedef void (*PARAM_FUNC)(double, PARAMSET*);
 static PARAM_FUNC paramfunc_table[7] = {&gamma_param, &elec_param, &posi_param, &nue_param, 
@@ -58,12 +58,17 @@ void example2(void)
     double Tp, E;
     double f;
     int i;
+    PARAMSET params;
+
+    memset(&params, 0, sizeof(PARAMSET));
 
     Tp = 512000.0; /* proton kinetic energy 512 TeV */
     E = 1.0e2;     /* gamma-ray energy 100 GeV */
 
+    gamma_param_nd(Tp, &params);
+
     printf("Example 2: total inclusive gamma-ray cross-section\n");
-    f = sigma_incl_tot(ID_GAMMA, E, Tp);
+    f = sigma_incl_tot(ID_GAMMA, E, Tp, &params);
     printf("total inclusive gamma-ray cross-section\n");
     printf("Tp = 512TeV, Egamma = 100 GeV => sigma_incl = %10e mb\n", f);
 

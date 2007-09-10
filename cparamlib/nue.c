@@ -4,13 +4,13 @@
  * Parameter calculation for electron neutrinos
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/nue.c,v $
- * $Author: niklas $ $Date: 2007/06/13 17:49:38 $ $Revision: 1.6 $
+ * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.7 $
  *
  */
 
 #include <stdio.h>
 #include <math.h>
-#include "cparammodel.h"
+#include "cparamlib.h"
 
 /*
  * Calculate parameter set for electron neutrinos from non-diff

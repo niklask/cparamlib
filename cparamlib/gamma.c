@@ -4,13 +4,13 @@
  * Parameter calculation for gamma-rays
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/gamma.c,v $
- * $Author: niklas $ $Date: 2007/06/29 21:35:35 $ $Revision: 1.9 $
+ * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.10 $
  *
  */
 
 #include <stdio.h>
 #include <math.h>
-#include "cparammodel.h"
+#include "cparamlib.h"
 
 /*
  * Calculate parameter set for gamma rays from non-diff

@@ -4,13 +4,13 @@
  * Parameter calculation for muon anti-neutrinos
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/antinumu.c,v $
- * $Author: niklas $ $Date: 2007/06/13 20:05:51 $ $Revision: 1.7 $
+ * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.8 $
  *
  */
 
 #include <stdio.h>
 #include <math.h>
-#include "cparammodel.h"
+#include "cparamlib.h"
 
 /*
  * Calculate parameter set for muon anti-neutrinos from non-diff
