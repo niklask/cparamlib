@@ -4,8 +4,8 @@
  *
  * Header file for cparamlib
  *
- * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/Attic/cparammodel.h,v $
- * $Author: niklas $ $Date: 2007/06/26 17:17:53 $ $Revision: 1.6 $
+ * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/cparamlib.h,v $
+ * $Author: niklas $ $Date: 2007/09/10 20:53:35 $ $Revision: 1.1 $
  *
  */
 
