@@ -18,7 +18,7 @@
  * arrays.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
- * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.9 $
+ * $Author: niklas $ $Date: 2007/11/01 00:09:37 $ $Revision: 1.10 $
  *
  */
 
@@ -186,6 +186,10 @@ double sigma_incl_delta(int particle, double E, double Tp, PARAMSET* params)
     double pow;
     double sigma;
     double cutoff;
+
+    /* check whether params is a null pointer or not */
+    if (params == NULL)
+        return 0;
 
     /* calculate log(E) and log(Tp) */
     x = log10(E);

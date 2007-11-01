@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2007/06/04 22:22:23 $ $Revision: 1.10 $
+# $Author: niklas $ $Date: 2007/11/01 00:09:37 $ $Revision: 1.11 $
 #
 
 #
@@ -12,6 +12,7 @@
 #
 
 import sys
+import cparamlib
 
 # --------------------------------------------------------------------------------
 #  Class definitions
