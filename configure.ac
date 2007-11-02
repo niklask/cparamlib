@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/11/02 16:57:29 $ $Revision: 1.22 $
+dnl $Author: niklas $ $Date: 2007/11/02 17:11:54 $ $Revision: 1.23 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -42,7 +42,7 @@ fi
 AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
 
 dnl Make sure SWIG is installed and set variable $(SWIG)
-dnl Only warn "not found" if --enable-pythonbuild was used
+dnl Only warn "not found" if --enable-python was used
 dnl (Do not care about version number for now)
 AC_PATH_PROG([SWIG],[swig])
 if test x$pythonbuild != false; then
