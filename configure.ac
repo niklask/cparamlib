@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/12/07 00:24:11 $ $Revision: 1.24 $
+dnl $Author: niklas $ $Date: 2007/12/07 00:26:41 $ $Revision: 1.25 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -48,7 +48,8 @@ if test x$pythonbuild != xfalse; then
   AC_PATH_PROG([SWIG],[swig])
   if test -z "$SWIG" ; then
 	  AC_MSG_WARN([cannot find the 'swig' executable, please install it])
-      
+      pythonbuild=false
+      AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
   fi
 fi
 
