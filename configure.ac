@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/12/07 00:26:41 $ $Revision: 1.25 $
+dnl $Author: niklas $ $Date: 2007/12/07 00:39:13 $ $Revision: 1.26 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -19,7 +19,7 @@ AM_PROG_LIBTOOL
 
 dnl Option to enable python extension build
 AC_ARG_ENABLE(python,
-[  --enable-python    build Python interface code (default = no)],
+[  --enable-python         build Python interface code (default = no)],
 [case "${enableval}" in
   yes) pythonbuild=true ;;
   no)  pythonbuild=false ;;
