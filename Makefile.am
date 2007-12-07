@@ -16,10 +16,6 @@ EXTRA_DIST = examples/Makefile examples/params.c examples/test.c
 # define where docs are installed
 docdir = $(datadir)/doc/$(PACKAGE)
 
-#
-# Targets
-#
-
 # extra clean target for the generated distribution tarball
 clean-local:
 	-rm -rf *.tar.gz
