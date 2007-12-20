@@ -1,0 +1,74 @@
+/** @file install.dox
+ *  @brief Installation instructions for cparamlib
+ */
+
+/**
+@page install Installation Instructions
+
+The cparamlib library is cross platform. The distribution components are:
+- static/dynamic C libraries
+- python extension module
+
+These instructions will help you install cparamlib from the source distribution
+on Unix-like systems, which includes Solaris, GNU/Linux, *BSD and Mac OS X.
+
+@section reqs Requirements
+
+To build and install cparamlib from source, you need a working build
+environment, including a C compiler and the autoconf/automake tools. SWIG is
+required if you want to build the python extension module and Doxygen is
+required for generating the documentation.
+
+@section inst_src Installation from Source
+In most cases, the standard autoconf/automake dance should suffice
+
+@code
+./configure
+make
+make install
+@endcode
+
+This will build the library with standard options and install it in /usr/lib.
+It will not build or install the python extension module. If not sufficient,
+see @ref conf for more configuration options.
+
+@section conf Configuration
+To change the path where the library gets installed, pass the --prefix option
+to the configure script
+
+@code
+./configure --prefix=/usr/local
+@endcode
+
+By default, the python extension module is not built. To have it built, use
+
+@code
+./configure --enable-python
+@endcode
+
+When issuing
+
+@code
+make
+make install
+@endcode
+
+SWIG will generate a python wrapper around the C library and the extension
+module will be installed in ${prefix}/lib/pythonN.N/site-packages.
+
+On 64-bit systems, the directory for 64-bit libraries might be different
+from the default ${prefix}/lib, e.g. ${prefix}/lib64. To make sure the
+library is installed in the correct directory pass the --libdir option
+to the configure script
+
+@code
+./configure --libdir=/usr/local/lib64
+@endcode
+
+For more information about available configure options, issue
+
+@code
+./configure --help
+@endcode
+
+*/
