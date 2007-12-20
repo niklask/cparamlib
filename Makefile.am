@@ -3,26 +3,27 @@
 # Author: niklas@slac.stanford.edu
 #
 
+if DOCBUILD
+DOCDIR = doc
+else
+DOCDIR = 
+endif
+
 if PYTHONBUILD
 PYTHONDIR = python
 else
 PYTHONDIR = 
 endif
 
-SUBDIRS = cparamlib $(PYTHONDIR)
+SUBDIRS = cparamlib $(DOCDIR) $(PYTHONDIR)
 
 EXTRA_DIST = examples/Makefile examples/params.c examples/test.c
 
-# define where docs are installed
-docdir = $(datadir)/doc/$(PACKAGE)
-
-# extra clean target for the generated distribution tarball
+# extra clean target for Sun CC compiler and generated distribution tarball
 clean-local:
+	-rm -rf SunWS_cache
 	-rm -rf *.tar.gz
 
-# extra uninstall for
-# - documentation dir
-# - Sun CC compiler cache dir
+# extra uninstall for documentation dir
 uninstall-local:
-	-rm -rf SunWS_cache
 	-rm -rf $(docdir)

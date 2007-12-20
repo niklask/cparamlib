@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/12/07 00:39:13 $ $Revision: 1.26 $
+dnl $Author: niklas $ $Date: 2007/12/20 23:42:40 $ $Revision: 1.27 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -16,6 +16,20 @@ AC_PROG_CC
 dnl disable static building
 dnl AM_DISABLE_STATIC
 AM_PROG_LIBTOOL
+
+dnl Check for gmake and use it
+AC_CHECK_PROG(GMAKE, gmake, gmake, make)
+AC_SUBST(GMAKE)
+
+dnl Check for header files stdio.h and math.h
+AC_CHECK_HEADER(stdio.h, [],
+                [AC_MSG_WARN(missing required header file <stdio.h>)])
+
+AC_CHECK_HEADER(math.h, [],
+                [AC_MSG_WARN(missing required header file <math.h>)])
+
+dnl Turn on -Wall if compiling with gcc
+#AC_COMPILE_WARNINGS
 
 dnl Option to enable python extension build
 AC_ARG_ENABLE(python,
@@ -47,25 +61,32 @@ dnl (Do not care about version number for now)
 if test x$pythonbuild != xfalse; then
   AC_PATH_PROG([SWIG],[swig])
   if test -z "$SWIG" ; then
-	  AC_MSG_WARN([cannot find the 'swig' executable, please install it])
-      pythonbuild=false
-      AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
+	AC_MSG_WARN([cannot find the 'swig' executable, please install it])
+    pythonbuild=false
+    AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
   fi
+fi
+
+dnl Documentation is built by default
+dnl only set to false if doxygen executable is not found
+docbuild=true
+AM_CONDITIONAL(DOCBUILD, [test x$docbuild = xtrue])
+
+AC_PATH_PROG([DOXYGEN],[doxygen])
+if test -z "$DOXYGEN" ; then
+   AC_MSG_WARN([cannot find the 'doxygen' executable, please install it])
+   docbuild=false
+   AM_CONDITIONAL(DOCBUILD, [test x$docbuild = xtrue])
 fi
 
 AM_SANITY_CHECK
 
-dnl Turn on -Wall if compiling with gcc
-#AC_COMPILE_WARNINGS
-
-dnl Check for gmake and use it
-AC_CHECK_PROG(GMAKE, gmake, gmake, make)
-AC_SUBST(GMAKE)
-
 dnl files to be generated 
 AC_OUTPUT(Makefile \
           cparamlib/Makefile \
-					python/Makefile
+		  python/Makefile \
+          doc/Makefile \
+          doc/Doxyfile
 )
 
 AC_MSG_RESULT([

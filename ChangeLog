@@ -1,3 +1,13 @@
+2007-12-20 Niklas Karlsson <niklas@slac.stanford.edu>
+
+	* Implementation Changed PARAMSET_PT to contain three double arrays
+	                 instead of mix of doubles and double arrays.
+	
+2007-12-14 Niklas Karlsson <niklas@slac.stanford.edu>
+
+	* Documentation A first version of doxygen generated documentation is
+	                implemented.
+	
 2007-12-07 Niklas Karlsson <niklas@slac.stanford.edu>
 
 	* Now only checks for SWIG if --enable-python is used and only builds
