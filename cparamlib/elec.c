@@ -1,10 +1,22 @@
 /*
- * elec.c
- *
- * Parameter calculation for electrons
- *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/elec.c,v $
- * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.6 $
+ * $Author: niklas $ $Date: 2007/12/20 23:43:20 $ $Revision: 1.7 $
+ *
+ * Change log:
+ *
+ * 2007-12-17:
+ * Modified for documentation generation with doxygen.
+ *
+ */
+
+/**
+ * @file elec.c
+ *
+ * @brief Functions to calculate electron parameters
+ *
+ * File provides functions to calculate the parameters describing electron
+ * inclusive cross sections. The functions fill struct ::PARAMSET according to
+ * the functions listed in Table 4 of Kamae et al. (2006).
  *
  */
 
@@ -12,8 +24,14 @@
 #include <math.h>
 #include "cparamlib.h"
 
-/*
- * Calculate parameter set for electrons from non-diff
+/**
+ * Calculates parameters a<sub>0</sub>,...,a<sub>8</sub> describing the
+ * nondiffraction interaction electron inclusive cross section as a function
+ * of the proton kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void elec_param_nd(double Tp, PARAMSET* params)
 {
@@ -48,8 +66,14 @@ void elec_param_nd(double Tp, PARAMSET* params)
     }
 }
 
-/*
- * Calculate parameter set for electrons from diff. dissoc.
+/**
+ * Calculates parameters b<sub>0</sub>,...,b<sub>7</sub> describing the
+ * diffraction dissociation electron inclusive cross section as a function
+ * of the proton kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void elec_param_diff(double Tp, PARAMSET* params) {
     double y, z1, z2, pow;
@@ -92,8 +116,16 @@ void elec_param_diff(double Tp, PARAMSET* params) {
     }
 }
 
-/*
- * Calculate parameter set for electrons from delta(1232)
+/**
+ * Calculates parameters c<sub>0</sub>,...,c<sub>4</sub> describing the
+ * Delta(1232) electron inclusive cross section as a function of the proton
+ * kinetic energy T<sub>p</sub>. Since the negative charged Delta(1232)
+ * resonance is not formed, no electrons are produced and thus this function
+ * only sets the ::PARAMSET::c array to zero.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void elec_param_delta(double Tp, PARAMSET* params)
 {
@@ -107,8 +139,14 @@ void elec_param_delta(double Tp, PARAMSET* params)
         params->c[i] = 0;
 }
 
-/*
- * Calculate parameter set for electrons from res(1600)
+/**
+ * Calculates parameters d<sub>0</sub>,...,d<sub>4</sub> describing the
+ * res(1600) electron inclusive cross section as a function of the proton
+ * kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void elec_param_res(double Tp, PARAMSET* params)
 {
@@ -136,8 +174,15 @@ void elec_param_res(double Tp, PARAMSET* params)
     }
 }
 
-/*
- * Calculate parameter set for electrons
+/**
+ * Calculates all parameters a<sub>0</sub>,...,a<sub>8</sub>,
+ * b<sub>0</sub>,...,b<sub>7</sub>, c<sub>0</sub>,...,c<sub>4</sub> and
+ * d<sub>0</sub>,...,d<sub>4</sub> describing electron inclusive cross
+ * sections as a function of the proton kinetic energy.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void elec_param(double Tp, PARAMSET* params)
 {

@@ -1,10 +1,29 @@
 /*
- * gamma.c
- *
- * Parameter calculation for gamma-rays
- *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/gamma.c,v $
- * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.10 $
+ * $Author: niklas $ $Date: 2007/12/20 23:43:20 $ $Revision: 1.11 $
+ *
+ * Change log:
+ *
+ * 2007-12-17:
+ * Modified for documentation generation with doxygen.
+ *
+ * 2007-12-20:
+ * The definition of struct PARAMSET_PT was changed in header file. Code updated
+ * to reflect that change. Also added Doxygen comments for the functions
+ * calculating pT parameters.
+ *
+ */
+
+/**
+ * @file gamma.c
+ *
+ * @brief Functions to calculate gamma-ray parameters
+ *
+ * File provides functions to calculate the parameters describing gamma-ray
+ * inclusive cross sections and transverse momentum distributions. The functions
+ * fill struct ::PARAMSET according to the functions listed in Table 3 of Kamae
+ * et al. (2006) or struct ::PARAMSET_PT according to Table 1 of Karlsson and
+ * Kamae (2008).
  *
  */
 
@@ -12,8 +31,14 @@
 #include <math.h>
 #include "cparamlib.h"
 
-/*
- * Calculate parameter set for gamma rays from non-diff
+/**
+ * Calculates parameters a<sub>0</sub>,...,a<sub>8</sub> describing the
+ * nondiffraction interaction gamma-ray inclusive cross section as a function
+ * of the proton kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void gamma_param_nd(double Tp, PARAMSET* params)
 {
@@ -47,8 +72,14 @@ void gamma_param_nd(double Tp, PARAMSET* params)
     }
 }
 
-/*
- * Calculate parameter set for gamma rays from diff. dissoc.
+/**
+ * Calculates parameters b<sub>0</sub>,...,b<sub>7</sub> describing the
+ * diffraction dissociation gamma-ray inclusive cross section as a function
+ * of the proton kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void gamma_param_diff(double Tp, PARAMSET* params)
 {
@@ -94,8 +125,14 @@ void gamma_param_diff(double Tp, PARAMSET* params)
     }
 }
 
-/*
- * Calculate parameter set for gamma-rays from delta(1232)
+/**
+ * Calculates parameters c<sub>0</sub>,...,c<sub>4</sub> describing the
+ * Delta(1232) gamma-ray inclusive cross section as a function of the proton
+ * kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void gamma_param_delta(double Tp, PARAMSET* params)
 {
@@ -123,8 +160,14 @@ void gamma_param_delta(double Tp, PARAMSET* params)
     }
 }
 
-/*
- * Calculate parameter set for gamma rays from res(1600)
+/**
+ * Calculates parameters d<sub>0</sub>,...,d<sub>4</sub> describing the
+ * res(1600) gamma-ray inclusive cross section as a function of the proton
+ * kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void gamma_param_res(double Tp, PARAMSET* params)
 {
@@ -152,8 +195,15 @@ void gamma_param_res(double Tp, PARAMSET* params)
     }
 }
 
-/*
- * Calculate parameter set for gamma rays
+/**
+ * Calculates all parameters a<sub>0</sub>,...,a<sub>8</sub>,
+ * b<sub>0</sub>,...,b<sub>7</sub>, c<sub>0</sub>,...,c<sub>4</sub> and
+ * d<sub>0</sub>,...,d<sub>4</sub> describing gamma-ray inclusive cross
+ * sections as a function of the proton kinetic energy.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void gamma_param(double Tp, PARAMSET* params)
 {
@@ -167,8 +217,19 @@ void gamma_param(double Tp, PARAMSET* params)
     gamma_param_res(Tp, params);
 }
 
-/*
- * Calculate pT parameter set for gamma rays from non-res
+/**
+ * Calculates parameters a<sub>0</sub>, a<sub>1</sub> and
+ * a<sub>10</sub>,...,a<sub>13</sub> describing the nonresonance gamma-ray
+ * p<sub>t</sub> distribution as a function of the proton kinetic energy
+ * T<sub>p</sub> and the gamma-ray energy E.
+ *
+ * @param E         Gamma-ray energy in GeV.
+ * @param Tp        Proton kinetic energy in GeV.
+ * @param pt_params Pointer to a ::PARAMSET_PT struct where the calculated
+ *                  parameters will be stored.
+ * @param flag      Flag if Tp has changed since last call to this function. If
+ *                  set to 0 then only a<sub>0</sub> and a<sub>1</sub> are
+ *                  recalculated using the new gamma-ray energy E.
  */
 void gamma_pt_param_nr(double E, double Tp, PARAMSET_PT* pt_params, int flag)
 {
@@ -189,10 +250,10 @@ void gamma_pt_param_nr(double E, double Tp, PARAMSET_PT* pt_params, int flag)
         /* first calculate a10,...,a14 using functions from Table 1 
            but only do this if flag = 1 */
         if (flag == 1) {
-            pt_params->a1i[0] = 0.043775 + 0.010271*exp(-0.55808*y);
-            pt_params->a1i[1] = 0.8;
-            pt_params->a1i[2] = 0.34223 + 0.027134*y - 0.0089229*y*y + 4.9996e-4*y*y*y;
-            pt_params->a1i[3] = -0.20480 + 0.013372*y + 0.13087*exp(0.0044021*(y - 11.467)*(y - 11.467));
+            pt_params->a[2] = 0.043775 + 0.010271*exp(-0.55808*y);
+            pt_params->a[3] = 0.8;
+            pt_params->a[4] = 0.34223 + 0.027134*y - 0.0089229*y*y + 4.9996e-4*y*y*y;
+            pt_params->a[5] = -0.20480 + 0.013372*y + 0.13087*exp(0.0044021*(y - 11.467)*(y - 11.467));
 
             gamma_param_nd(Tp, &(pt_params->params));
             gamma_param_diff(Tp, &(pt_params->params));
@@ -200,34 +261,45 @@ void gamma_pt_param_nr(double E, double Tp, PARAMSET_PT* pt_params, int flag)
 
         /* then calculate a1 using a10,...,a14; when x > -0.75 coefficent a14 = a1(x = -0.75) */
         if (x > -0.75) {
-            xa = -0.75 + pt_params->a1i[2];
-            a14 = pt_params->a1i[0]*exp(-pt_params->a1i[1]*xa*xa);
+            xa = -0.75 + pt_params->a[4];
+            a14 = pt_params->a[2]*exp(-pt_params->a[3]*xa*xa);
             
-            pt_params->a1 = pt_params->a1i[3]*(x + 0.75) + a14;
+            pt_params->a[1] = pt_params->a[5]*(x + 0.75) + a14;
         } else {
-            xa = x + pt_params->a1i[2];
-            pt_params->a1 = pt_params->a1i[0]*exp(-pt_params->a1i[1]*xa*xa);
+            xa = x + pt_params->a[4];
+            pt_params->a[1] = pt_params->a[2]*exp(-pt_params->a[3]*xa*xa);
         }
 
         sigma_incl = sigma_incl_nd(ID_GAMMA, E, Tp, &(pt_params->params));
         sigma_incl += sigma_incl_diff(ID_GAMMA, E, Tp, &(pt_params->params));
 
         /* finally calculate a0 from a1 and sigma_incl*/
-        if (pt_params->a1 != 0) {
-            pt_params->a0 = 1/(pt_params->a1*pt_params->a1)*sigma_incl;
+        if (pt_params->a[1] != 0) {
+            pt_params->a[0] = 1/(pt_params->a[1]*pt_params->a[1])*sigma_incl;
         } else {
-            pt_params->a0 = 0;
+            pt_params->a[0] = 0;
         }
     } else {
-        for (i = 0; i < 4; i++) {
-            pt_params->a1i[i] = 0;
+        for (i = 0; i < 6; i++) {
+            pt_params->a[i] = 0;
         }
-        pt_params->a1 = 0;
     }
 }
 
-/*
- * Calculate pT parameter set for gamma rays from delta(1232)
+/**
+ * Calculates parameters b<sub>0</sub>, b<sub>1</sub>, b<sub>2</sub>,
+ * b<sub>10</sub>,...,b<sub>13</sub> and b<sub>20</sub>,...,b<sub>23</sub>
+ * describing the Delta(1232) gamma-ray p<sub>t</sub> distribution as a
+ * function of the proton kinetic energy T<sub>p</sub> and the gamma-ray
+ * energy E.
+ *
+ * @param E         Gamma-ray energy in GeV.
+ * @param Tp        Proton kinetic energy in GeV.
+ * @param pt_params Pointer to a ::PARAMSET_PT struct where the calculated
+ *                  parameters will be stored.
+ * @param flag      Flag if Tp has changed since last call to this function. If
+ *                  set to 0 then only b<sub>0</sub>,...,b<sub>2</sub> are
+ *                  recalculated using the new gamma-ray energy E.
  */
 void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
 {
@@ -236,7 +308,7 @@ void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
     double A;
     double pow;
     double sigma_incl;
-    int i;
+    int i,j;
 
     /* check whether pt_params is a null pointer or not */
     if (pt_params == NULL)
@@ -246,26 +318,25 @@ void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
     y = log10(Tp*0.001);
 
     if ((Tp < 0.488) || (Tp > 1.95)) {
-        for (i = 0; i < 4; i++) {
-            pt_params->b1i[i] = 0;
-            pt_params->b2i[i] = 0;
+        for (j = 0; j < 3; j++) {
+            for (i = 0; i < 4; i++) {
+                pt_params->b[j][i] = 0;
+                pt_params->b[j][i] = 0;
+            }
         }
-        pt_params->b0 = 0;
-        pt_params->b1 = 0;
-        pt_params->b2 = 0;
     } else {
         /* first calculate b10,...,b14 and b20,...,b24 using functions from Table 1
            but only do this if flag = 1 */
         if (flag == 1) {
-            pt_params->b1i[0] = 18.712 + 18.030*y + 5.8239*y*y + 0.62728*y*y*y;
-            pt_params->b1i[1] = 612.61 + 404.80*y + 67.406*y*y;
-            pt_params->b1i[2] = 98.639 + 96.741*y + 31.597*y*y + 3.4567*y*y*y;
-            pt_params->b1i[3] = -208.38 - 183.65*y - 53.283*y*y - 5.0470*y*y*y;
+            pt_params->b[1][0] = 18.712 + 18.030*y + 5.8239*y*y + 0.62728*y*y*y;
+            pt_params->b[1][1] = 612.61 + 404.80*y + 67.406*y*y;
+            pt_params->b[1][2] = 98.639 + 96.741*y + 31.597*y*y + 3.4567*y*y*y;
+            pt_params->b[1][3] = -208.38 - 183.65*y - 53.283*y*y - 5.0470*y*y*y;
 
-            pt_params->b2i[0] = 0.21977 + 0.064073*y;
-            pt_params->b2i[1] = 3.3187e3 + 3.4634e3*y + 1.1982e3*y*y + 136.71*y*y*y;
-            pt_params->b2i[2] = 91.410 + 91.613*y + 30.621*y*y + 3.4296*y*y*y;
-            pt_params->b2i[3] = -521.40 - 529.06*y - 178.49*y*y - 19.975*y*y*y;
+            pt_params->b[2][0] = 0.21977 + 0.064073*y;
+            pt_params->b[2][1] = 3.3187e3 + 3.4634e3*y + 1.1982e3*y*y + 136.71*y*y*y;
+            pt_params->b[2][2] = 91.410 + 91.613*y + 30.621*y*y + 3.4296*y*y*y;
+            pt_params->b[2][3] = -521.40 - 529.06*y - 178.49*y*y - 19.975*y*y*y;
 
             gamma_param_delta(Tp, &(pt_params->params));
         }
@@ -274,33 +345,45 @@ void gamma_pt_param_delta(double E, double Tp, PARAMSET_PT* pt_params, int flag)
            when x > 0.5 bi = 0; i=0,1,2 */
         A = 0.81*(y + 3.32) - 0.5;
         if (x < A) {
-            xb = x - pt_params->b1i[2];
-            pow = xb/(1.0 + pt_params->b1i[3]*xb);
-            pt_params->b1 = pt_params->b1i[0]*exp(-pt_params->b1i[1]*pow*pow);
+            xb = x - pt_params->b[1][2];
+            pow = xb/(1.0 + pt_params->b[1][3]*xb);
+            pt_params->b[0][1] = pt_params->b[1][0]*exp(-pt_params->b[1][1]*pow*pow);
             
-            xb = x - pt_params->b2i[2];
-            pow = xb/(1.0 + pt_params->b2i[3]*xb);
-            pt_params->b2 = pt_params->b2i[0]*exp(-pt_params->b2i[1]*pow*pow);
+            xb = x - pt_params->b[2][2];
+            pow = xb/(1.0 + pt_params->b[2][3]*xb);
+            pt_params->b[0][2] = pt_params->b[2][0]*exp(-pt_params->b[2][1]*pow*pow);
 
             sigma_incl = sigma_incl_delta(ID_GAMMA, E, Tp, &(pt_params->params));
 
             /* calculate b0 from b1 and b2 */
-            if ((pt_params->b1 != 0) && (pt_params->b2 != 0)) {
-                pt_params->b0 = 2*sigma_incl/(pt_params->b1*sqrt(M_PI*pt_params->b2)*(erf(pt_params->b1/sqrt(pt_params->b2)) + 1) + 
-                                              pt_params->b2*exp(-pt_params->b1*pt_params->b1/pt_params->b2));
+            if ((pt_params->b[0][1] != 0) && (pt_params->b[0][2] != 0)) {
+                pt_params->b[0][0] = 2*sigma_incl/(pt_params->b[0][1]*sqrt(M_PI*pt_params->b[0][2])*(erf(pt_params->b[0][1]/sqrt(pt_params->b[0][2])) + 1) + 
+                                                   pt_params->b[0][2]*exp(-pt_params->b[0][1]*pt_params->b[0][1]/pt_params->b[0][2]));
             } else {
-                pt_params->b0 = 0;
+                pt_params->b[0][0] = 0;
             }
         } else {
-            pt_params->b0 = 0;
-            pt_params->b1 = 0;
-            pt_params->b2 = 0;
+            for (i = 0; i < 4; i++) {
+                pt_params->b[0][i] = 0;
+            }
         }
     }
 }
 
-/*
- * Calculate pT parameter set for gamma rays from res(1600)
+/**
+ * Calculates parameters c<sub>0</sub>, c<sub>1</sub>, c<sub>2</sub>,
+ * c<sub>10</sub>,...,c<sub>13</sub> and c<sub>10</sub>,...,c<sub>13</sub>
+ * describing the res(1600) gamma-ray p<sub>t</sub> distribution as a
+ * function of the proton kinetic energy T<sub>p</sub> and the gamma-ray
+ * energy.
+ *
+ * @param E         Gamma-ray energy in GeV.
+ * @param Tp        Proton kinetic energy in GeV.
+ * @param pt_params Pointer to a ::PARAMSET_PT struct where the calculated
+ *                  parameters will be stored.
+ * @param flag      Flag if Tp has changed since last call to this function. If
+ *                  set to 0 then only c<sub>0</sub>,...,c<sub>2</sub> are
+ *                  recalculated using the new gamma-ray energy E.
  */
 void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag)
 {
@@ -309,7 +392,7 @@ void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag)
     double A;
     double pow;
     double sigma_incl;
-    int i;
+    int i,j;
 
     /* check whether pt_params is a null pointer or not */
     if (pt_params == NULL)
@@ -319,26 +402,25 @@ void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag)
     y = log10(Tp*0.001);
 
     if ((Tp < 0.69) || (Tp > 2.76)) {
-        for (i = 0; i < 4; i++) {
-            pt_params->c1i[i] = 0;
-            pt_params->c2i[i] = 0;
+        for (j = 0; j < 3; j++) {
+            for (i = 0; i < 4; i++) {
+                pt_params->c[j][i] = 0;
+                pt_params->c[j][i] = 0;
+            }
         }
-        pt_params->c0 = 0;
-        pt_params->c1 = 0;
-        pt_params->c2 = 0;
     } else {
         /* first calculate c10,...,c14 and c20,...,c24 using functions from Table 1
            but only do this if flag = 1 */
         if (flag == 1) {
-            pt_params->c1i[0] = -1.5013 - 1.1281*y - 0.19813*y*y;
-            pt_params->c1i[1] = -33.179 - 22.496*y - 3.3108*y*y;
-            pt_params->c1i[2] = 116.44 + 122.11*y + 42.594*y*y + 4.9609*y*y*y;
-            pt_params->c1i[3] = -545.77 - 574.80*y - 201.25*y*y - 23.400*y*y*y;
+            pt_params->c[1][0] = -1.5013 - 1.1281*y - 0.19813*y*y;
+            pt_params->c[1][1] = -33.179 - 22.496*y - 3.3108*y*y;
+            pt_params->c[1][2] = 116.44 + 122.11*y + 42.594*y*y + 4.9609*y*y*y;
+            pt_params->c[1][3] = -545.77 - 574.80*y - 201.25*y*y - 23.400*y*y*y;
             
-            pt_params->c2i[0] = 0.68849 + 0.36438*y + 0.047958*y*y;
-            pt_params->c2i[1] = -1.6871e4 - 1.7412e4*y - 5.9648e3*y*y - 679.27*y*y*y;
-            pt_params->c2i[2] = -88.565 - 94.034*y - 33.014*y*y - 3.8205*y*y*y;
-            pt_params->c2i[3] = 1.5141e3 + 1.5757e3*y + 544.20*y*y + 62.446*y*y*y;
+            pt_params->c[2][0] = 0.68849 + 0.36438*y + 0.047958*y*y;
+            pt_params->c[2][1] = -1.6871e4 - 1.7412e4*y - 5.9648e3*y*y - 679.27*y*y*y;
+            pt_params->c[2][2] = -88.565 - 94.034*y - 33.014*y*y - 3.8205*y*y*y;
+            pt_params->c[2][3] = 1.5141e3 + 1.5757e3*y + 544.20*y*y + 62.446*y*y*y;
 
             gamma_param_res(Tp, &(pt_params->params));
         }
@@ -347,33 +429,41 @@ void gamma_pt_param_res(double E, double Tp, PARAMSET_PT* pt_params, int flag)
            when x > 0.5 ci = 0; i=0,1,2 */
         A = 0.82*(x + 3.17) - 0.25;
         if (x < 0.5) {
-            xc = x - pt_params->c1i[2];
-            pow = xc/(1.0 + pt_params->c1i[3]*xc);
-            pt_params->c1 = pt_params->c1i[0]*exp(-pt_params->c1i[1]*pow*pow);
+            xc = x - pt_params->c[1][2];
+            pow = xc/(1.0 + pt_params->c[1][3]*xc);
+            pt_params->c[0][1] = pt_params->c[1][0]*exp(-pt_params->c[1][1]*pow*pow);
             
-            xc = x - pt_params->c2i[2];
-            pow = xc/(1.0 + pt_params->c2i[3]*xc);
-            pt_params->c2 = pt_params->c2i[0]*exp(-pt_params->c2i[1]*pow*pow);
+            xc = x - pt_params->c[2][2];
+            pow = xc/(1.0 + pt_params->c[2][3]*xc);
+            pt_params->c[0][2] = pt_params->c[2][0]*exp(-pt_params->c[2][1]*pow*pow);
 
             sigma_incl = sigma_incl_res(ID_GAMMA, E, Tp, &(pt_params->params));
 
             /* calculate c0 from c1 and c2 */
-            if ((pt_params->c1 != 0) && (pt_params->c2 != 0)) {
-                pt_params->c0 = 2*sigma_incl/(pt_params->c1*sqrt(M_PI*pt_params->c2)*(erf(pt_params->c1/sqrt(pt_params->c2)) + 1) + 
-                                              pt_params->c2*exp(-pt_params->c1*pt_params->c1/pt_params->c2));
+            if ((pt_params->c[0][1] != 0) && (pt_params->c[0][2] != 0)) {
+                pt_params->c[0][0] = 2*sigma_incl/(pt_params->c[0][1]*sqrt(M_PI*pt_params->c[0][2])*(erf(pt_params->c[0][1]/sqrt(pt_params->c[0][2])) + 1) + 
+                                              pt_params->c[0][2]*exp(-pt_params->c[0][1]*pt_params->c[0][1]/pt_params->c[0][2]));
             } else {
-                pt_params->c0 = 0;
+                pt_params->c[0][0] = 0;
             }
         } else {
-            pt_params->c0 = 0;
-            pt_params->c1 = 0;
-            pt_params->c2 = 0;
+            for (i = 0; i < 4; i++) {
+                pt_params->c[0][i] = 0;
+            }
         }
     }
 }
 
-/*
- * Calculate pT parameter set for gamma rays
+/**
+ * Calculates all parameters describing the gamma-ray p<sub>t</sub> distribution
+ * as a function of the proton kinetic energy T<sub>p</sub> and the gamma-ray
+ * energy.
+ *
+ * @param E         Gamma-ray energy in GeV.
+ * @param Tp        Proton kinetic energy in GeV.
+ * @param pt_params Pointer to a ::PARAMSET_PT struct where the calculated
+ *                  parameters will be stored.
+ * @param flag      Flag if Tp has changed since last call to this function.
  */
 void gamma_pt_param(double E, double Tp, PARAMSET_PT* pt_params, int flag)
 {

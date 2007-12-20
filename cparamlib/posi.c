@@ -4,7 +4,23 @@
  * Parameter calculation for positrons
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/posi.c,v $
- * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.6 $
+ * $Author: niklas $ $Date: 2007/12/20 23:43:20 $ $Revision: 1.7 $
+ *
+ * Change log:
+ *
+ * 2007-12-17:
+ * Modified for documentation generation with doxygen.
+ *
+ */
+
+/**
+ * @file posi.c
+ *
+ * @brief Functions to calculate positron parameters
+ *
+ * File provides functions to calculate the parameters describing positron
+ * inclusive cross sections. The functions fill struct ::PARAMSET according to
+ * the functions listed in Table 5 of Kamae et al. (2006).
  *
  */
 
@@ -12,8 +28,14 @@
 #include <math.h>
 #include "cparamlib.h"
 
-/*
- * Calculate parameter set for positrons from non-diff
+/**
+ * Calculates parameters a<sub>0</sub>,...,a<sub>8</sub> describing the
+ * non-diffraction interaction positron inclusive cross section as a function
+ * of the proton kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void posi_param_nd(double Tp, PARAMSET* params)
 {
@@ -46,8 +68,14 @@ void posi_param_nd(double Tp, PARAMSET* params)
     }
 }
 
-/*
- * Calculate parameter set for positrons from diff. dissoc.
+/**
+ * Calculates parameters b<sub>0</sub>,...,b<sub>7</sub> describing the
+ * diffraction dissociation positron inclusive cross section as a function
+ * of the proton kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void posi_param_diff(double Tp, PARAMSET* params)
 {
@@ -92,8 +120,14 @@ void posi_param_diff(double Tp, PARAMSET* params)
     }
 }
 
-/*
- * Calculate parameter set for positrons from delta(1232)
+/**
+ * Calculates parameters c<sub>0</sub>,...,c<sub>4</sub> describing the
+ * Delta(1232) positron inclusive cross section as a function of the proton
+ * kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void posi_param_delta(double Tp, PARAMSET* params)
 {
@@ -121,8 +155,14 @@ void posi_param_delta(double Tp, PARAMSET* params)
     }
 }
 
-/*
- * Calculate parameter set for positrons from res(1600)
+/**
+ * Calculates parameters d<sub>0</sub>,...,d<sub>4</sub> describing the
+ * res(1600) positron inclusive cross section as a function of the proton
+ * kinetic energy T<sub>p</sub>.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void posi_param_res(double Tp, PARAMSET* params)
 {
@@ -150,8 +190,15 @@ void posi_param_res(double Tp, PARAMSET* params)
     }
 }
 
-/*
- * Calculate parameter set for positrons
+/**
+ * Calculates all parameters a<sub>0</sub>,...,a<sub>8</sub>,
+ * b<sub>0</sub>,...,b<sub>7</sub>, c<sub>0</sub>,...,c<sub>4</sub> and
+ * d<sub>0</sub>,...,d<sub>4</sub> describing positron inclusive cross
+ * sections as a function of the proton kinetic energy.
+ *
+ * @param Tp     Proton kinetic energy in GeV.
+ * @param params Pointer to a ::PARAMSET struct where the calculated parameters
+ *               will be stored.
  */
 void posi_param(double Tp, PARAMSET* params)
 {

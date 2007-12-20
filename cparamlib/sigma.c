@@ -1,24 +1,44 @@
 /*
- * sigma.c
- *
- * Main part of cparamlib; methods for calculations of differential
- * cross sections. Functions for inclusive cross sections as well 
- * as kinematic cutoff functions are given in Kamae et al. (2006)
- * and functions for pT distributions are given in Karlsson and
- * Kamae (2007).
- *
- * 10/11/2006: On request we have added functions for calculating
- * sigma_pp for the for components as given in the paper. We also
- * changed sigma to sigma_incl.
- *
- * 05/01/2007: Functionality to calculate pT distributions added
- *
- * 05/22/2007: Changed all functions to take a pointer to a struct
- * containing parameters rather than taking pointers to double
- * arrays.
- *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
- * $Author: niklas $ $Date: 2007/11/01 00:09:37 $ $Revision: 1.10 $
+ * $Author: niklas $ $Date: 2007/12/20 23:43:20 $ $Revision: 1.11 $
+ *
+ * Change log:
+ *
+ * 2006-10-11:
+ * On request we have added functions for calculating sigma_pp for the for
+ * components as given in the paper. We also changed sigma to sigma_incl.
+ *
+ * 2007-05-01:
+ * Functionality to calculate pT distributions added.
+ *
+ * 2007-05-22:
+ * Changed all functions to take a pointer to a struct containing parameters
+ * rather than taking pointers to double arrays.
+ *
+ * 2007-12-14:
+ * Modified for documentation generation with doxygen.
+ *
+ * 2007-12-20:
+ * Modified to reflect change of PARAMSET_PT definition.
+ *
+ */
+
+/**
+ * @file sigma.c
+ *
+ * @brief Main part of cparamlib; functions to calculate of differential
+ * cross sections. 
+ *
+ * File provides functions for the calculation of inclusive cross sections for
+ * stable secondary particles (gamma rays, electrons, positrons, electron
+ * neutrinos, electron antineutrinos, muon neutrinos and muon antineturinos)
+ * and transverse momentum distributions for gamma rays, as described in
+ * <a href="http://www.arxiv.org/abs/astro-ph/0605581">Kamae et al. (2006)</a>
+ * and
+ * <a href="http://www.arxiv.org/abs/0709.0233">Karlsson and Kamae (2008)</a>.
+ * It also provides functions for the calculation of the inelastic
+ * proton-proton cross section given in
+ * <a href="http://www.arxiv.org/abs/astro-ph/0605581">Kamae et al. (2006)</a>.
  *
  */
 
@@ -27,14 +47,26 @@
 #include "cparamlib.h"
 
 /* 
- * Table 2 of Kamae et al. 
+ * Coefficients for the kinematic cutoff functions as given in Table 2 of
+ * Kamae et al. (2006)
+ *
  */
 double L_MAX[7] = {0.96, 0.96, 0.94, 0.98, 0.98, 0.94, 0.98};
 double W_NDL[7] = {15.0, 20.0, 15.0, 15.0, 15.0, 20.0, 15.0};
 double W_NDH[7] = {44.0, 45.0, 47.0, 42.0, 40.0, 45.0, 40.0};
 
-/*
- * Calculate inclusive cross section from the non-diff process
+/**
+ * Calculates the inclusive cross section for the non-diffractive interaction
+ * (equation 6 of Kamae et al. 2006). The inclusive cross section is defined as
+ * dsigma/dlog(E) and returned in the units of mb.
+ *
+ * @param particle Secondary particle id number (see cparamlib.h).
+ * @param E        Secondary particle energy in GeV.
+ * @param Tp       Proton kinetic energy in GeV.
+ * @param params   Pointer to a ::PARAMSET struct. The struct should be
+ *                 initialized before being passed to this function.
+ * @return         Inclusive cross section dsigma/dlogE in mb.
+ *
  */
 double sigma_incl_nd(int particle, double E, double Tp, PARAMSET* params)
 {
@@ -116,14 +148,14 @@ double sigma_incl_nd(int particle, double E, double Tp, PARAMSET* params)
                 r_factor = 2.23*exp(-93.4*pow1*pow1) + y*(-0.376 - 0.121*y);
             }
             break;
-        /* electron anti-neutrino */
+        /* electron antineutrino */
         case ID_ANTINUE:
             if (Tp <= 15.6) {
                 pow1 = (y + 3.27)/(1 + 6.59*(y + 3.27));
                 r_factor = 2.67*exp(-45.7*pow1*pow1) + y*(-0.301 - 0.208*y);
             }
             break;
-        /* muon anti-neutrino */
+        /* muon antineutrino */
         case ID_ANTINUMU:
             if (Tp <= 15.6) {
                 pow1 = (y + 3.25)/(1 + 8.34*(y + 3.25));
@@ -136,8 +168,18 @@ double sigma_incl_nd(int particle, double E, double Tp, PARAMSET* params)
     return sigma;
 }
 
-/*
- * Calculate inclusive cross section from the diffraction dissociation process
+/**
+ * Calculates the inclusive cross section for the diffraction dissociation
+ * process (equation 9 of Kamae et al. 2006). The inclusive cross section is
+ * defined as dsigma/dlog(E) and is returned in units of mb.
+ *
+ * @param particle Secondary particle id number (see cparamlib.h).
+ * @param E        Secondary particle energy in GeV.
+ * @param Tp       Proton kinetic energy in GeV.
+ * @param params   Pointer to a ::PARAMSET struct. The struct should be
+ *                 initialized before being passed to this function.
+ * @return         Inclusive cross section dsigma/dlogE in mb.
+ *
  */
 double sigma_incl_diff(int particle, double E, double Tp, PARAMSET* params)
 {
@@ -175,8 +217,18 @@ double sigma_incl_diff(int particle, double E, double Tp, PARAMSET* params)
     return sigma;
 }
 
-/*
- * Calculate inclusive cross section from the Delta(1232) resonance
+/**
+ * Calculates the inclusive cross section for the Delta(1232) resonance
+ * (equation 12 of Kamae et al. 2006). The inclusive cross section is defined as
+ * dsigma/dlog(E) and is returned in units of mb.
+ *
+ * @param particle Secondary particle id number (see cparamlib.h)
+ * @param E        Secondary particle energy in GeV
+ * @param Tp       Proton kinetic energy in GeV
+ * @param params   Pointer to a ::PARAMSET struct. The struct should be
+ *                 initialized before being passed to this function.
+ * @return         Inclusive cross section dsigma/dlogE in mb
+ *
  */
 double sigma_incl_delta(int particle, double E, double Tp, PARAMSET* params)
 {
@@ -215,8 +267,18 @@ double sigma_incl_delta(int particle, double E, double Tp, PARAMSET* params)
     return sigma;
 }
 
-/*
- * Calculate inclusive cross section from the res(1600) resonance
+/**
+ * Calculates the inclusive cross section for the res(1600) resonance
+ * (equation 12 of Kamae et al. 2006). The inclusive cross section is defined as
+ * dsigma/dlog(E) and is returned in units of mb.
+ *
+ * @param particle Secondary particle id number (see cparamlib.h).
+ * @param E        Secondary particle energy in GeV.
+ * @param Tp       Proton kinetic energy in GeV.
+ * @param params   Pointer to a ::PARAMSET struct. The struct should be
+ *                 initialized before being passed to this function.
+ * @return         Inclusive cross section dsigma/dlogE in mb.
+ *
  */
 double sigma_incl_res(int particle, double E, double Tp, PARAMSET* params)
 {
@@ -255,8 +317,19 @@ double sigma_incl_res(int particle, double E, double Tp, PARAMSET* params)
     return sigma;
 }
 
-/*
- * Calculate total inclusive cross section (sum of all processes)
+/**
+ * Calculates the total inclusive cross section, i.e. the sum of all components
+ * (non-diffractive interaction, diffraction dissociation, Delta(1232) and
+ * res(1600) resonances). The inclusive cross section is defined as
+ * dsigma/dlog(E) and is returned in units of mb.
+ *
+ * @param particle Secondary particle id number (see cparamlib.h).
+ * @param E        Secondary particle energy in GeV.
+ * @param Tp       Proton kinetic energy in GeV.
+ * @param params   Pointer to a ::PARAMSET struct. The struct should be
+ *                 initialized before being passed to this function.
+ * @return         Inclusive cross section dsigma/dlogE in mb.
+ *
  */
 double sigma_incl_tot(int particle, double E, double Tp, PARAMSET* params)
 {
@@ -280,9 +353,19 @@ double sigma_incl_tot(int particle, double E, double Tp, PARAMSET* params)
     return f_tot;
 }
 
-/*
- * Calculate the differential cross section dsigma/dlogEdpT from non-res process
- * (i.e. non-diffractive + diffractive)
+/**
+ * Calculates the pT distribution for non-resonance (non-diffractive plus
+ * diffraction dissociation). The pT distribution is defined as the differential
+ * cross section d^2sigma/dlog(E)dpT and is returned in units of mb/(GeV/c).
+ *
+ * @param particle  Secondary particle id number (see cparamlib.h).
+ * @param pT        Secondary particle transverse momentum in GeV/c.
+ * @param E         Secondary particle energy in GeV.
+ * @param Tp        Proton kinetic energy in GeV.
+ * @param pt_params Pointer to a ::PARAMSET_PT struct. The struct should be
+ *                  initialized before being passed to this function.
+ * @return          Inclusive cross section d^2sigma/dlog(E)dpT in mb/(GeV/c).
+ *
  */
 double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params)
 {
@@ -302,7 +385,7 @@ double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* pt
     x = log10(E);
 
     if (particle == ID_GAMMA) {
-        sigma = pt_params->a0*pT*exp(-pT/pt_params->a1);
+        sigma = pt_params->a[0]*pT*exp(-pT/pt_params->a[1]);
         
         /* cutoff is the kinematic limit function as in the paper */
         if (x > 0.5) {
@@ -323,8 +406,19 @@ double sigma_pt_nr(int particle, double pT, double E, double Tp, PARAMSET_PT* pt
     return sigma;
 }
 
-/*
- * Calculate the differential cross section dsigma/dlogEdpT from the Delta(1232) resonance
+/**
+ * Calculates the pT distribution for the Delta(1232) resonance. The pT
+ * distribution is defined as the differential cross section d^2sigma/dlog(E)dpT
+ * and is returned in units of mb/(GeV/c).
+ *
+ * @param particle  Secondary particle id number (see cparamlib.h).
+ * @param pT        Secondary particle transverse momentum in GeV/c.
+ * @param E         Secondary particle energy in GeV.
+ * @param Tp        Proton kinetic energy in GeV.
+ * @param pt_params Pointer to a ::PARAMSET_PT struct. The struct should be
+ *                  initialized before being passed to this function.
+ * @return          Inclusive cross section d^2sigma/dlog(E)dpT in mb/(GeV/c).
+ *
  */
 double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params)
 {
@@ -345,8 +439,8 @@ double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT*
     x = log10(E);
 
     if (particle == ID_GAMMA) {
-        pow = pT - pt_params->b1;
-        sigma = pt_params->b0*pT*exp(-pow*pow/pt_params->b2);
+        pow = pT - pt_params->b[0][1];
+        sigma = pt_params->b[0][0]*pT*exp(-pow*pow/pt_params->b[0][2]);
 
         /* cutoff is the kinematic limit function as in the paper */
         if (x > 0.5) {
@@ -368,8 +462,19 @@ double sigma_pt_delta(int particle, double pT, double E, double Tp, PARAMSET_PT*
     return sigma;
 }
 
-/*
- * Calculate the differential cross section dsigma/dlogEdpT from the res(1600) resonance
+/**
+ * Calculates the pT distribution for the res(1600) resonance. The pT
+ * distribution is defined as the differential cross section d^2sigma/dlog(E)dpT
+ * and is returned in units of mb/(GeV/c).
+ *
+ * @param particle  Secondary particle id number (see cparamlib.h).
+ * @param pT        Secondary particle transverse momentum in GeV/c.
+ * @param E         Secondary particle energy in GeV.
+ * @param Tp        Proton kinetic energy in GeV.
+ * @param pt_params Pointer to a ::PARAMSET_PT struct. The struct should be
+ *                  initialized before being passed to this function.
+ * @return          Inclusive cross section d^2sigma/dlog(E)dpT in mb/(GeV/c).
+ *
  */
 double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params)
 {
@@ -390,8 +495,8 @@ double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* p
     x = log10(E);
 
     if (particle == ID_GAMMA) {
-        pow = pT - pt_params->c1;
-        sigma = pt_params->c0*pT*exp(-pow*pow/pt_params->c2);
+        pow = pT - pt_params->c[0][1];
+        sigma = pt_params->c[0][0]*pT*exp(-pow*pow/pt_params->c[0][2]);
 
         /* cutoff is the kinematic limit function as in the paper */
         if (x > 0.5) {
@@ -412,8 +517,20 @@ double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* p
     return sigma;
 }
 
-/*
- * Calculate the differential cross section dsigma/dlogEdp from all processes
+/**
+ * Calculates the total pT distribution, i.e. sum of all components,
+ * non-resonance, Delta(1232) and res(1600) resonances. The pT distribution is
+ * defined as the differential cross section d^2sigma/dlog(E)dpT and is
+ * returned in units of mb/(GeV/c).
+ *
+ * @param particle  Secondary particle id number (see cparamlib.h).
+ * @param pT        Secondary particle transverse momentum in GeV/c.
+ * @param E         Secondary particle energy in GeV.
+ * @param Tp        Proton kinetic energy in GeV.
+ * @param pt_params Pointer to a ::PARAMSET_PT struct. The struct should be
+ *                  initialized before being passed to this function.
+ * @return          Inclusive cross section d^2sigma/dlog(E)dpT in mb/(GeV/c).
+ *
  */
 double sigma_pt_tot(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params)
 {
@@ -436,9 +553,14 @@ double sigma_pt_tot(int particle, double pT, double E, double Tp, PARAMSET_PT* p
     return f_tot;
 }
 
-/*
- * Calculate non-diffractive inelastic p-p cross section
- * as given by equation 1 in Kamae et al. (2006)
+/**
+ * Calculates the inelastic proton-proton cross section for the non-diffractive
+ * interaction component, as given by equation 3 in Kamae et al. (2006). The
+ * cross section sigma(pp) is returned in units of mb.
+ *
+ * @param Pp       Proton momentum in GeV/c.
+ * @return         Inelastic cross section sigma(pp) in mb.
+ *
  */
 double sigma_pp_nd(double Pp)
 {
@@ -463,9 +585,14 @@ double sigma_pp_nd(double Pp)
     return sigma;
 }
 
-/*
- * Calculate diffractive inelastic p-p cross section
- * as given by equation 2 in Kamae et al. (2006)
+/**
+ * Calculates the inelastic proton-proton cross section for the diffraction
+ * dissociation component, as given by equation 3 in Kamae et al. (2006). The
+ * cross section sigma(pp) is returned in units of mb.
+ *
+ * @param Pp       Proton momentum in GeV/c.
+ * @return         Inelastic cross section sigma(pp) in mb.
+ *
  */
 double sigma_pp_diff(double Pp)
 {
@@ -488,9 +615,14 @@ double sigma_pp_diff(double Pp)
     return sigma;
 }
 
-/*
- * Calculate delta(1232) inelastic p-p cross section
- * as given by equation 3 in Kamae et al. (2006)
+/**
+ * Calculates the inelastic proton-proton cross section for the Delta(1232)
+ * component, as given by equation 3 in Kamae et al. (2006). The cross section
+ * sigma(pp) is returned in units of mb.
+ *
+ * @param Pp       Proton momentum in GeV/c.
+ * @return         Inelastic cross section sigma(pp) in mb.
+ *
  */
 double sigma_pp_delta(double Pp)
 {
@@ -513,9 +645,14 @@ double sigma_pp_delta(double Pp)
     return sigma;
 }
 
-/*
- * Calculate res(1600) inelastic p-p cross section
- * as given by equation 4 in Kamae et al. (2006)
+/**
+ * Calculates the inelastic proton-proton cross section for the res(1600)
+ * component, as given by equation 4 in Kamae et al. (2006). The cross section
+ * sigma(pp) is returned in units of mb.
+ *
+ * @param Pp       Proton momentum in GeV/c.
+ * @return         Inelastic cross section sigma(pp) in mb.
+ *
  */
 double sigma_pp_res(double Pp)
 {
