@@ -21,8 +21,7 @@ The cparamlib package provides:
 - python extension module
 
 See the @ref install for detailed instructions on how to build and install the
-library on your system. There is also an extensive @ref tutorial will be added
-later.
+library on your system. Later on, an extensive @ref tutorial will be added.
 
 @author Niklas Karlsson <niklas@slac.stanford.edu>
 
