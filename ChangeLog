@@ -1,3 +1,8 @@
+2007-12-30 Niklas Karlsson <niklas@slac.stanford.edu>
+
+	* Option --enable-userdoc added so that documentation is not
+	         always built.
+	
 2007-12-20 Niklas Karlsson <niklas@slac.stanford.edu>
 
 	* Implementation Changed PARAMSET_PT to contain three double arrays

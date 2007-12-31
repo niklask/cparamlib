@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/12/20 23:42:40 $ $Revision: 1.27 $
+dnl $Author: niklas $ $Date: 2007/12/31 00:46:43 $ $Revision: 1.28 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -67,16 +67,26 @@ if test x$pythonbuild != xfalse; then
   fi
 fi
 
-dnl Documentation is built by default
-dnl only set to false if doxygen executable is not found
-docbuild=true
+dnl Option to build and install documentation
+AC_ARG_ENABLE(userdoc,
+[  --enable-userdoc        generate documentation (default = no)],
+[case "${enableval}" in
+  yes) docbuild=true ;;
+  no)  docbuild=false ;;
+  *)   AC_MSG_ERROR(bad value ${enableval} for --enable-python) ;;
+esac],[docbuild=true])
+
 AM_CONDITIONAL(DOCBUILD, [test x$docbuild = xtrue])
 
-AC_PATH_PROG([DOXYGEN],[doxygen])
-if test -z "$DOXYGEN" ; then
-   AC_MSG_WARN([cannot find the 'doxygen' executable, please install it])
-   docbuild=false
-   AM_CONDITIONAL(DOCBUILD, [test x$docbuild = xtrue])
+dnl Make sure Doxygen is installed and set variable $(DOXYGEN)
+dnl only warn "not found" if actually making documentation
+if test x$docbuild != xfalse; then
+  AC_PATH_PROG([DOXYGEN],[doxygen])
+  if test -z "$DOXYGEN" ; then
+    AC_MSG_WARN([cannot find the 'doxygen' executable, please install it])
+    docbuild=false
+    AM_CONDITIONAL(DOCBUILD, [test x$docbuild = xtrue])
+  fi
 fi
 
 AM_SANITY_CHECK
@@ -96,5 +106,11 @@ if test x$pythonbuild != xfalse; then
   AC_MSG_RESULT(  compile Python interface code: yes )
 else
   AC_MSG_RESULT(  compile Python interface code: no )
+fi
+
+if test x$docbuild != xfalse; then
+  AC_MSG_RESULT(  generate Doxygen documentation: yes )
+else
+  AC_MSG_RESULT(  generate Doxygen documentation: no )
 fi
 
