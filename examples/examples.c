@@ -1,10 +1,10 @@
 /*
- * test.c
+ * examples.c
  *
- * Test app for the parameterization model lib
+ * Implementation of example code given in the tutorial for cparamlib.
  *
- * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/test.c,v $
- * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.7 $
+ * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/examples.c,v $
+ * $Author: niklas $ $Date: 2007/12/31 00:51:53 $ $Revision: 1.1 $
  *
  */
 
