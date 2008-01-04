@@ -16,7 +16,7 @@ CLFLAGS = -o
 
 all: examples.o params.o
 	$(CC) params.c -I$(INCLUDE_DIR) -L$(LIB_DIR) -lm -lcparamlib $(CLFLAGS) $(BIN_PARAMS)
-	$(CC) test.c -I$(INCLUDE_DIR) -L$(LIB_DIR) -lm -lcparamlib $(CLFLAGS) $(BIN_TEST)
+	$(CC) examples.c -I$(INCLUDE_DIR) -L$(LIB_DIR) -lm -lcparamlib $(CLFLAGS) $(BIN_TEST)
 
 clean:
 	-@ echo "Cleaning up..."
