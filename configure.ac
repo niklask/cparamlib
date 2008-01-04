@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2007/12/31 00:46:43 $ $Revision: 1.28 $
+dnl $Author: niklas $ $Date: 2008/01/04 21:57:59 $ $Revision: 1.29 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -51,21 +51,17 @@ if test x$pythonbuild != xfalse; then
 
   AC_SUBST([PYTHON_INCLUDE],[$python_include_path] )
   AC_SUBST([PYTHON_LIB],[$python_lib_path])
-fi
-	
-AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
 
-dnl Make sure SWIG is installed and set variable $(SWIG)
-dnl Only warn "not found" if --enable-python was used
-dnl (Do not care about version number for now)
-if test x$pythonbuild != xfalse; then
+  dnl Make sure SWIG is installed and set variable $(SWIG)
+  dnl (do not care about version number for now)
   AC_PATH_PROG([SWIG],[swig])
   if test -z "$SWIG" ; then
 	AC_MSG_WARN([cannot find the 'swig' executable, please install it])
     pythonbuild=false
-    AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
   fi
 fi
+	
+AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
 
 dnl Option to build and install documentation
 AC_ARG_ENABLE(userdoc,
@@ -76,8 +72,6 @@ AC_ARG_ENABLE(userdoc,
   *)   AC_MSG_ERROR(bad value ${enableval} for --enable-python) ;;
 esac],[docbuild=true])
 
-AM_CONDITIONAL(DOCBUILD, [test x$docbuild = xtrue])
-
 dnl Make sure Doxygen is installed and set variable $(DOXYGEN)
 dnl only warn "not found" if actually making documentation
 if test x$docbuild != xfalse; then
@@ -85,9 +79,10 @@ if test x$docbuild != xfalse; then
   if test -z "$DOXYGEN" ; then
     AC_MSG_WARN([cannot find the 'doxygen' executable, please install it])
     docbuild=false
-    AM_CONDITIONAL(DOCBUILD, [test x$docbuild = xtrue])
   fi
 fi
+
+AM_CONDITIONAL(DOCBUILD, [test x$docbuild = xtrue])
 
 AM_SANITY_CHECK
 
