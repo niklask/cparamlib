@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2008/01/08 21:51:25 $ $Revision: 1.32 $
+dnl $Author: niklas $ $Date: 2008/01/08 22:29:33 $ $Revision: 1.33 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -10,6 +10,7 @@ AC_INIT(cparamlib/cparamlib.h)
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_AUX_DIR(config)
 AM_INIT_AUTOMAKE(cparamlib, 2.0.0)
+dnl Do not forget to change library interface version in cparamlib/Makefile.am!
 
 dnl Checks for programs
 AC_PROG_CC
@@ -108,14 +109,14 @@ AC_MSG_RESULT([
 cparamlib successfully configured.])
 				  
 if test x$pythonbuild != xfalse; then
-  AC_MSG_RESULT(  compile Python interface code: yes )
+  AC_MSG_RESULT([  compile Python interface code: yes ])
 else
-  AC_MSG_RESULT(  compile Python interface code: no )
+  AC_MSG_RESULT([  compile Python interface code: no ])
 fi
 
 if test x$docbuild != xfalse; then
-  AC_MSG_RESULT(  generate Doxygen documentation: yes )
+  AC_MSG_RESULT([  generate Doxygen documentation: yes ])
 else
-  AC_MSG_RESULT(  generate Doxygen documentation: no )
+  AC_MSG_RESULT([  generate Doxygen documentation: no ])
 fi
 
