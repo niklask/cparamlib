@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2008/01/08 01:18:01 $ $Revision: 1.31 $
+dnl $Author: niklas $ $Date: 2008/01/08 21:51:25 $ $Revision: 1.32 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -31,7 +31,9 @@ AC_CHECK_HEADER(math.h, [],
 dnl Turn on -Wall if compiling with gcc
 #AC_COMPILE_WARNINGS
 
+dnl
 dnl Option to enable python extension build
+dnl
 AC_ARG_ENABLE(python,
 [  --enable-python         build Python interface code (default = no)],
 [case "${enableval}" in
@@ -63,7 +65,9 @@ fi
 	
 AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
 
+dnl
 dnl Option to build and install documentation
+dnl
 AC_ARG_ENABLE(userdoc,
 [  --enable-userdoc        generate documentation (default = no)],
 [case "${enableval}" in
@@ -86,7 +90,9 @@ AM_CONDITIONAL(DOCBUILD, [test x$docbuild = xtrue])
 
 AM_SANITY_CHECK
 
-dnl files to be generated 
+dnl
+dnl Files to be generated 
+dnl
 AC_OUTPUT(Makefile \
           cparamlib.pc \
           cparamlib/Makefile \
@@ -95,6 +101,9 @@ AC_OUTPUT(Makefile \
           doc/Doxyfile
 )
 
+dnl
+dnl Output message about what is going to be compiled/installed
+dnl
 AC_MSG_RESULT([
 cparamlib successfully configured.])
 				  
