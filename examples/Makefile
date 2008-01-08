@@ -2,9 +2,6 @@ SHELL = /bin/sh
 
 CC = gcc
 
-INCLUDE_DIR = /usr/include
-LIB_DIR = /usr/lib
-
 BIN_PARAMS = params
 BIN_EXAMPLES = examples
 
