@@ -6,18 +6,18 @@ INCLUDE_DIR = /usr/include
 LIB_DIR = /usr/lib
 
 BIN_PARAMS = params
-BIN_TEST = examples
+BIN_EXAMPLES = examples
 
 CCFLAGS = -O2 -c -g
 CLFLAGS = -o
 
 %.o : %.c
-	${CC} -I$(INCLUDE_DIR) $(CCFLAGS) $< -o $@
+	${CC} $(CCFLAGS) `pkg-config --cflags cparamlib` $< -o $@
 
 all: examples.o params.o
-	$(CC) params.c -I$(INCLUDE_DIR) -L$(LIB_DIR) -lm -lcparamlib $(CLFLAGS) $(BIN_PARAMS)
-	$(CC) examples.c -I$(INCLUDE_DIR) -L$(LIB_DIR) -lm -lcparamlib $(CLFLAGS) $(BIN_TEST)
+	$(CC) params.c $(CLFLAGS) $(BIN_PARAMS) `pkg-config --libs --cflags cparamlib`
+	$(CC) examples.c $(CLFLAGS) $(BIN_EXAMPLES) `pkg-config --libs --cflags cparamlib`
 
 clean:
 	-@ echo "Cleaning up..."
-	-@ rm -r *.o $(BIN_PARAMS) $(BIN_TEST)
+	-@ rm -r *.o $(BIN_PARAMS) $(BIN_EXAMPLES)

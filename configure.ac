@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2008/01/04 21:57:59 $ $Revision: 1.29 $
+dnl $Author: niklas $ $Date: 2008/01/08 01:06:32 $ $Revision: 1.30 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -88,6 +88,7 @@ AM_SANITY_CHECK
 
 dnl files to be generated 
 AC_OUTPUT(Makefile \
+          cparamlib.pc \
           cparamlib/Makefile \
 		  python/Makefile \
           doc/Makefile \

@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+pyexecdir=@pyexecdir@
+
+Name: cparamlib
+Description: C library for calculating cross sections according to parameterization
+Requires: 
+Version: @VERSION@
+Libs: -L${libdir} -lcparamlib -lm
+Cflags: -I${includedir}
