@@ -53,15 +53,17 @@ Generally, the library is linked to your program using something like
 
 gcc yourprogram.c -L/usr/lib -lm -lcparamlib -o yourprogram.bin
 
+or if you like to use pkg-config
+
+gcc yourprogram.c `pkgconfig --libs --cflags cparamlib` -o yourprogram.bin
+
 In the directory examples/ you will find two example programs that builds with the library and an
-example Makefile. This Makefile must be modified so that the two lines
+example Makefile. In these examples, pkg-config is used to determine the location of libraries and
+include files. If the library was installed in a non-standard path, e.g. /opt, then you must set
+PKG_CONFIG_PATH to reflect this, e.g. PKG_CONFIG_PATH=/opt/lib/pkgconfig. 
 
-  INCLUDE_DIR = /usr/include
-  LIB_DIR = /usr/lib
-
-points to the location where you installed the library (--prefix option with ./configure). The
-default is /usr/include and /usr/lib. Also, do not forget to set LD_LIBRARY_PATH if you install
-the library somewhere else than /usr/lib.
+Also, do not forget to set LD_LIBRARY_PATH if you install the library somewhere else than /usr/lib
+and intend to use the dynamic libraries.
 
 We have chosen not to build these example binaries with autoconf for two reasons:
 
