@@ -4,7 +4,7 @@
  * Implementation of example code given in the tutorial for cparamlib.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/examples.c,v $
- * $Author: niklas $ $Date: 2008/01/15 21:10:45 $ $Revision: 1.2 $
+ * $Author: niklas $ $Date: 2008/01/15 21:17:04 $ $Revision: 1.3 $
  *
  */
 
@@ -30,10 +30,10 @@ double Tp[43] = {512.0e3, 362.0e3, 256.0e3, 181.0e3, 128.0e3, 90.5e3, 64.0e3, 45
  */
 void example1(void)
 {
-    double Tp, E;
-    double s;
+    double Tp, E;    /* proton kinetic energy and gamma-ray energy */
+    double s;        /* non-diffraction cross section */
     int i;
-    PARAMSET params;
+    PARAMSET params; /* struct where parameters are stored */
 
     memset(&params, 0, sizeof(PARAMSET));
 
