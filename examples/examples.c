@@ -4,7 +4,7 @@
  * Implementation of example code given in the tutorial for cparamlib.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/examples.c,v $
- * $Author: niklas $ $Date: 2008/01/15 21:17:04 $ $Revision: 1.3 $
+ * $Author: niklas $ $Date: 2008/01/15 21:40:26 $ $Revision: 1.4 $
  *
  */
 
@@ -41,9 +41,13 @@ void example1(void)
     E = 1.0e2;     /* gamma-ray energy 100 GeV */
 
     printf("Example 1: non-diff\n");
+
+    /* call function to fill parameter struct params with correct values */
     gamma_param_nd(Tp, &params);
+
     for (i = 0; i < 9; i++)
         printf("a[%d] = %10e\n", i, params.a[i]);
+
     s = sigma_incl_nd(ID_GAMMA, E, Tp, &params);
     printf("Tp = 512TeV and Egamma = 100 GeV => sigma_incl_nd = %10e mb\n", s);
 
@@ -174,12 +178,28 @@ void example3(void)
     return;
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
-    example1();
-    example2();
-    example3();
+    int no;
+
+    if (argc < 2) {
+        printf("No example specified!\n");
+        return 0;
+    }
+
+    no = strtol(argv[1], NULL, 0);
+
+    switch (no) {
+        case 1:
+            example1();
+            break;
+        case 2:
+            example2();
+            break;
+        case 3:
+            example3();
+            break;
+    }
 
     return 0;
 }
-
