@@ -1,7 +1,135 @@
-/** \file tutorial.dox
- *  \brief Tutorial for cparamlib
+/** @file tutorial.dox
+ *  @brief Tutorial for cparamlib
  */
 
 /**
-\page tutorial Tutorial
+@page tutorial Tutorial
+
+This tutorial will go through the basics of calculating spectra and angular
+distributions. The examples here are for gamma rays only, but can easily be
+modified for use with other stable secondary particles. Examples include
+- @ref example1
+- @ref example2
+- @ref example3
+
+The first step is to make sure to have the library installed. Follow the @ref
+install for more details.
+
+All the code presented here is also available in the file @em examples.c found
+in the examples directory. To compile the code, enter the @em examples directory
+and do make
+
+@code
+cd ./examples
+make
+@endcode
+
+The example @em Makefile utilizes @em pkg-config to find the correct compiler
+options and paths needed to build with @b cparamlib. It compiles two binaries:
+- examples
+- params
+
+The @em examples binary runs all the examples in this tutorial by passing the
+example number as argument on the command line. For example,
+
+@code
+./examples 1
+@endcode
+
+runs the first example described below.
+
+@section example1 Example 1: Non-diffraction
+
+In this first example, @b cparamlib functions are used to calculate parameters
+needed to calculate the non-diffractive cross section of gamma rays at a given
+proton kinetic energy T<sub>p</sub> and gamma-ray energy E. Then the cross
+section is actually calculated.
+
+First include the necessary header files and define a few variables to be used
+
+@code
+#include <stdio.h>
+#include "cparamlib/cparamlib.h"
+
+double Tp, E;    /* proton kinetic energy and gamma-ray energy */
+double s;        /* non-diffraction cross section */
+int i;
+PARAMSET params; /* struct where parameters are stored */
+@endcode
+
+Make sure the parameter struct is empty before accessing it
+
+@code
+memset(&params, 0, sizeof(PARAMSET));
+@endcode
+
+Set the proton kinetic energy and the gamma-ray energy for which the parameters
+and cross section will be calculated
+
+@code
+Tp = 512000.0; /* proton kinetic energy 512 TeV */
+E = 1.0e2;     /* gamma-ray energy 100 GeV */
+@endcode
+
+Now call the function @ref gamma_param_nd to fill the parameter struct with the
+correct values for the given proton kinetic energy. The first argument is the
+proton kinetic energy and the second argument is a pointer to the struct where
+the parameters will be stored
+
+@code
+gamma_param_nd(Tp, &params);
+@endcode
+
+and print them out
+
+@code
+for (i = 0; i < 9; i++)
+    printf("a[%d] = %10e\n", i, params.a[i]);
+@endcode
+
+Finally, the non-diffractive cross section is calculated with a call to @ref
+sigma_incl_nd and print it out. The first argument to this function specifies
+the particle for which to calculate, in this case gamma rays. See @ref
+cparamlib.h for a list of particle id's. The following arguments are the
+gamma-ray energy, proton kinetic energy and a pointer to the parameter struct
+
+@code
+s = sigma_incl_nd(ID_GAMMA, E, Tp, &params);
+printf("Tp = 512TeV and Egamma = 100 GeV => sigma_incl_nd = %10e mb\n", s);
+@endcode
+
+@section example2 Example 2: Total inclusive cross section
+
+The second example builds on the first and calculates the total inclusive
+cross section for given proton kinetic energy and gamma-ray energy. This
+requires only two changes:
+
+@code
+gamma_param_nd(Tp, &params);
+@endcode
+
+is replaced by
+@code
+gamma_param(Tp, &params);
+@endcode
+
+and
+
+@code
+s = sigma_incl_nd(ID_GAMMA, E, Tp, &params);
+@endcode
+
+is replaced by
+
+@code
+s = sigma_incl_tot(ID_GAMMA, E, Tp, &params);
+@endcode
+
+@section example3 Example 3: Gamma-ray spectrum due to power-law protons
+
+This third example is quite a bit more complex and calculates the gamma-ray
+spectrum due to a pencil beam of protons with kinetic energy following a
+power law. For simplicity, the target density is taken as unity and all
+protons are assumed to interact.
+
 */
