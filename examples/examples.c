@@ -4,7 +4,7 @@
  * Implementation of example code given in the tutorial for cparamlib.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/examples.c,v $
- * $Author: niklas $ $Date: 2007/12/31 00:51:53 $ $Revision: 1.1 $
+ * $Author: niklas $ $Date: 2008/01/15 21:10:45 $ $Revision: 1.2 $
  *
  */
 
@@ -31,7 +31,7 @@ double Tp[43] = {512.0e3, 362.0e3, 256.0e3, 181.0e3, 128.0e3, 90.5e3, 64.0e3, 45
 void example1(void)
 {
     double Tp, E;
-    double f;
+    double s;
     int i;
     PARAMSET params;
 
@@ -44,8 +44,8 @@ void example1(void)
     gamma_param_nd(Tp, &params);
     for (i = 0; i < 9; i++)
         printf("a[%d] = %10e\n", i, params.a[i]);
-    f = sigma_incl_nd(ID_GAMMA, E, Tp, &params);
-    printf("Tp = 512TeV and Egamma = 100 GeV => sigma_incl_nd = %10e mb\n", f);
+    s = sigma_incl_nd(ID_GAMMA, E, Tp, &params);
+    printf("Tp = 512TeV and Egamma = 100 GeV => sigma_incl_nd = %10e mb\n", s);
 
     return;
 }
@@ -56,7 +56,7 @@ void example1(void)
 void example2(void)
 {
     double Tp, E;
-    double f;
+    double s;
     int i;
     PARAMSET params;
 
@@ -68,9 +68,9 @@ void example2(void)
     gamma_param_nd(Tp, &params);
 
     printf("Example 2: total inclusive gamma-ray cross-section\n");
-    f = sigma_incl_tot(ID_GAMMA, E, Tp, &params);
+    s = sigma_incl_tot(ID_GAMMA, E, Tp, &params);
     printf("total inclusive gamma-ray cross-section\n");
-    printf("Tp = 512TeV, Egamma = 100 GeV => sigma_incl = %10e mb\n", f);
+    printf("Tp = 512TeV, Egamma = 100 GeV => sigma_incl = %10e mb\n", s);
 
     return;
 }
