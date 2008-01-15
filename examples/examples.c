@@ -4,7 +4,7 @@
  * Implementation of example code given in the tutorial for cparamlib.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/examples.c,v $
- * $Author: niklas $ $Date: 2008/01/15 21:40:26 $ $Revision: 1.4 $
+ * $Author: niklas $ $Date: 2008/01/15 21:43:20 $ $Revision: 1.5 $
  *
  */
 
@@ -69,11 +69,13 @@ void example2(void)
     Tp = 512000.0; /* proton kinetic energy 512 TeV */
     E = 1.0e2;     /* gamma-ray energy 100 GeV */
 
-    gamma_param_nd(Tp, &params);
+    gamma_param(Tp, &params);
 
     printf("Example 2: total inclusive gamma-ray cross-section\n");
+
     s = sigma_incl_tot(ID_GAMMA, E, Tp, &params);
-    printf("total inclusive gamma-ray cross-section\n");
+
+    printf("Total inclusive gamma-ray cross-section\n");
     printf("Tp = 512TeV, Egamma = 100 GeV => sigma_incl = %10e mb\n", s);
 
     return;
