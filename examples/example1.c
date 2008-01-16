@@ -4,7 +4,7 @@
  * Implementation of example code given in the tutorial for cparamlib.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/example1.c,v $
- * $Author: niklas $ $Date: 2008/01/16 19:21:00 $ $Revision: 1.1 $
+ * $Author: niklas $ $Date: 2008/01/16 19:24:01 $ $Revision: 1.2 $
  *
  */
 
@@ -14,10 +14,10 @@
 
 int main(int argc, char* argv[])
 {
-    double Tp, E;
-    double s;
+    double Tp, E;    /* proton kinetic energy and gamma-ray energy */
+    double s;        /* non-diffraction cross section */
     int i;
-    PARAMSET params;
+    PARAMSET params; /* struct where parameters are stored */
 
     memset(&params, 0, sizeof(PARAMSET));
 
