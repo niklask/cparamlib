@@ -1,11 +1,11 @@
 /*
- * params.c
+ * parameters.c
  *
- * Test app for the parameterization model lib
+ * Test application for the parameterization model lib
  * Calculates parameters as functions of Tp
  *
- * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/Attic/params.c,v $
- * $Author: niklas $ $Date: 2007/09/10 21:18:05 $ $Revision: 1.7 $
+ * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/parameters.c,v $
+ * $Author: niklas $ $Date: 2008/01/16 19:13:05 $ $Revision: 1.1 $
  *
  */
 
@@ -21,13 +21,13 @@ double Tp_list[43] = {512.0, 362.0, 256.0, 181.0, 128.0, 90.5, 64.0, 45.3, 32.0,
                       1.95e-3, 1.38e-3, 0.98e-3, 0.82e-3, 0.69e-3,
                       0.58e-3, 0.488e-3};
 
-char *filenames[7][4] = {{"GammaNonDiff.dat", "GammaDiffDiss.dat", "GammaDelta1232.dat", "GammaDelta1600.dat"},
-                         {"ElecNonDiff.dat", "ElecDiffDiss.dat", "ElecDelta1232.dat", "ElecDelta1600.dat"},
-                         {"PosiNonDiff.dat", "PosiDiffDiss.dat", "PosiDelta1232.dat", "PosiDelta1600.dat"},
-                         {"NuENonDiff.dat", "NuEDiffDiss.dat", "NuEDelta1232.dat", "NuEDelta1600.dat"},
-                         {"NuMuNonDiff.dat", "NuMuDiffDiss.dat", "NuMuDelta1232.dat", "NuMuDelta1600.dat"},
-                         {"AntiNuENonDiff.dat", "AntiNuEDiffDiss.dat", "AntiNuEDelta1232.dat", "AntiNuEDelta1600.dat"},
-                         {"AntiNuMuNonDiff.dat", "AntiNuMuDiffDiss.dat", "AntiNuMuDelta1232.dat", "AntiNuMuDelta1600.dat"}};
+char *filenames[7][4] = {{"gamma_nh.dat", "gamma_diff.dat", "gamma_delta.dat", "gamma_res.dat"},
+                         {"elec_nd.dat", "elec_diff.dat", "elec_delta.dat", "elec_res.dat"},
+                         {"posi_nd.dat", "posi_diff.dat", "posi_delta.dat", "posi_res.dat"},
+                         {"nue_nd.dat", "nue_diff.dat", "nue_delta.dat", "nue_res.dat"},
+                         {"numu_nd.dat", "numu_diff.dat", "numu_delta.dat", "numu_res.dat"},
+                         {"antinue_nd.dat", "antinue_diff.dat", "antinue_delta.dat", "antinue_res.dat"},
+                         {"antinumu_nd.dat", "antinumu_diff.dat", "antinumu_delta.dat", "antinumu_res.dat"}};
 
 void nondiff(int p)
 {
