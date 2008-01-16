@@ -2,8 +2,9 @@ SHELL = /bin/sh
 
 CC = gcc
 
-BIN_PARAMS = params
-BIN_EXAMPLES = examples
+BIN_PARAMS = parameters
+BIN_EX1 = example1
+BIN_SPECTRUM = spectrum
 
 CCFLAGS = -O2 -c -g
 CLFLAGS = -o
@@ -11,10 +12,11 @@ CLFLAGS = -o
 %.o : %.c
 	${CC} $(CCFLAGS) `pkg-config --cflags cparamlib` $< -o $@
 
-all: examples.o params.o
-	$(CC) params.c $(CLFLAGS) $(BIN_PARAMS) `pkg-config --libs --cflags cparamlib`
-	$(CC) examples.c $(CLFLAGS) $(BIN_EXAMPLES) `pkg-config --libs --cflags cparamlib`
+all: example1.o parameters.o spectrum.o
+	$(CC) parameters.c $(CLFLAGS) $(BIN_PARAMS) `pkg-config --libs --cflags cparamlib`
+	$(CC) example1.c $(CLFLAGS) $(BIN_EX1) `pkg-config --libs --cflags cparamlib`
+	$(CC) spectrum.c $(CLFLAGS) $(BIN_SPECTRUM) `pkg-config --libs --cflags cparamlib`
 
 clean:
 	-@ echo "Cleaning up..."
-	-@ rm -r *.o $(BIN_PARAMS) $(BIN_EXAMPLES)
+	-@ rm -r *.o *.csv $(BIN_PARAMS) $(BIN_EXAMPLES) $(BIN_SPECTRUM)

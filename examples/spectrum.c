@@ -5,7 +5,7 @@
  * protons.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/spectrum.c,v $
- * $Author: niklas $ $Date: 2008/01/16 19:15:14 $ $Revision: 1.1 $
+ * $Author: niklas $ $Date: 2008/01/16 19:31:11 $ $Revision: 1.2 $
  *
  */
 
@@ -19,8 +19,6 @@ double Tp[43] = {512.0e3, 362.0e3, 256.0e3, 181.0e3, 128.0e3, 90.5e3, 64.0e3, 45
                  1.41e3, 1.0e3, 707.0, 500.0, 354.0, 250.0, 177.0, 125.0, 88.4, 62.5,
                  44.2, 31.3, 22.1, 15.6, 11.1, 7.81, 5.52, 3.91, 2.76, 1.95, 1.38,
                  0.98, 0.82, 0.69, 0.58, 0.488};
-
-/* proton power-law index */
 
 /* the following double arrays are used to store the calculated spectra */
 double *spectrum;
