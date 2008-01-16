@@ -1,6 +1,6 @@
 /*
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/cparamlib/sigma.c,v $
- * $Author: niklas $ $Date: 2007/12/20 23:43:20 $ $Revision: 1.11 $
+ * $Author: niklas $ $Date: 2008/01/16 18:35:27 $ $Revision: 1.12 $
  *
  * Change log:
  *
@@ -333,24 +333,24 @@ double sigma_incl_res(int particle, double E, double Tp, PARAMSET* params)
  */
 double sigma_incl_tot(int particle, double E, double Tp, PARAMSET* params)
 {
-    double f_tot;
-    double f_nd, f_diff, f_delta, f_res;
+    double s_tot;
+    double s_nd, s_diff, s_delta, s_res;
 
     /* check whether params is a null pointer or not */
     if (params == NULL)
         return 0;
 
-    f_tot = f_nd = f_diff = f_delta = f_res = 0;
+    s_tot = s_nd = s_diff = s_delta = s_res = 0;
 
     /* calculate sigmas */
-    f_nd = sigma_incl_nd(particle, E, Tp, params);
-    f_diff = sigma_incl_diff(particle, E, Tp, params);
-    f_delta = sigma_incl_delta(particle, E, Tp, params);
-    f_res = sigma_incl_res(particle, E, Tp, params);
+    s_nd = sigma_incl_nd(particle, E, Tp, params);
+    s_diff = sigma_incl_diff(particle, E, Tp, params);
+    s_delta = sigma_incl_delta(particle, E, Tp, params);
+    s_res = sigma_incl_res(particle, E, Tp, params);
 
-    f_tot = f_nd + f_diff + f_delta + f_res;
+    s_tot = s_nd + s_diff + s_delta + s_res;
 
-    return f_tot;
+    return s_tot;
 }
 
 /**
@@ -534,23 +534,23 @@ double sigma_pt_res(int particle, double pT, double E, double Tp, PARAMSET_PT* p
  */
 double sigma_pt_tot(int particle, double pT, double E, double Tp, PARAMSET_PT* pt_params)
 {
-    double f_tot;
-    double f_nr, f_delta, f_res;
+    double s_tot;
+    double s_nr, s_delta, s_res;
 
     /* check whether params is a null pointer or not */
     if (pt_params == NULL)
         return 0;
 
-    f_tot = f_nr = f_delta = f_res = 0;
+    s_tot = s_nr = s_delta = s_res = 0;
 
     /* calculate sigmas */
-    f_nr = sigma_pt_nr(particle, pT, E, Tp, pt_params);
-    f_delta = sigma_pt_delta(particle, pT, E, Tp, pt_params);
-    f_res = sigma_pt_res(particle, pT, E, Tp, pt_params);
+    s_nr = sigma_pt_nr(particle, pT, E, Tp, pt_params);
+    s_delta = sigma_pt_delta(particle, pT, E, Tp, pt_params);
+    s_res = sigma_pt_res(particle, pT, E, Tp, pt_params);
     
-    f_tot = f_nr + f_delta + f_res;
+    s_tot = s_nr + s_delta + s_res;
 
-    return f_tot;
+    return s_tot;
 }
 
 /**
