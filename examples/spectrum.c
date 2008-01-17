@@ -5,7 +5,7 @@
  * protons.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/spectrum.c,v $
- * $Author: niklas $ $Date: 2008/01/16 19:31:11 $ $Revision: 1.2 $
+ * $Author: niklas $ $Date: 2008/01/17 19:00:14 $ $Revision: 1.3 $
  *
  */
 
@@ -99,7 +99,6 @@ int main(int argc, char* argv[])
     /* save to a file */
     file = fopen("gamma_spectrum.csv", "w");
     fprintf(file, "#spectrum due to power-law proton index %.2f\n", pl_index);
-    fprintf(file, "logE\ttot\tnd\tdiff\tdelta\tres\n");
     for (i = 0; i < 180; i++) {
         s = log10(spectrum[i] + 1.0e-12) + (i*0.05 - 3.0);
         s_nd = log10(spectrum_nd[i] + 1.0e-12) + (i*0.05 - 3.0);
