@@ -4,7 +4,7 @@
  * Implementation of example code given in the tutorial for cparamlib.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/example1.c,v $
- * $Author: niklas $ $Date: 2008/01/17 18:36:07 $ $Revision: 1.4 $
+ * $Author: niklas $ $Date: 2008/01/17 18:43:54 $ $Revision: 1.5 $
  *
  */
 
@@ -19,6 +19,8 @@ int main(int argc, char* argv[])
     int i;
     PARAMSET params; /* struct where parameters are stored */
 
+    printf("Example 1: total inclusive gamma-ray cross section\n");
+
     memset(&params, 0, sizeof(PARAMSET));
 
     Tp = 512000.0; /* proton kinetic energy 512 TeV */
@@ -26,7 +28,15 @@ int main(int argc, char* argv[])
 
     gamma_param(Tp, &params);
 
-    printf("Example 1: total inclusive gamma-ray cross section\n");
+    /* print out the values of a0,...,a8 and b0,...,b7 */
+    for (i = 0; i < 9; i++) {
+        printf("a%d=%f ", i, params.a[i]);
+    }
+    printf("\n");
+    for (i = 0; i < 8; i++) {
+        printf("b%d=%f ", i, params.b[i]);
+    }
+    printf("\n");
 
     s = sigma_incl_tot(ID_GAMMA, E, Tp, &params);
 
