@@ -17,7 +17,7 @@ endif
 
 SUBDIRS = cparamlib $(DOCDIR) $(PYTHONDIR)
 
-EXTRA_DIST = examples/Makefile examples/params.c examples/examples.c
+EXTRA_DIST = examples/Makefile examples/parameters.c examples/example1.c examples/spectrum.c
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = cparamlib.pc

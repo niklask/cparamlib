@@ -19,4 +19,4 @@ all: example1.o parameters.o spectrum.o
 
 clean:
 	-@ echo "Cleaning up..."
-	-@ rm -r *.o *.csv $(BIN_PARAMS) $(BIN_EXAMPLES) $(BIN_SPECTRUM)
+	-@ rm -r *.o *.csv $(BIN_PARAMS) $(BIN_EX1) $(BIN_SPECTRUM)
