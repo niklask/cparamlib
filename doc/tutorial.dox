@@ -230,7 +230,7 @@ spectra.
 @endcode
 
 Finally the spectra are save to a comma-separated ascii file @em
-gamma_spectrum.csv. Each spectrum is multiplied with E to give the
+gamma_spectrum.csv. Each spectrum is miltiplied with E to give the
 E<sup>2</sup>dF/dE spectrum.
 
 @code
