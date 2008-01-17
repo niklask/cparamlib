@@ -13,9 +13,9 @@ CLFLAGS = -o
 	${CC} $(CCFLAGS) `pkg-config --cflags cparamlib` $< -o $@
 
 all: example1.o parameters.o spectrum.o
-	$(CC) parameters.c $(CLFLAGS) $(BIN_PARAMS) `pkg-config --libs --cflags cparamlib`
-	$(CC) example1.c $(CLFLAGS) $(BIN_EX1) `pkg-config --libs --cflags cparamlib`
-	$(CC) spectrum.c $(CLFLAGS) $(BIN_SPECTRUM) `pkg-config --libs --cflags cparamlib`
+	$(CC) parameters.o $(CLFLAGS) $(BIN_PARAMS) `pkg-config --libs --cflags cparamlib`
+	$(CC) example1.o $(CLFLAGS) $(BIN_EX1) `pkg-config --libs --cflags cparamlib`
+	$(CC) spectrum.o $(CLFLAGS) $(BIN_SPECTRUM) `pkg-config --libs --cflags cparamlib`
 
 clean:
 	-@ echo "Cleaning up..."
