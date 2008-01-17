@@ -4,7 +4,7 @@
  * Implementation of example code given in the tutorial for cparamlib.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/example1.c,v $
- * $Author: niklas $ $Date: 2008/01/17 18:34:59 $ $Revision: 1.3 $
+ * $Author: niklas $ $Date: 2008/01/17 18:36:07 $ $Revision: 1.4 $
  *
  */
 
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     /* output the results */
     printf("Tp = %.2f GeV\n", Tp);
     printf("E = %.2f GeV\n", E);
-    printf("=> sigma_incl = %10f mb\n", s);
+    printf("=> sigma_incl = %.1f mb\n", s);
 
     return;
 }
