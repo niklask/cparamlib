@@ -5,7 +5,7 @@
  * protons.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/spectrum.c,v $
- * $Author: niklas $ $Date: 2008/01/17 19:46:27 $ $Revision: 1.5 $
+ * $Author: niklas $ $Date: 2008/01/17 19:49:24 $ $Revision: 1.6 $
  *
  */
 
@@ -101,11 +101,11 @@ int main(int argc, char* argv[])
     fprintf(file, "#spectrum due to power-law proton index %.2f\n", pl_index);
     for (i = 0; i < 180; i++) {
         E = pow(10.0, i*0.05 - 3.0);
-        s = spectrum[i];
-        s_nd = spectrum_nd[i];
-        s_diff = spectrum_diff[i];
-        s_delta = spectrum_delta[i];
-        s_res = spectrum_res[i];
+        s = spectrum[i]*E;
+        s_nd = spectrum_nd[i]*E;
+        s_diff = spectrum_diff[i]*E;
+        s_delta = spectrum_delta[i]*E;
+        s_res = spectrum_res[i]*E;
         fprintf(file, "%e %e %e %e %e %e\n", E, s, s_nd, s_diff, s_delta, s_res);
     }
     fclose(file);

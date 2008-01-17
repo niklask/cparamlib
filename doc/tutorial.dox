@@ -10,13 +10,12 @@ distributions. The examples here are for gamma rays only, but can easily be
 modified for use with other stable secondary particles. Examples include
 - @ref example1
 - @ref example2
-- @ref example3
 
 The first step is to make sure to have the library installed. Follow the @ref
 install for more details.
 
-All the code presented here is also available in the file @em examples.c found
-in the examples directory. To compile the code, enter the @em examples directory
+All the code presented here is also available in the source files found in the
+examples directory. To compile the code, enter the @em examples directory
 and do make
 
 @code
@@ -25,25 +24,21 @@ make
 @endcode
 
 The example @em Makefile utilizes @em pkg-config to find the correct compiler
-options and paths needed to build with @b cparamlib. It compiles two binaries:
-- examples
-- params
+options and paths needed to build with @b cparamlib. It compiles several
+binaries:
+- example1
+- parameters
+- spectrum
 
-The @em examples binary runs all the examples in this tutorial by passing the
-example number as argument on the command line. For example,
+The binary @em parameters is a test application that calculates the parameters
+at every Tp for every secondary particle. It was used to verify the library.
 
-@code
-./examples 1
-@endcode
-
-runs the first example described below.
-
-@section example1 Example 1: Non-diffraction
+@section example1 Example 1: Total inclusive cross section
 
 In this first example, @b cparamlib functions are used to calculate parameters
-needed to calculate the non-diffractive cross section of gamma rays at a given
+needed to calculate the total inclusive cross section of gamma rays at a given
 proton kinetic energy T<sub>p</sub> and gamma-ray energy E. Then the cross
-section is actually calculated.
+section is calculated.
 
 First include the necessary header files and define a few variables to be used
 
@@ -71,65 +66,201 @@ Tp = 512000.0; /* proton kinetic energy 512 TeV */
 E = 1.0e2;     /* gamma-ray energy 100 GeV */
 @endcode
 
-Now call the function @ref gamma_param_nd to fill the parameter struct with the
+Now call the function @ref gamma_param to fill the parameter struct with the
 correct values for the given proton kinetic energy. The first argument is the
 proton kinetic energy and the second argument is a pointer to the struct where
 the parameters will be stored
 
 @code
-gamma_param_nd(Tp, &params);
-@endcode
-
-and print them out
-
-@code
-for (i = 0; i < 9; i++)
-    printf("a[%d] = %10e\n", i, params.a[i]);
-@endcode
-
-Finally, the non-diffractive cross section is calculated with a call to @ref
-sigma_incl_nd and print it out. The first argument to this function specifies
-the particle for which to calculate, in this case gamma rays. See @ref
-cparamlib.h for a list of particle id's. The following arguments are the
-gamma-ray energy, proton kinetic energy and a pointer to the parameter struct
-
-@code
-s = sigma_incl_nd(ID_GAMMA, E, Tp, &params);
-printf("Tp = 512TeV and Egamma = 100 GeV => sigma_incl_nd = %10e mb\n", s);
-@endcode
-
-@section example2 Example 2: Total inclusive cross section
-
-The second example builds on the first and calculates the total inclusive
-cross section for given proton kinetic energy and gamma-ray energy. This
-requires only two changes:
-
-@code
-gamma_param_nd(Tp, &params);
-@endcode
-
-is replaced by
-@code
 gamma_param(Tp, &params);
 @endcode
 
-and
+and print out the values of parameters a<sub>0</sub>,...,a<sub>8</sub> and
+b<sub>0</sub>,...,b<sub>7</sub>. Since the chosen proton kinetic energy is
+far from the resonance region, c<sub>0</sub>,...,c<sub>4</sub>=0 and
+d<sub>0</sub>,...,d<sub>4</sub>=0.
 
 @code
-s = sigma_incl_nd(ID_GAMMA, E, Tp, &params);
+for (i = 0; i < 9; i++) {
+    printf("a%d=%f ", i, params.a[i]);
+}
+printf("\n");
+for (i = 0; i < 8; i++) {
+    printf("b%d=%f ", i, params.b[i]);
+}
+printf("\n");
 @endcode
 
-is replaced by
+Finally, the non-diffractive cross section is calculated with a call to @ref
+sigma_incl_tot and output the results. The first argument to this function
+specifies the particle for which to calculate, in this case gamma rays. See
+@ref cparamlib.h for a list of particle id's. The following arguments are the
+gamma-ray energy, proton kinetic energy and a pointer to the parameter struct
 
 @code
 s = sigma_incl_tot(ID_GAMMA, E, Tp, &params);
+
+printf("Tp = %.2f GeV\n", Tp);
+printf("E = %.2f GeV\n", E);
+printf("=> sigma_incl = %.1f mb\n", s);
 @endcode
 
-@section example3 Example 3: Gamma-ray spectrum due to power-law protons
+For T<sub>p</sub>=512 TeV and E<sub>gamma</sub>=100 GeV the inclusive cross
+section should be dsigma/dlogE=179.5 mb.
 
-This third example is quite a bit more complex and calculates the gamma-ray
-spectrum due to a pencil beam of protons with kinetic energy following a
-power law. For simplicity, the target density is taken as unity and all
-protons are assumed to interact.
+@section example2 Example 2: Gamma-ray spectrum
+
+The second example is a bit more complex and calculates the gamma-ray spectrum
+from a pencil beam of protons with kinetic energy following a power law. For
+simplicity, the target density is taken as unity and all protons are assumed to
+interact. Both the total gamma spectrum and the spectrum for the four components
+are calculated. The entire code is in spectrum.c.
+
+@code
+#include <stdio.h>
+#include <math.h>
+#include "cparamlib/cparamlib.h"
+@endcode
+
+Define the bins of proton kinetic energy for which the spectrum is calculated
+
+@code
+double Tp[43] = {512.0e3, 362.0e3, 256.0e3, 181.0e3, 128.0e3, 90.5e3, 64.0e3, 45.3e3,
+                 32.0e3, 22.6e3, 16.0e3, 11.3e3, 8.0e3, 5.66e3, 4.0e3, 2.8e3, 2.0e3,
+                 1.41e3, 1.0e3, 707.0, 500.0, 354.0, 250.0, 177.0, 125.0, 88.4, 62.5,
+                 44.2, 31.3, 22.1, 15.6, 11.1, 7.81, 5.52, 3.91, 2.76, 1.95, 1.38,
+                 0.98, 0.82, 0.69, 0.58, 0.488};
+@endcode
+
+Also define five global double arrays in which the calculated spectra are stored
+
+@code
+double *spectrum;
+double *spectrum_nd;
+double *spectrum_diff;
+double *spectrum_delta;
+double *spectrum_res;
+@endcode
+
+@code
+int main(int argc, char* argv[])
+{
+    double E;
+    double Jp, pl_index;
+    double s, s_nd, s_diff, s_delta, s_res;
+    double width;
+    int i, j;
+    PARAMSET params;
+    FILE *file;
+@endcode
+
+Allocate memory for the spectra and make sure the double arrays are empty before
+they are used. Each spectrum is calculated from 1 MeV to 1000 TeV in gamma-ray
+energy, i.e. 180 logarithmic bins of width 0.05
+
+@code
+    spectrum = (double*)malloc(180 * sizeof(double));
+    spectrum_nd = (double*)malloc(180 * sizeof(double));
+    spectrum_diff = (double*)malloc(180 * sizeof(double));
+    spectrum_delta = (double*)malloc(180 * sizeof(double));
+    spectrum_res = (double*)malloc(180 * sizeof(double));
+
+    memset(spectrum, 0, 180 * sizeof(double));
+    memset(spectrum_nd, 0, 180 * sizeof(double));
+    memset(spectrum_diff, 0, 180 * sizeof(double));
+    memset(spectrum_delta, 0, 180 * sizeof(double));
+    memset(spectrum_res, 0, 180 * sizeof(double));
+@endcode
+
+Also make sure the parameter struct is empty and set the power-law index of the
+proton spectrum
+
+@code
+    memset(&params, 0, sizeof(PARAMSET));
+    pl_index = 2.0;
+@endcode
+
+Now loop over all proton kinetic energies. For each one, calculate the parameters
+using @ref gamma_param as in example 1. The width of the current bin is set
+(relative to the default bin width) and the proton power-law distribution
+J<sub>p</sub> is calculated. J<sub>p</sub> is normalized such that
+J<sub>p</sub>=1 at T<sub>p</sub>=1 TeV.
+
+@code
+    for (i = 0; i < 43; i++) {
+        gamma_param(Tp[i], &params);
+
+        if (i < 38)
+            width = 1.0;
+        else if (i == 38)
+            width = 0.75;
+        else if (i > 38)
+            width = 0.5;
+
+        Jp = pow(Tp[i]*1.0e-3, -(pl_index - 1));
+@endcode
+
+Now the inclusive cross section is calculated for each bin of gamma-ray energy.
+Each bin is 0.05 wide in logarithmic scale and the energy has been binned from
+1 MeV to 1000 TeV, resulting in 180 bins. The cross section is calculated for
+each component and then added together to allow generation of the component
+spectra.
+
+@code           
+        for (j = 0; j < 180; j++) {
+            E = pow(10.0, j*0.05 - 3.0);
+
+            /* calculate individual contributions */
+            s_nd = sigma_incl_nd(ID_GAMMA, E, Tp[i], &params);
+            s_diff = sigma_incl_diff(ID_GAMMA, E, Tp[i], &params);
+            s_delta = sigma_incl_delta(ID_GAMMA, E, Tp[i], &params);
+            s_res = sigma_incl_res(ID_GAMMA, E, Tp[i], &params);
+            
+            /* and add them together and add to rest of the spectrum */
+            s = s_nd + s_diff + s_delta + s_res;
+
+            /* store in spectrum for given power-law index */
+            spectrum[j] += s*Jp*width;
+            spectrum_nd[j] += s_nd*Jp*width;
+            spectrum_diff[j] += s_diff*Jp*width;
+            spectrum_delta[j] += s_delta*Jp*width;
+            spectrum_res[j] += s_res*Jp*width;
+        }
+    }
+@endcode
+
+Finally the spectra are save to a comma-separated ascii file @em
+gamma_spectrum.csv. Each spectrum is multiplied with E to give the
+E<sup>2</sup>dF/dE spectrum.
+
+@code
+    /* save to a file */
+    file = fopen("gamma_spectrum.csv", "w");
+    fprintf(file, "#spectrum due to power-law proton index %.2f\n", pl_index);
+    for (i = 0; i < 180; i++) {
+        E = pow(10.0, i*0.05 - 3.0);
+        s = spectrum[i]*E;
+        s_nd = spectrum_nd[i]*E;
+        s_diff = spectrum_diff[i]*E;
+        s_delta = spectrum_delta[i]*E;
+        s_res = spectrum_res[i]*E;
+        fprintf(file, "%e %e %e %e %e %e\n", E, s, s_nd, s_diff, s_delta, s_res);
+    }
+    fclose(file);
+@endcode
+
+Before program exits, free any allocated memory.
+
+@code
+    /* free allocated memory */
+    free(spectrum);
+    free(spectrum_nd);
+    free(spectrum_diff);
+    free(spectrum_delta);
+    free(spectrum_res);
+
+    return;
+}
+@endcode
 
 */
