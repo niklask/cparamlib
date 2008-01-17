@@ -5,7 +5,7 @@
  * protons.
  *
  * $Source: /home/nkarlsson/usr/cvsroot/cparamlib/examples/spectrum.c,v $
- * $Author: niklas $ $Date: 2008/01/17 19:00:14 $ $Revision: 1.3 $
+ * $Author: niklas $ $Date: 2008/01/17 19:31:57 $ $Revision: 1.4 $
  *
  */
 
@@ -70,8 +70,8 @@ int main(int argc, char* argv[])
         else if (i > 38)
             width = 0.5;
 
-        /* calculate the proton spectrum (power law) at given Tp */
-        Jp = pow(Tp[i], pl_index - 1);
+        /* calculate the proton spectrum (power law) at given Tp [TeV] */
+        Jp = pow(Tp[i]*1.0e-3, -(pl_index - 1));
            
         /* calculate the inclusive cross section in each bin of Egamma */
         for (j = 0; j < 180; j++) {
