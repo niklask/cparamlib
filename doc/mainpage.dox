@@ -25,6 +25,8 @@ library on your system. There is also a comprehensive @ref tutorial.
 
 @author Niklas Karlsson <niklas@slac.stanford.edu>
 
+Inquires can also be made to Tune Kamae <kamae@slac.stanford.edu>.
+
 @section Download
 
 The current version of cparamlib is 2.0.0. For now, it is only available as a

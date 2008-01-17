@@ -7,7 +7,7 @@
 
 INSTALLDIR = $(DESTDIR)$(datadir)/doc/$(PACKAGE)/html
 
-EXTRA_DIST = Doxyfile.in header.html footer.html mainpage.dox install.dox tutorial.dox
+EXTRA_DIST = Doxyfile.in header.html footer.html mainpage.dox install.dox tutorial.dox gamma_ind2.png
 
 # cleaned and installed
 GEN_SUFFIX = html gif png css
