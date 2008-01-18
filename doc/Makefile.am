@@ -35,6 +35,9 @@ install-data-local: docs
 # will be used when doing "make install-docs"
 install-docs: docs
 	$(INSTALL) -d $(INSTALLDIR)
+	list='$(GEN_SUFFIX)'; for suffix in $$list; do \
+	   ( cd html/lib; cp *.$$suffix $(INSTALLDIR)/lib/. ) \
+	done
 
 uninstall-local:
 	rm -rf $(INSTALLDIR)
