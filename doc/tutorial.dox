@@ -28,6 +28,7 @@ The example @em Makefile utilizes @em pkg-config to find the correct compiler
 options and paths needed to build with @b cparamlib. It compiles several
 binaries:
 - example1
+- example2
 - parameters
 - spectrum
 
