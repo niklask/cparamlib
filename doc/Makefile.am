@@ -36,7 +36,7 @@ install-data-local: docs
 install-docs: docs
 	$(INSTALL) -d $(INSTALLDIR)
 	list='$(GEN_SUFFIX)'; for suffix in $$list; do \
-	   ( cd html/lib; cp *.$$suffix $(INSTALLDIR)/lib/. ) \
+	   ( cd html; cp *.$$suffix $(INSTALLDIR)/. ) \
 	done
 
 uninstall-local:
