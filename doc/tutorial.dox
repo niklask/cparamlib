@@ -10,6 +10,7 @@ distributions. The examples here are for gamma rays only, but can easily be
 modified for use with other stable secondary particles. Examples include
 - @ref example1
 - @ref example2
+- @ref example3
 
 The first step is to make sure to have the library installed. Follow the @ref
 install for more details.
@@ -108,9 +109,96 @@ printf("=> sigma_incl = %.1f mb\n", s);
 For T<sub>p</sub>=512 TeV and E<sub>gamma</sub>=100 GeV the inclusive cross
 section should be dsigma/dlogE=179.5 mb.
 
-@section example2 Example 2: Gamma-ray spectrum
+@section example2 Example 2: Gamma-ray pt distribution
 
-The second example is a bit more complex and calculates the gamma-ray spectrum
+The second example shows how to calculate the p<sub>t</sub> distribution for a
+givee proton kinetic energy and gamma-ray energy. It is similar to the first
+example, i.e. first the parameters are calculated and then the distribution is
+calculated for given bins of p<sub>t</sub>.
+
+Just as in the first example, the necessary header files must be included and a
+few variables are defined
+
+@code
+#include <stdio.h>
+#include <math.h>
+#include "cparamlib/cparamlib.h"
+
+double Tp, E;       /* proton kinetic energy and gamma-ray energy */
+double pT;          /* transverse momentum of gamma ray */
+double* pTdist;     /* pointer to a double array for the pT distribution */
+int i;
+PARAMSET_PT params; /* struct where parameters are stored */
+FILE *file;
+@endcode
+
+Then allocate memory for a double array where the p<sub>t</sub> distribution
+will be stored. The distribution will cover from 0 GeV/c to 2.5 GeV/c in
+250 bins, each 10 MeV/c wide
+
+@code
+pTdist = (double*)malloc(250 * sizeof(double));    
+memset(pTdist, 0, 250 * sizeof(double));
+@endcode
+
+Make sure the parameter struct is empty before accessing it
+
+@code
+memset(&params, 0, sizeof(PARAMSET_PT));
+@endcode
+
+Set the proton kinetic energy and the gamma-ray energy for which the parameters
+and distribution will be calculated
+
+@code
+Tp = 64000.0;  /* proton kinetic energy 64 TeV */
+E = 1.0e2;     /* gamma-ray energy 100 GeV */
+@endcode
+
+Now call the function @ref gamma_pt_param to fill the parameter struct with the
+correct values for the given proton kinetic energy and gamma-ray energy. The
+first argument is the gamma-ray energy and the second argument is the proton
+kinetic energy. A pointer to the struct where the parameters will be stored is
+passed as argument three and the fourth argument flags whether or not
+T<sub>p</sub> has changed since last call. Since this is the first (and only)
+call, it has changed and thus flag is set to 1.
+
+@code
+gamma_pt_param(E, Tp, &params, 1);
+@endcode
+
+Now loop over all p<sub>p</sub> bins and calculate the differential cross section
+dsigma/dp<sub>t</sub> for each bin with calls to @ref sigma_pt_tot.
+
+@code
+for (i = 0; i < 250; i++) {
+    pT = 0.01*i;
+    pTdist[i] = sigma_pt_tot(ID_GAMMA, pT, E, Tp, &params);
+}
+@endcode
+
+Finally the spectra are save to a comma-separated ascii file @em
+gamma_pt_dist.csv
+
+@code
+file = fopen("gamma_pt_dist.csv", "w");
+fprintf(file, "#pT distribution of gamma rays for Tp=%.2f and Egamma=%.2f\n", Tp, E);
+for (i = 0; i < 250; i++) {
+    pT = 0.01*i;
+    fprintf(file, "%e %e\n", pT, pTdist[i]);
+}
+fclose(file);
+
+free(pTdist);
+@endcode
+
+@subsection spectrum_sub Results
+The resulting distribution is illustrated in the figure below.
+@image html gamma_pt_dist.png
+
+@section example3 Example 3: Gamma-ray spectrum
+
+The third example is a bit more complex and calculates the gamma-ray spectrum
 from a pencil beam of protons with kinetic energy following a power law. For
 simplicity, the target density is taken as unity and all protons are assumed to
 interact. Both the total gamma spectrum and the spectrum for the four components
