@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2008/01/08 22:29:33 $ $Revision: 1.33 $
+dnl $Author: niklas $ $Date: 2008/01/22 23:57:34 $ $Revision: 1.34 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -15,7 +15,7 @@ dnl Do not forget to change library interface version in cparamlib/Makefile.am!
 dnl Checks for programs
 AC_PROG_CC
 dnl disable static building
-dnl AM_DISABLE_STATIC
+nl AM_DISABLE_STATIC
 AM_PROG_LIBTOOL
 
 dnl Check for gmake and use it
@@ -48,9 +48,9 @@ dnl and set variables $(PYTHON_INCLUDE) and $(PYTHON_LIB)
 if test x$pythonbuild != xfalse; then
   AM_PATH_PYTHON(2.2)
 
-	dnl The following code adopted from HippoDraw by Paul F. Kunz
-	python_include_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_inc()"`
-	python_lib_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_lib(standard_lib=True)"`
+  dnl The following code adopted from HippoDraw by Paul F. Kunz
+  python_include_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_inc()"`
+  python_lib_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_lib(standard_lib=True)"`
 
   AC_SUBST([PYTHON_INCLUDE],[$python_include_path] )
   AC_SUBST([PYTHON_LIB],[$python_lib_path])
