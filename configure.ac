@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2008/01/22 23:57:34 $ $Revision: 1.34 $
+dnl $Author: niklas $ $Date: 2008/01/22 23:59:30 $ $Revision: 1.35 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -15,7 +15,7 @@ dnl Do not forget to change library interface version in cparamlib/Makefile.am!
 dnl Checks for programs
 AC_PROG_CC
 dnl disable static building
-nl AM_DISABLE_STATIC
+AM_DISABLE_STATIC
 AM_PROG_LIBTOOL
 
 dnl Check for gmake and use it
