@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2007/11/01 00:09:37 $ $Revision: 1.11 $
+# $Author: niklas $ $Date: 2008/05/16 14:22:43 $ $Revision: 1.12 $
 #
 
 #
@@ -317,7 +317,7 @@ class AngularParamModel:
     # component at given pT, E and Tp
     # This is a wrapper around cparamlib.sigma_pt_nr(particle, E, Tp, params)
     #
-    def sigma_pt_res(self, pT, E, Tp):
+    def sigma_pt_nr(self, pT, E, Tp):
         # check if Tp or E has changes since last call
         # we only need to recalculate if either one has changed
         if ((Tp != self.Tp) or (E != self.E)):
@@ -336,7 +336,7 @@ class AngularParamModel:
     # at given pT, E and Tp
     # This is a wrapper around cparamlib.sigma_pt_delta(particle, E, Tp, params)
     #
-    def sigma_pt_res(self, pT, E, Tp):
+    def sigma_pt_delta(self, pT, E, Tp):
         # check if Tp or E has changes since last call
         # we only need to recalculate if either one has changed
         if ((Tp != self.Tp) or (E != self.E)):
@@ -380,7 +380,7 @@ class AngularParamModel:
         if ((Tp != self.Tp) or (E != self.E)):
             self.E = E
             self.Tp = Tp
-            self.param_pt_res(self.E, self.Tp)
+            self.param_pt_all(self.E, self.Tp)
 
         sigma = cparamlib.sigma_pt_tot(self.particle, pT, self.E, self.Tp, params)
             
