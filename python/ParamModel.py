@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2008/05/16 14:49:57 $ $Revision: 1.13 $
+# $Author: niklas $ $Date: 2008/05/16 15:49:50 $ $Revision: 1.14 $
 #
 
 #
@@ -12,6 +12,7 @@
 #
 
 import sys
+import math
 import cparamlib
 
 # --------------------------------------------------------------------------------
@@ -24,7 +25,7 @@ import cparamlib
 # Compares two floating point numbers
 #
 def fcmp(x, y):
-    d = fabs(x - y)
+    d = math.fabs(x - y)
     if (d < 1.0e-15):
         return 1
     else:
@@ -279,7 +280,10 @@ class AngularParamModel:
 
         self.Tp = Tp
         self.E = E
-        self.changedTp = 1
+        self.chTp_all = 1
+        self.chTp_nr = 1
+        self.chTp_delta = 1
+        self.chTp_res = 1
 
         # create struct for parameter storage
         self.pt_params = cparamlib.PARAMSET_PT()
@@ -295,7 +299,7 @@ class AngularParamModel:
     #
     def param_pt_all(self, E, Tp):
         if (self.particle == cparamlib.ID_GAMMA):
-            cparamlib.gamma_pt_param(E, Tp, self.pt_params, self.changedTp)
+            cparamlib.gamma_pt_param(E, Tp, self.pt_params, self.chTp_all)
                 
     #
     # Method param_pt_nr
@@ -305,7 +309,7 @@ class AngularParamModel:
     #
     def param_pt_nr(self, E, Tp):
         if (self.particle == cparamlib.ID_GAMMA):
-            cparamlib.gamma_pt_param_nr(E, Tp, self.pt_params, self.changedTp)
+            cparamlib.gamma_pt_param_nr(E, Tp, self.pt_params, self.chTp_nr)
 
     #
     # Method param_pt_delta
@@ -315,7 +319,7 @@ class AngularParamModel:
     #
     def param_pt_delta(self, E, Tp):
         if (self.particle == cparamlib.ID_GAMMA):
-            cparamlib.gamma_pt_param_delta(E, Tp, self.pt_params, self.changedTp)
+            cparamlib.gamma_pt_param_delta(E, Tp, self.pt_params, self.chTp_delta)
 
     #
     # Method param_pt_res
@@ -325,7 +329,7 @@ class AngularParamModel:
     #
     def param_pt_res(self, E, Tp):
         if (self.particle == cparamlib.ID_GAMMA):
-            cparamlib.gamma_pt_param_res(E, Tp, self.pt_params, self.changedTp)
+            cparamlib.gamma_pt_param_res(E, Tp, self.pt_params, self.chTp_res)
 
     #
     # Method sigma_pt_nr
@@ -335,13 +339,18 @@ class AngularParamModel:
     # This is a wrapper around cparamlib.sigma_pt_nr(particle, E, Tp, params)
     #
     def sigma_pt_nr(self, pT, E, Tp):
-        # check if Tp or E has changes since last call
-        # we only need to recalculate if either one has changed
-        if fcmp(E, self.E):
+        # check whether Tp has changed from the previous call
+        # if it has, set the chTp flag to 1 and update the stored Tp value
+        if fcmp(Tp, self.Tp):
+            self.chTp_nr = 0
+        else:
+            print "Tp changed from", self.Tp, "to", Tp
+            self.Tp = Tp
+            self.chTp_nr = 1
+
+        # now check if E has changed since the last call or if chTp is set
+        if ((fcmp(E, self.E) == 0) or (self.chTp_nr == 1)):
             self.E = E
-            if fcmp(Tp, self.Tp):
-                self.Tp = Tp
-                self.changedTp = 1
             self.param_pt_nr(self.E, self.Tp)
 
         sigma = cparamlib.sigma_pt_nr(self.particle, pT, self.E, self.Tp, self.pt_params)
@@ -356,13 +365,18 @@ class AngularParamModel:
     # This is a wrapper around cparamlib.sigma_pt_delta(particle, E, Tp, params)
     #
     def sigma_pt_delta(self, pT, E, Tp):
-        # check if Tp or E has changes since last call
-        # we only need to recalculate if either one has changed
-        if fcmp(E, self.E):
+        # check whether Tp has changed from the previous call
+        # if it has, set the chTp flag to 1 and update the stored Tp value
+        if fcmp(Tp, self.Tp):
+            self.chTp_delta = 0
+        else:
+            print "Tp changed from", self.Tp, "to", Tp
+            self.Tp = Tp
+            self.chTp_delta = 1
+        
+        # now check if E has changed since the last call or if chTp is set
+        if ((fcmp(E, self.E) == 0) or (self.chTp_delta == 1)):
             self.E = E
-            if fcmp(Tp, self.Tp):
-                self.Tp = Tp
-                self.changedTp = 1
             self.param_pt_delta(self.E, self.Tp)
 
         sigma = cparamlib.sigma_pt_delta(self.particle, pT, self.E, self.Tp, self.pt_params)
@@ -377,13 +391,18 @@ class AngularParamModel:
     # This is a wrapper around cparamlib.sigma_pt_res(particle, E, Tp, params)
     #
     def sigma_pt_res(self, pT, E, Tp):
-        # check if Tp or E has changes since last call
-        # we only need to recalculate if either one has changed
-        if fcmp(E, self.E):
+        # first check whether Tp has changed from the previous call
+        # if it has, set the chTp flag to 1 and update the stored Tp value
+        if fcmp(Tp, self.Tp):
+            self.chTp_res = 0
+        else:
+            print "Tp changed from", self.Tp, "to", Tp
+            self.Tp = Tp
+            self.chTp_res = 1
+        
+        # now check if E has changed since the last call or if chTp is set
+        if ((fcmp(E, self.E) == 0) or (self.chTp_res == 1)):
             self.E = E
-            if fcmp(Tp, self.Tp):
-                self.Tp = Tp
-                self.changedTp = 1
             self.param_pt_res(self.E, self.Tp)
 
         sigma = cparamlib.sigma_pt_res(self.particle, pT, self.E, self.Tp, self.pt_params)
@@ -398,11 +417,18 @@ class AngularParamModel:
     # This is a wrapper around cparamlib.sigma_pt_tot(particle, E, Tp, params)
     #
     def sigma_pt_tot(self, pT, E, Tp):
-        # check if Tp or E has changes since last call
-        # we only need to recalculate if either one has changed
-        if ((Tp != self.Tp) or (E != self.E)):
-            self.E = E
+        # first check whether Tp has changed from the previous call
+        # if it has, set the chTp flag to 1 and update the stored Tp value
+        if fcmp(Tp, self.Tp):
+            self.chTp_all = 0
+        else:
+            print "Tp changed from", self.Tp, "to", Tp
             self.Tp = Tp
+            self.chTp_all = 1
+        
+        # now check if E has changed since the last call or if chTp is set
+        if ((fcmp(E, self.E) == 0) or (self.chTp_all == 1)):
+            self.E = E
             self.param_pt_all(self.E, self.Tp)
 
         sigma = cparamlib.sigma_pt_tot(self.particle, pT, self.E, self.Tp, params)
