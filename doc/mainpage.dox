@@ -29,10 +29,10 @@ Inquires can also be made to Tune Kamae <kamae@slac.stanford.edu>.
 
 @section Download
 
-The current version of cparamlib is 2.0.0. For now, it is only available as a
+The current version of cparamlib is 2.1.0. For now, it is only available as a
 source distribution for use with Unix-like systems, such as GNU/Linux, *BSD,
 OS X and Cygwin:
-- <a href="http://www.slac.stanford.edu/~niklas/Public/cparamlib-2.0.0.tar.gz">cparamlib 2.0.0 compressed tarball</a>
+- <a href="http://www.slac.stanford.edu/~niklas/Public/cparamlib-2.1.0.tar.gz">cparamlib 2.1.0 compressed tarball</a>
 
 It should not be difficult to use the code with Microsoft compilers, though
 this has not been tested.
