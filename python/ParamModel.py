@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2008/05/16 14:22:43 $ $Revision: 1.12 $
+# $Author: niklas $ $Date: 2008/05/16 14:49:57 $ $Revision: 1.13 $
 #
 
 #
@@ -13,6 +13,22 @@
 
 import sys
 import cparamlib
+
+# --------------------------------------------------------------------------------
+#  Helper function definitions
+# --------------------------------------------------------------------------------
+
+#
+# Function: fcmp
+#
+# Compares two floating point numbers
+#
+def fcmp(x, y):
+    d = fabs(x - y)
+    if (d < 1.0e-15):
+        return 1
+    else:
+        return 0
 
 # --------------------------------------------------------------------------------
 #  Class definitions
@@ -263,6 +279,7 @@ class AngularParamModel:
 
         self.Tp = Tp
         self.E = E
+        self.changedTp = 1
 
         # create struct for parameter storage
         self.pt_params = cparamlib.PARAMSET_PT()
@@ -274,41 +291,41 @@ class AngularParamModel:
     # Method param_pt_all
     #
     # Calculates the pT parameters for all three components at the given Tp and E
-    # This is a wrapper around cparamlib.<particle>_pt_param(E, Tp, params)
+    # This is a wrapper around cparamlib.<particle>_pt_param(E, Tp, params, flag)
     #
     def param_pt_all(self, E, Tp):
         if (self.particle == cparamlib.ID_GAMMA):
-            cparamlib.gamma_pt_param(Tp, self.pt_params)
+            cparamlib.gamma_pt_param(E, Tp, self.pt_params, self.changedTp)
                 
     #
     # Method param_pt_nr
     #
     # Creates the list containing the non-resonance pT parameter set at the given Tp
-    # This is a wrapper around cparamlib.<particle>_pt_param_nr(E, Tp, params)
+    # This is a wrapper around cparamlib.<particle>_pt_param_nr(E, Tp, params, flag)
     #
     def param_pt_nr(self, E, Tp):
         if (self.particle == cparamlib.ID_GAMMA):
-            cparamlib.gamma_pt_param_nr(Tp, self.pt_params)
+            cparamlib.gamma_pt_param_nr(E, Tp, self.pt_params, self.changedTp)
 
     #
     # Method param_pt_delta
     #
     # Creates the list containing the Delta(1232) pT parameter set at the given Tp
-    # This is a wrapper around cparamlib.<particle>_pt_param_delta(E, Tp, params)
+    # This is a wrapper around cparamlib.<particle>_pt_param_delta(E, Tp, params, flag)
     #
     def param_pt_delta(self, E, Tp):
         if (self.particle == cparamlib.ID_GAMMA):
-            cparamlib.gamma_pt_param_delta(Tp, self.pt_params)
+            cparamlib.gamma_pt_param_delta(E, Tp, self.pt_params, self.changedTp)
 
     #
     # Method param_pt_res
     #
     # Creates the list containing the res(1232) pT parameter set at the given Tp
-    # This is a wrapper around cparamlib.<particle>_pt_param_res(E, Tp, params)
+    # This is a wrapper around cparamlib.<particle>_pt_param_res(E, Tp, params, flag)
     #
     def param_pt_res(self, E, Tp):
         if (self.particle == cparamlib.ID_GAMMA):
-            cparamlib.gamma_pt_param_res(Tp, self.pt_params)
+            cparamlib.gamma_pt_param_res(E, Tp, self.pt_params, self.changedTp)
 
     #
     # Method sigma_pt_nr
@@ -320,9 +337,11 @@ class AngularParamModel:
     def sigma_pt_nr(self, pT, E, Tp):
         # check if Tp or E has changes since last call
         # we only need to recalculate if either one has changed
-        if ((Tp != self.Tp) or (E != self.E)):
+        if fcmp(E, self.E):
             self.E = E
-            self.Tp = Tp
+            if fcmp(Tp, self.Tp):
+                self.Tp = Tp
+                self.changedTp = 1
             self.param_pt_nr(self.E, self.Tp)
 
         sigma = cparamlib.sigma_pt_nr(self.particle, pT, self.E, self.Tp, self.pt_params)
@@ -339,9 +358,11 @@ class AngularParamModel:
     def sigma_pt_delta(self, pT, E, Tp):
         # check if Tp or E has changes since last call
         # we only need to recalculate if either one has changed
-        if ((Tp != self.Tp) or (E != self.E)):
+        if fcmp(E, self.E):
             self.E = E
-            self.Tp = Tp
+            if fcmp(Tp, self.Tp):
+                self.Tp = Tp
+                self.changedTp = 1
             self.param_pt_delta(self.E, self.Tp)
 
         sigma = cparamlib.sigma_pt_delta(self.particle, pT, self.E, self.Tp, self.pt_params)
@@ -358,9 +379,11 @@ class AngularParamModel:
     def sigma_pt_res(self, pT, E, Tp):
         # check if Tp or E has changes since last call
         # we only need to recalculate if either one has changed
-        if ((Tp != self.Tp) or (E != self.E)):
+        if fcmp(E, self.E):
             self.E = E
-            self.Tp = Tp
+            if fcmp(Tp, self.Tp):
+                self.Tp = Tp
+                self.changedTp = 1
             self.param_pt_res(self.E, self.Tp)
 
         sigma = cparamlib.sigma_pt_res(self.particle, pT, self.E, self.Tp, self.pt_params)
