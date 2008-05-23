@@ -2,7 +2,7 @@
 # Python package implementing the parametric model described in ApJ paper
 #
 # $Source: /home/nkarlsson/usr/cvsroot/cparamlib/python/ParamModel.py,v $
-# $Author: niklas $ $Date: 2008/05/16 15:49:50 $ $Revision: 1.14 $
+# $Author: niklas $ $Date: 2008/05/23 20:07:42 $ $Revision: 1.15 $
 #
 
 #
@@ -249,7 +249,7 @@ class ParamModel:
             self.Tp = Tp
             self.param_all(self.Tp)
             
-        sigma = cparamlib.sigma_incl_tot(E, self.Tp, self.params)
+        sigma = cparamlib.sigma_incl_tot(self.particle, E, self.Tp, self.params)
             
         return sigma
 
@@ -431,7 +431,7 @@ class AngularParamModel:
             self.E = E
             self.param_pt_all(self.E, self.Tp)
 
-        sigma = cparamlib.sigma_pt_tot(self.particle, pT, self.E, self.Tp, params)
+        sigma = cparamlib.sigma_pt_tot(self.particle, pT, self.E, self.Tp, self.pt_params)
             
         return sigma
     
