@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: niklas $ $Date: 2008/05/16 15:51:08 $ $Revision: 1.36 $
+dnl $Author: nkarlsson $ $Date: 2008/11/10 17:01:30 $ $Revision: 1.37 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -74,7 +74,7 @@ AC_ARG_ENABLE(userdoc,
 [case "${enableval}" in
   yes) docbuild=true ;;
   no)  docbuild=false ;;
-  *)   AC_MSG_ERROR(bad value ${enableval} for --enable-python) ;;
+  *)   AC_MSG_ERROR(bad value ${enableval} for --enable-userdoc) ;;
 esac],[docbuild=false])
 
 dnl Make sure Doxygen is installed and set variable $(DOXYGEN)
