@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script
 dnl
 dnl	$Source: /home/nkarlsson/usr/cvsroot/cparamlib/configure.ac,v $
-dnl $Author: nkarlsson $ $Date: 2008/11/10 19:47:39 $ $Revision: 1.38 $
+dnl $Author: nkarlsson $ $Date: 2009/02/13 21:27:03 $ $Revision: 1.39 $
 dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
@@ -36,7 +36,7 @@ dnl
 dnl Option to enable python extension build
 dnl
 AC_ARG_ENABLE(python,
-AS_HELP_STRING([--enable-python],[build Pythin interface code (default = no]),
+AS_HELP_STRING([--enable-python],[build Pythin interface code [[default=no]]]),
 [case "${enableval}" in
   yes) pythonbuild=true ;;
   no)  pythonbuild=false ;;
@@ -70,7 +70,7 @@ dnl
 dnl Option to build and install documentation
 dnl
 AC_ARG_ENABLE(userdoc,
-AS_HELP_STRING([--enable-userdoc],[generate documentation (default = no]),
+AS_HELP_STRING([--enable-userdoc],[generate documentation [[default=no]]]),
 [case "${enableval}" in
   yes) docbuild=true ;;
   no)  docbuild=false ;;
