@@ -121,7 +121,7 @@ void elec_param_diff(double Tp, PARAMSET* params) {
  * Delta(1232) electron inclusive cross section as a function of the proton
  * kinetic energy T<sub>p</sub>. Since the negative charged Delta(1232)
  * resonance is not formed, no electrons are produced and thus this function
- * only sets the ::PARAMSET::c array to zero.
+ * only sets the ::PARAMSET array to zero.
  *
  * @param Tp     Proton kinetic energy in GeV.
  * @param params Pointer to a ::PARAMSET struct where the calculated parameters
