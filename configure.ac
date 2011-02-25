@@ -43,25 +43,27 @@ AS_HELP_STRING([--enable-python],[build Pythin interface code [[default=no]]]),
   *) AC_MSG_ERROR(bad value ${enableval} for --enable-python) ;;
 esac],[pythonbuild=false])
 
-dnl If --enable-python then make sure Python is installed with version >= 2.2
-dnl and set variables $(PYTHON_INCLUDE) and $(PYTHON_LIB)
-if test x$pythonbuild != xfalse; then
-  AM_PATH_PYTHON(2.2)
+dnl Make sure Python is installed with version >= 2.2 and set variables
+dnl   $(PYTHON_INCLUDE)
+dnl   $(PYTHON_LIB)
+dnl Do this even if --disable-python because it sets variables required when
+dnl doing a 'make distcheck' 
+AM_PATH_PYTHON(2.2)
 
-  dnl The following code adopted from HippoDraw by Paul F. Kunz
-  python_include_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_inc()"`
-  python_lib_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_lib(standard_lib=True)"`
+dnl The following code adopted from HippoDraw by Paul F. Kunz
+python_include_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_inc()"`
+python_lib_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_lib(standard_lib=True)"`
 
-  AC_SUBST([PYTHON_INCLUDE],[$python_include_path] )
-  AC_SUBST([PYTHON_LIB],[$python_lib_path])
+AC_SUBST([PYTHON_INCLUDE],[$python_include_path] )
+AC_SUBST([PYTHON_LIB],[$python_lib_path])
 
-  dnl Make sure SWIG is installed and set variable $(SWIG)
-  dnl (do not care about version number for now)
-  AC_PATH_PROG([SWIG],[swig])
-  if test -z "$SWIG" ; then
-	AC_MSG_WARN([cannot find the 'swig' executable, please install it])
-    pythonbuild=false
-  fi
+dnl Make sure SWIG is installed and set variable $(SWIG)
+dnl (do not care about version number for now)
+dnl Do this even if --disable-python because it sets a variable required when
+dnl doing a 'make distcheck' 
+AC_PATH_PROG([SWIG],[swig])
+if test -z "$SWIG" ; then
+   AC_MSG_WARN([cannot find the 'swig' executable, please install it])
 fi
 	
 AM_CONDITIONAL(PYTHONBUILD, [test x$pythonbuild = xtrue])
