@@ -3,12 +3,12 @@
 # Author: niklas@slac.stanford.edu
 #
 
-BUILT_SOURCES = $(srcdir)/cparamlib_wrap.c
+BUILT_SOURCES = cparamlib_wrap.c
 SWIG_SOURCES = cparamlib.i
 
 EXTRA_DIST = ParamModel.py __init__.py
 
-$(srcdir)/cparamlib_wrap.c cparamlib.py: $(SWIG_SOURCES)
+cparamlib_wrap.c cparamlib.py: $(SWIG_SOURCES)
 	$(SWIG) -python -I$(top_srcdir)/cparamlib -o $@ $<
 
 pkgpyexec_PYTHON = ParamModel.py __init__.py cparamlib.py
