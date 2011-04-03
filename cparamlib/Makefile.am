@@ -7,7 +7,7 @@ cparamlibdir = $(includedir)/cparamlib
 
 cparamlib_HEADERS = cparamlib.h
 cparamlib_SOURCE = antinue.c antinumu.c elec.c gamma.c nue.c numu.c posi.c sigma.c
-LIB_VERSION = 2:1:1
+LIB_VERSION = 2:2:0
 
 library_includedir=$(includedir)/cparamlib
 
