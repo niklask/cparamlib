@@ -7,7 +7,7 @@
 
 INSTALLDIR = $(DESTDIR)$(datadir)/doc/$(PACKAGE)/html
 
-EXTRA_DIST = Doxyfile.in header.html footer.html mainpage.dox install.dox tutorial.dox gamma_ind2.png
+EXTRA_DIST = Doxyfile.in header.html footer.html mainpage.dox install.dox tutorial.dox gamma_ind2.png gamma_pt_dist.png
 
 all: docs
 
