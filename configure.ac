@@ -9,7 +9,7 @@ dnl
 AC_INIT(cparamlib/cparamlib.h)
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_AUX_DIR(config)
-AM_INIT_AUTOMAKE(cparamlib, 2.1.0)
+AM_INIT_AUTOMAKE(cparamlib, 2.1.1)
 dnl Do not forget to change library interface version in cparamlib/Makefile.am!
 
 dnl Checks for programs
