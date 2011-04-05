@@ -5,4 +5,5 @@
 # $Author: niklas $ $Date: 2007/06/04 22:22:23 $ $Revision: 1.2 $
 #
 
+from cparamlib import *
 __all__ = ["cparamlib", "ParamModel"]
