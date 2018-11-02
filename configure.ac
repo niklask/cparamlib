@@ -6,10 +6,11 @@ dnl
 dnl Author: Niklas Karlsson <niklas@slac.stanford.edu>
 dnl
 
-AC_INIT(cparamlib/cparamlib.h)
+AC_INIT([cparamlib], [2.1.2])
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_AUX_DIR(config)
-AM_INIT_AUTOMAKE(cparamlib, 2.1.2)
+AC_CONFIG_SRCDIR([cparamlib/cparamlib.h])
+AM_INIT_AUTOMAKE
 dnl Do not forget to change library interface version in cparamlib/Makefile.am!
 
 dnl Checks for programs
@@ -51,8 +52,11 @@ dnl doing a 'make distcheck'
 AM_PATH_PYTHON(2.2)
 
 dnl The following code adopted from HippoDraw by Paul F. Kunz
-python_include_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_inc()"`
-python_lib_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_lib(standard_lib=True)"`
+dnl python_include_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_inc()"`
+dnl python_lib_path=`$PYTHON -c "from distutils import sysconfig; print sysconfig.get_python_lib(standard_lib=True)"`
+dnl Use the above two lines instead if using Python 2.x
+python_include_path=`$PYTHON -c "import sysconfig; print(sysconfig.get_config_vars()[['INCLUDEPY']])"`
+python_lib_path=`$PYTHON -c "import sysconfig; print(sysconfig.get_config_vars()[['LIBDEST']])"`
 
 AC_SUBST([PYTHON_INCLUDE],[$python_include_path] )
 AC_SUBST([PYTHON_LIB],[$python_lib_path])
