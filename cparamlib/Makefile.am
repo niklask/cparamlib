@@ -11,7 +11,7 @@ LIB_VERSION = 2:3:0
 
 library_includedir=$(includedir)/cparamlib
 
-INCLUDES = -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_srcdir)
 
 lib_LTLIBRARIES= libcparamlib.la
 libcparamlib_la_SOURCES= $(cparamlib_HEADERS) $(cparamlib_SOURCE)
